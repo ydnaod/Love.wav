@@ -8,6 +8,10 @@ function App() {
   return (
     <Fragment>
       <NavBar />
+      <div>
+        <MatchDashboard />
+        <MessageList />
+      </div>
     </Fragment>
   );
 }

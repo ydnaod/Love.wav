@@ -1,10 +1,22 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Profile } from '../Profile/Profile';
 import './MatchDashboard.css';
+import playButton from '../../images/PlayButton(swiperight).png'
+import stopButton from '../../images/StopButton.png'
 
-export function MatchDashboard(){
+export function MatchDashboard() {
     return (
         <Fragment>
-
+            <div className="MatchDashboard">
+                <Profile />
+                <div>
+                    <h1 className="name">Summer L.</h1>
+                    <div className = "buttons">
+                        <img src={playButton}></img>
+                        <img src={stopButton}></img>
+                    </div>
+                </div>
+            </div>
         </Fragment>
     )
 }
