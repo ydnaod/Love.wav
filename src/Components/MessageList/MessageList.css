@@ -1,0 +1,9 @@
+.MessageList {
+    width: 40%;
+    display: flex;
+    background-color: rgb(241, 241, 241);
+}
+
+.label {
+    padding: 25px;
+}

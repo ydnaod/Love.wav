@@ -1,8 +1,23 @@
 .MatchDashboard{
     background-color: #472F8D;
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .name {
     color: #E0E0E0;
     font-size: 4em;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    margin: 20px;
 }

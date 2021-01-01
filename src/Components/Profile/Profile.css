@@ -1,0 +1,10 @@
+.Profile {
+    width: 85%;
+    height: 60%;
+    background-color: #C4C4C4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+    border-radius: 5%;
+}

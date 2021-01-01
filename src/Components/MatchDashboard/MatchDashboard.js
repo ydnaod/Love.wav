@@ -12,8 +12,8 @@ export function MatchDashboard() {
                 <div>
                     <h1 className="name">Summer L.</h1>
                     <div className = "buttons">
-                        <img src={playButton}></img>
-                        <img src={stopButton}></img>
+                        <img className="button" src={playButton}></img>
+                        <img className="button" src={stopButton}></img>
                     </div>
                 </div>
             </div>
