@@ -2,8 +2,10 @@
     width: 40%;
     display: flex;
     background-color: rgb(241, 241, 241);
-}
-
-.label {
+    flex-direction: column;
+    justify-content: start;
+    text-align: start;
     padding: 25px;
 }
+
+
