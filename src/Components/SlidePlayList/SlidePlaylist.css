@@ -1,0 +1,12 @@
+.tracks {
+    display: flex;
+    flex-direction: column;
+}
+
+.playlistSlide{
+    display: flex;
+}
+
+.title {
+    font-weight: 700;
+}

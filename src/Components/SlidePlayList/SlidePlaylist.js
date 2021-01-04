@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlidePlaylist.css';
+import { Track } from '../Track/Track';
 
 export function SlidePlaylist(props) {
 
@@ -9,16 +10,15 @@ export function SlidePlaylist(props) {
                 <div className="slideTitle">
                     <h2>{props.profileInfo.slideTitle}</h2>
                 </div>
-                <div className="songDetailsSlide">
-                    <div className="songDetails">
+                <div className="playlistSlide">
+                    <div className="tracks">
                         {
                             props.profileInfo.trackList.map(track => {
+
                                 return (
-                                    <div>
-                                        <h3>{track.title}</h3>
-                                        <h3>{track.artist}</h3>
-                                    </div>
+                                    <Track track={track} />
                                 )
+
                             })
                         }
                     </div>

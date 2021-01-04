@@ -23,53 +23,73 @@ export function MatchDashboard() {
             trackList: [
                 {
                     title: '"Adore You"',
+                    album: 'Fine Line',
                     artist: "Harry Styles",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:0
                 },
                 {
                     title: '"This House"',
+                    album: 'Fine Line',
                     artist: "Japanese Breakfast",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:1
                 },
                 {
                     title: '"In Your Atmosphere"',
+                    album: 'Fine Line',
                     artist: "John Mayer",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:2
                 },
                 {
                     title: '"Lovewave"',
+                    album: 'Fine Line',
                     artist: "Lovewave",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:3
                 },
                 {
                     title: '"If the World was Ending"',
+                    album: 'Fine Line',
                     artist: "JP Saxe and Julia Michales",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:4
                 },
                 {
                     title: '"First Love / Late Spring"',
+                    album: 'Fine Line',
                     artist: "Mitski",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:5
                 },
                 {
                     title: "Adore You",
+                    album: 'Fine Line',
                     artist: "Harry Styles",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:6
                 },
                 {
                     title: "Adore You",
+                    album: 'Fine Line',
                     artist: "Harry Styles",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:7
                 },
                 {
                     title: "Adore You",
+                    album: 'Fine Line',
                     artist: "Harry Styles",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:8
                 },
                 {
                     title: "Adore You",
+                    album: 'Fine Line',
                     artist: "Harry Styles",
-                    preview_url: ""
+                    preview_url: "",
+                    playlistIndex:9
                 },
             ]
         },

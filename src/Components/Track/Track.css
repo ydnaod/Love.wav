@@ -1,0 +1,22 @@
+.trackList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: start;
+}
+
+.track {
+    display: flex;
+    width: 100%;
+    padding: .15em;
+    align-items: center;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.sampleButton {
+    height: 80%;
+    margin-right: .5em;
+}
