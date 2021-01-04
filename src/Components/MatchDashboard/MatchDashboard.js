@@ -112,16 +112,13 @@ export function MatchDashboard() {
         {
             id: 3,
             slideTitle: 'what you both like',
-            image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-            title: '"Adore You"',
-            artist: 'Harry Styles'
-        },
-        {
-            id: 4,
-            slideTitle: '% match',
-            image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-            title: '"Adore You"',
-            artist: 'Harry Styles'
+            trackQualities: {acousticness: .5,
+            danceability: .7,
+            energy: .6,
+            instrumentalness: .09,
+            liveness: .159,
+            valence: .6},
+            tempo: 100
         }
     ]);
     const [current, setCurrent] = useState(0);

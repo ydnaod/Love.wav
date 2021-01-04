@@ -17,7 +17,7 @@ export function SlideFavoriteLyric(props) {
                             props.profileInfo.lyrics.map(lyric => {
 
                                 return (
-                                    <p className="lyric">{lyric}</p>
+                                    <p className="lyric" >{lyric}</p>
                                 )
 
                             })

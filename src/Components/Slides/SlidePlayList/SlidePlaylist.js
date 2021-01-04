@@ -17,7 +17,8 @@ export function SlidePlaylist(props) {
 
                                 return (
                                     
-                                    <Track track={track} />
+                                    <Track track={track}
+                                        key={track.playlistIndex}/>
                                     
                                 )
 

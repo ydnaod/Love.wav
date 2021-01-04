@@ -3,6 +3,7 @@ import './Profile.css';
 import { SlidePlaylist } from '../Slides/SlidePlayList/SlidePlaylist'
 import { SlideThemeSong } from '../Slides/SlideThemeSong/SlideThemeSong';
 import { SlideFavoriteLyric } from '../Slides/SlideFavoriteLyric/SlideFavoriteLyric';
+import { SlidePercentMatch } from '../Slides/SlidePercentMatch/SlidePercentMatch';
 
 export function Profile(props) {
 
@@ -14,6 +15,9 @@ export function Profile(props) {
     }
     if (props.profileInfo.id == 2) {
         return <SlideFavoriteLyric profileInfo={props.profileInfo} />
+    }
+    if (props.profileInfo.id == 3) {
+        return <SlidePercentMatch profileInfo={props.profileInfo} />
     }
 
     /*return (
