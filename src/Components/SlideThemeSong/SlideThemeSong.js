@@ -1,15 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import './Profile.css';
-import {SlidePlaylist} from '../SlidePlayList/SlidePlaylist'
-import { SlideThemeSong } from '../SlideThemeSong/SlideThemeSong';
+import './SlideThemeSong.css';
 
-export function Profile(props) {
+export function SlideThemeSong(props) {
 
-    if(props.profileInfo.id == 0){
-        return <SlideThemeSong profileInfo={props.profileInfo}/>
-    }
-
-    /*return (
+    return (
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
@@ -24,5 +18,5 @@ export function Profile(props) {
                 </div>
             </div>
         </Fragment>
-    )*/
+    )
 }

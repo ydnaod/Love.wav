@@ -8,6 +8,7 @@ import RightArrow from '../../images/RightArrow.png'
 
 export function MatchDashboard() {
 
+    //profile will be needed to be fetched from the database
     const [profiles, setProfiles] = useState([
         {
             id: 0,
@@ -18,10 +19,58 @@ export function MatchDashboard() {
         },
         {
             id: 1,
-            slideTitle: 'their playlist',
-            image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-            title: '"Adore You"',
-            artist: 'Harry Styles'
+            trackList: [
+                {
+                    title: '"Adore You"',
+                    artist: "Harry Styles",
+                    preview_url: ""
+                },
+                {
+                    title: '"This House"',
+                    artist: "Japanese Breakfast",
+                    preview_url: ""
+                },
+                {
+                    title: '"In Your Atmosphere"',
+                    artist: "John Mayer",
+                    preview_url: ""
+                },
+                {
+                    title: '"Lovewave"',
+                    artist: "Lovewave",
+                    preview_url: ""
+                },
+                {
+                    title: '"If the World was Ending"',
+                    artist: "JP Saxe and Julia Michales",
+                    preview_url: ""
+                },
+                {
+                    title: '"First Love / Late Spring"',
+                    artist: "Mitski",
+                    preview_url: ""
+                },
+                {
+                    title: "Adore You",
+                    artist: "Harry Styles",
+                    preview_url: ""
+                },
+                {
+                    title: "Adore You",
+                    artist: "Harry Styles",
+                    preview_url: ""
+                },
+                {
+                    title: "Adore You",
+                    artist: "Harry Styles",
+                    preview_url: ""
+                },
+                {
+                    title: "Adore You",
+                    artist: "Harry Styles",
+                    preview_url: ""
+                },
+            ]
         },
         {
             id: 2,
@@ -120,7 +169,7 @@ export function MatchDashboard() {
                     <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
 
                     <Profile profileInfo={profiles[current]}
-                        key={profiles[current].id} />
+                        key={profiles[current].id}/>
 
                     <img src={RightArrow} onClick={handleRightArrowClick}></img>
                 </div>
