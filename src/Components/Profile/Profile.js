@@ -1,15 +1,19 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './Profile.css';
-import {SlidePlaylist} from '../SlidePlayList/SlidePlaylist'
-import { SlideThemeSong } from '../SlideThemeSong/SlideThemeSong';
+import { SlidePlaylist } from '../Slides/SlidePlayList/SlidePlaylist'
+import { SlideThemeSong } from '../Slides/SlideThemeSong/SlideThemeSong';
+import { SlideFavoriteLyric } from '../Slides/SlideFavoriteLyric/SlideFavoriteLyric';
 
 export function Profile(props) {
 
-    if(props.profileInfo.id == 0){
-        return <SlideThemeSong profileInfo={props.profileInfo}/>
+    if (props.profileInfo.id == 0) {
+        return <SlideThemeSong profileInfo={props.profileInfo} />
     }
-    if(props.profileInfo.id == 1){
-        return <SlidePlaylist profileInfo={props.profileInfo}/>
+    if (props.profileInfo.id == 1) {
+        return <SlidePlaylist profileInfo={props.profileInfo} />
+    }
+    if (props.profileInfo.id == 2) {
+        return <SlideFavoriteLyric profileInfo={props.profileInfo} />
     }
 
     /*return (

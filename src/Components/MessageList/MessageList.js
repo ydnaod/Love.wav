@@ -52,7 +52,7 @@ export function MessageList() {
     return (
         <Fragment>
             <div className="MessageList">
-                <h1 className="label">Messages</h1>
+                <h1 className="label">messages</h1>
                 {
                     messageList.map(conversation => {
                        return <Message conversation={conversation}

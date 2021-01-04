@@ -1,12 +1,10 @@
 .tracks {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .playlistSlide{
     display: flex;
-}
-
-.title {
-    font-weight: 700;
+    height: 80%;
 }

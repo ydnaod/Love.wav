@@ -96,9 +96,18 @@ export function MatchDashboard() {
         {
             id: 2,
             slideTitle: 'guess their favorite lyric',
-            image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-            title: '"Adore You"',
-            artist: 'Harry Styles'
+            lyrics: [
+                "You are sick, and you're married",
+                "And you might be dying",
+                "But you're holding me like water in your hands",
+                "When you saw the dead little bird, you started crying",
+                "But you know the killer doesn't understand"
+            ],
+            favoriteLyric: "But you're holding me like water in your hands",
+            title: '"Moon Song"',
+            artist: 'Phoebe Bridgers',
+            album: "Punisher",
+            image: "https://upload.wikimedia.org/wikipedia/en/2/23/Phoebe_Bridgers_Punisher_%282020%29.png"
         },
         {
             id: 3,
@@ -137,9 +146,16 @@ export function MatchDashboard() {
                 {
                     id: 2,
                     slideTitle: 'guess their favorite lyric',
-                    image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-                    title: '"Adore You"',
-                    artist: 'Harry Styles'
+                    lyrics: [
+                        "You are sick, and you're married",
+                        "And you might be dying",
+                        "But you're holding me like water in your hands",
+                        "When you saw the dead little bird, you started crying",
+                        "But you know the killer doesn't understand"
+                    ],
+                    title: '"Moon Song"',
+                    artist: 'Phoebe Bridgers',
+                    Album: "Punisher"
                 },
                 {
                     id: 3,

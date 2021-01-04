@@ -16,7 +16,9 @@ export function SlidePlaylist(props) {
                             props.profileInfo.trackList.map(track => {
 
                                 return (
+                                    
                                     <Track track={track} />
+                                    
                                 )
 
                             })

@@ -1,0 +1,27 @@
+.lyrics {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 80%;
+}
+
+.lyricSlide{
+    display: flex;
+    height: 80%;
+    width: 100%;
+    padding-left: 2em;
+    justify-content: center;
+    align-items: center;
+}
+
+.lyric {
+    padding: .5em;
+}
+
+.lyricImage {
+    width: 20%;
+    height: 30%;
+    object-fit: cover;
+    margin-right: 2em;
+}
