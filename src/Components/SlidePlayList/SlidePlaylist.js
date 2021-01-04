@@ -3,8 +3,6 @@ import './SlidePlaylist.css';
 
 export function SlidePlaylist(props) {
 
-    
-
     return (
         <Fragment>
             <div className="Profile">
@@ -12,10 +10,17 @@ export function SlidePlaylist(props) {
                     <h2>{props.profileInfo.slideTitle}</h2>
                 </div>
                 <div className="songDetailsSlide">
-                    <img className="albumCover" src={props.profileInfo.image} />
                     <div className="songDetails">
-                        <h3>{props.profileInfo.title}</h3>
-                        <h3>{props.profileInfo.artist}</h3>
+                        {
+                            props.profileInfo.trackList.map(track => {
+                                return (
+                                    <div>
+                                        <h3>{track.title}</h3>
+                                        <h3>{track.artist}</h3>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>

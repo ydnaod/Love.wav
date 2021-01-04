@@ -19,6 +19,7 @@ export function MatchDashboard() {
         },
         {
             id: 1,
+            slideTitle: 'their playlist',
             trackList: [
                 {
                     title: '"Adore You"',

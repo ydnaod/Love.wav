@@ -8,6 +8,9 @@ export function Profile(props) {
     if(props.profileInfo.id == 0){
         return <SlideThemeSong profileInfo={props.profileInfo}/>
     }
+    if(props.profileInfo.id == 1){
+        return <SlidePlaylist profileInfo={props.profileInfo}/>
+    }
 
     /*return (
         <Fragment>
