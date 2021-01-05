@@ -156,7 +156,7 @@ export function MatchDashboard() {
                 },
                 {
                     id: 3,
-                    slideTitle: 'what you both like',
+                    slideTitle: ['it seems you both like', 'you can show them'],
                     image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
                     title: '"Adore You"',
                     artist: 'Harry Styles'
