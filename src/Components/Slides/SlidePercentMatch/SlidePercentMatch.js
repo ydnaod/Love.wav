@@ -2,17 +2,24 @@ import React, { useState, useEffect, Fragment } from 'react';
 import './SlidePercentMatch.css';
 import { Track } from '../Track/Track'
 
-export function SlidePercentMatch(props) {
+export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities } }) {
 
-    //state variables for differences
-    const [acousticnessDiff, setAcousticnessDiff] = useState();
-    const [danceabilityDiff, setDanceabilityDiff] = useState();
-    const [energyDiff, setEnergyDiff] = useState();
-    const [instrumentalnessDiff, setInstrumentalnessDiff] = useState();
-    const [livenessDiff, setLivenessDiff] = useState();
-    const [valenceDiff, setValenceDiff] = useState();
+    //state variables to hold differences between profiles
+    const [musicDiff, setMusicDiff] = useState(
+        {
+            acousticnessDiff: 0,
+            danceabilityDiff: 0,
+            energyDiff: 0,
+            instrumentalnessDiff: 0,
+            livenessDiff: 0,
+            valenceDiff: 0
+        }
+    );
+    
+    //destructure the difference variables
+    const { acousticnessDiff, danceabilityDiff, energyDiff, instrumentalnessDiff, livenessDiff, valenceDiff } = musicDiff;
 
-    //percent match
+    //percentage match variable
     const [percentage, setPercentage] = useState("");
 
     //placeholder data
@@ -28,11 +35,11 @@ export function SlidePercentMatch(props) {
         tempo: 100
     });
 
-    //need state variable to know which sentences to show
+    //sentences to show
 
-    //need state variable to check if there are more matches than not
-    const something=  [];
+    //mutual sentences
 
+    //different sentences
 
     const calculateDifference = (num1, num2) => {
         return Math.abs(num1 - num2);
@@ -40,16 +47,20 @@ export function SlidePercentMatch(props) {
 
     const calculatePercentMatch = (yourOwnMusic, theirMusic) => {
 
-        setAcousticnessDiff(calculateDifference(yourOwnMusic.trackQualities.acousticness, theirMusic.trackQualities.acousticness));
-        setDanceabilityDiff(calculateDifference(yourOwnMusic.trackQualities.danceability, theirMusic.trackQualities.danceability));
-        setEnergyDiff(calculateDifference(yourOwnMusic.trackQualities.energy, theirMusic.trackQualities.energy));
-        setInstrumentalnessDiff(calculateDifference(yourOwnMusic.trackQualities.danceability, theirMusic.trackQualities.danceability));
-        setLivenessDiff(calculateDifference(yourOwnMusic.trackQualities.liveness, theirMusic.trackQualities.liveness));
-        setValenceDiff(calculateDifference(yourOwnMusic.trackQualities.valence, theirMusic.trackQualities.valence));
+        setMusicDiff({
+            ...musicDiff,
+            acousticnessDiff: calculateDifference(yourOwnMusic.trackQualities.acousticness, theirMusic.acousticness),
+            danceabilityDiff: calculateDifference(yourOwnMusic.trackQualities.danceability, theirMusic.danceability),
+            energyDiff: calculateDifference(yourOwnMusic.trackQualities.energy, theirMusic.energy),
+            instrumentalnessDiff: calculateDifference(yourOwnMusic.trackQualities.danceability, theirMusic.danceability),
+            livenessDiff: calculateDifference(yourOwnMusic.trackQualities.liveness, theirMusic.liveness),
+            valenceDiff: calculateDifference(yourOwnMusic.trackQualities.valence, theirMusic.valence)
+        })
+
     }
 
     useEffect(() => {
-        calculatePercentMatch(yourMusic, props.profileInfo);
+        calculatePercentMatch(yourMusic, trackQualities);
         setPercentage(Math.floor((1 - ((acousticnessDiff + danceabilityDiff + energyDiff + instrumentalnessDiff + livenessDiff + valenceDiff) / 6)) * 100) + "%")
     }, [acousticnessDiff, danceabilityDiff, energyDiff, instrumentalnessDiff, livenessDiff, valenceDiff])
 
@@ -62,7 +73,7 @@ export function SlidePercentMatch(props) {
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{props.profileInfo.slideTitle}</h2>
+                    <h2>{profileInfo.slideTitle}</h2>
                 </div>
                 <div className="percentMatchSlide">
                     <div className="facts">
