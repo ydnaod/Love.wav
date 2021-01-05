@@ -7,17 +7,17 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
     //state variables to hold differences between profiles
     const [musicDiff, setMusicDiff] = useState(
         {
-            acousticnessDiff: 0,
-            danceabilityDiff: 0,
-            energyDiff: 0,
-            instrumentalnessDiff: 0,
-            livenessDiff: 0,
-            valenceDiff: 0
+            acousticness: 1,
+            danceability: 0,
+            energy: 0,
+            instrumentalness: 0,
+            liveness: 0,
+            valence: 0,
         }
     );
     
     //destructure the difference variables
-    const { acousticnessDiff, danceabilityDiff, energyDiff, instrumentalnessDiff, livenessDiff, valenceDiff } = musicDiff;
+    const { acousticness, danceability, energy, instrumentalness, liveness, valence } = musicDiff;
 
     //percentage match variable
     const [percentage, setPercentage] = useState("");
@@ -54,22 +54,17 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
 
     const calculatePercentMatch = (yourOwnMusic, theirMusic) => {
 
-        setMusicDiff({
-            ...musicDiff,
-            acousticnessDiff: calculateDifference(yourOwnMusic.trackQualities.acousticness, theirMusic.acousticness),
-            danceabilityDiff: calculateDifference(yourOwnMusic.trackQualities.danceability, theirMusic.danceability),
-            energyDiff: calculateDifference(yourOwnMusic.trackQualities.energy, theirMusic.energy),
-            instrumentalnessDiff: calculateDifference(yourOwnMusic.trackQualities.danceability, theirMusic.danceability),
-            livenessDiff: calculateDifference(yourOwnMusic.trackQualities.liveness, theirMusic.liveness),
-            valenceDiff: calculateDifference(yourOwnMusic.trackQualities.valence, theirMusic.valence)
-        })
-
+        const update = {};
+        for(const quality in musicDiff){
+            update[quality] = calculateDifference(yourOwnMusic.trackQualities[quality], theirMusic[quality]);
+            setMusicDiff({ ...musicDiff, ...update})
+        }
     }
 
     useEffect(() => {
         calculatePercentMatch(yourMusic, trackQualities);
-        setPercentage(Math.floor((1 - ((acousticnessDiff + danceabilityDiff + energyDiff + instrumentalnessDiff + livenessDiff + valenceDiff) / 6)) * 100) + "%")
-    }, [acousticnessDiff, danceabilityDiff, energyDiff, instrumentalnessDiff, livenessDiff, valenceDiff])
+        setPercentage(Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "%")
+    }, [acousticness, danceability, energy, instrumentalness, liveness, valence])
 
     //need to find a way to render sentences based on the differences
     //also come up with these sentences!
