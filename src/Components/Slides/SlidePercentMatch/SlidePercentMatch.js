@@ -41,6 +41,13 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
 
     //different sentences
 
+    const calculateSentences = () => {
+        const common = [];
+        for(const quality in musicDiff){
+            console.log(quality);
+        }
+    }
+
     const calculateDifference = (num1, num2) => {
         return Math.abs(num1 - num2);
     }
@@ -73,7 +80,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{profileInfo.slideTitle}</h2>
+                    <h2>{profileInfo.slideTitle[0]}</h2>
                 </div>
                 <div className="percentMatchSlide">
                     <div className="facts">

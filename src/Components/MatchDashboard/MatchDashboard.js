@@ -111,7 +111,7 @@ export function MatchDashboard() {
         },
         {
             id: 3,
-            slideTitle: 'what you both like',
+            slideTitle: ['it seems you both like', 'you can show them'],
             trackQualities: {acousticness: .5,
             danceability: .7,
             energy: .6,
