@@ -31,7 +31,7 @@ export function SlidePercentMatch(props) {
     //need state variable to know which sentences to show
 
     //need state variable to check if there are more matches than not
-    const []
+    const something=  [];
 
 
     const calculateDifference = (num1, num2) => {
