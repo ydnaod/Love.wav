@@ -1,0 +1,21 @@
+.profilePicture {
+    height: 25em;
+    width: 25em;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 10px solid white;
+}
+
+.pictureSlide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+    padding: 0 0 2em 2em;
+}
+
+#percentMatch{
+    font-size: 5em;
+    color: white;
+}

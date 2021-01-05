@@ -4,19 +4,23 @@ import { SlidePlaylist } from '../Slides/SlidePlayList/SlidePlaylist'
 import { SlideThemeSong } from '../Slides/SlideThemeSong/SlideThemeSong';
 import { SlideFavoriteLyric } from '../Slides/SlideFavoriteLyric/SlideFavoriteLyric';
 import { SlidePercentMatch } from '../Slides/SlidePercentMatch/SlidePercentMatch';
+import {SlidePicture} from '../Slides/SlidePicture/SlidePicture';
 
 export function Profile(props) {
 
     if (props.profileInfo.id == 0) {
-        return <SlideThemeSong profileInfo={props.profileInfo} />
-    }
-    if (props.profileInfo.id == 1) {
-        return <SlidePlaylist profileInfo={props.profileInfo} />
-    }
-    if (props.profileInfo.id == 2) {
-        return <SlideFavoriteLyric profileInfo={props.profileInfo} />
+        return <SlidePicture profileInfo={props.profileInfo} />
     }
     if (props.profileInfo.id == 3) {
+        return <SlideThemeSong profileInfo={props.profileInfo} />
+    }
+    if (props.profileInfo.id == 2) {
+        return <SlidePlaylist profileInfo={props.profileInfo} />
+    }
+    if (props.profileInfo.id == 4) {
+        return <SlideFavoriteLyric profileInfo={props.profileInfo} />
+    }
+    if (props.profileInfo.id == 1) {
         return <SlidePercentMatch profileInfo={props.profileInfo} />
     }
 
