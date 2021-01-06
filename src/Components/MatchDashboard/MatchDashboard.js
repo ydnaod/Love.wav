@@ -152,14 +152,7 @@ export function MatchDashboard() {
         //fetchData();
     }, [])
 
-
-    /*profiles.map(profile => {
-                        return <Profile profileInfo={profile}
-                        key={profile.id} />
-                    })
-                    
-                    <Profile profileInfo={profile[current]}
-                        key={profile[current].id} />*/
+    
 
     return (
         <Fragment>
