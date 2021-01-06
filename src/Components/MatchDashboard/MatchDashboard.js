@@ -133,50 +133,7 @@ export function MatchDashboard() {
 
     function fetchData() {
         try {
-            const profileInfo = [
-                {
-                    id: 0,
-                    slideTitle: 'theme song',
-                    image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-                    title: '"Adore You"',
-                    artist: 'Harry Styles'
-                },
-                {
-                    id: 1,
-                    slideTitle: 'their playlist',
-                    image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-                    title: '"Adore You"',
-                    artist: 'Harry Styles'
-                },
-                {
-                    id: 2,
-                    slideTitle: 'guess their favorite lyric',
-                    lyrics: [
-                        "You are sick, and you're married",
-                        "And you might be dying",
-                        "But you're holding me like water in your hands",
-                        "When you saw the dead little bird, you started crying",
-                        "But you know the killer doesn't understand"
-                    ],
-                    title: '"Moon Song"',
-                    artist: 'Phoebe Bridgers',
-                    Album: "Punisher"
-                },
-                {
-                    id: 3,
-                    slideTitle: ['it seems you both like', 'you can show them'],
-                    image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-                    title: '"Adore You"',
-                    artist: 'Harry Styles'
-                },
-                {
-                    id: 4,
-                    slideTitle: '% match',
-                    image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-                    title: '"Adore You"',
-                    artist: 'Harry Styles'
-                }
-            ]
+            const profileInfo = []
             setProfiles(profileInfo);
         } catch (error) {
             console.error(error.message);
