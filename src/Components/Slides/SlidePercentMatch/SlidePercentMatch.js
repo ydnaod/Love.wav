@@ -38,9 +38,6 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
 
     //sentences to show
 
-    //qualities to show
-    const [common, setCommon] = useState([]);
-
     //mutual sentences
     const [mutual, setMutual] = useState([]);
 
@@ -51,55 +48,69 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
 
         const update = [];
         for(const quality in musicDiff){
-            if(musicDiff[quality] < .2){
+            if(musicDiff[quality] <= .2){
                 update.push(quality);
                 //setCommon([...common, ...update])
                 console.log(quality);
             }
+            //console.log(quality);
         }
         return update;
     }
 
     const calculateSentences = () => {
 
-        const update = [];
-        if(common.length > 3 && mutual.length < 3){
-            if(yourMusic.trackQualities.acousticness > .6 ){
-                update.push('songs that are acoustic');
-                setMutual([...mutual, ...update])
+        const sentences = {};
+        if(yourMusic.trackQualities.acousticness > .6){
+            //sentences.push('songs that are acoustic');
+            sentences.acousticness = "songs that are acoustic";
+        }
+        if(yourMusic.trackQualities.danceability > .6){
+            //sentences.push('songs that you can dance to');
+            sentences.danceability = 'songs that you can dance to';
+        }
+        if(yourMusic.trackQualities.energy >= .6){
+            //sentences.push('songs that are high energy');
+            sentences.energy = 'songs that are high energy';
+        }
+        if(yourMusic.trackQualities.energy < .4){
+            //sentences.push('songs that you can chill out to');
+            sentences.energy = 'songs that you can chill out to';
+        }
+        if(yourMusic.trackQualities.valence >= .6){
+            //sentences.push('songs that are happy');
+            sentences.valence = 'songs that are happy';
+        }
+        if(yourMusic.trackQualities.valence < .4){
+            //sentences.push('songs that you can cry to');
+            sentences.valence = 'songs that you can cry to';
+        }
+        if(yourMusic.trackQualities.instrumentalness > .5){
+            //sentences.push('songs that you can work to');
+            sentences.instrumentallness = 'songs that you can work to';
+        }
+        if(yourMusic.tempo >= 100){
+            //sentences.push('songs that are fast-paced');
+            sentences.tempo = 'songs that are fast-paced';
+        }
+        if(yourMusic.tempo < 80){
+            //sentences.push('songs that you can probably slow dance to');
+            sentences.tempo = 'songs that you can probably slow dance to';
+        }
+        console.log(sentences);
+        const common = calculateCommon();
+        const updatedMutual = [];
+        const updatedDifferent = [];
+        for(const type in sentences){
+            if(common.includes(type)){
+                updatedMutual.push(sentences[type]);
             }
-            if(yourMusic.trackQualities.danceability > .6 ){
-                update.push('songs that you can dance to');
-                setMutual([...mutual, ...update])
-            }
-            if(yourMusic.trackQualities.energy > .6 ){
-                update.push('songs that are high energy');
-                setMutual([...mutual, ...update])
-            }
-            if(yourMusic.trackQualities.valence > .6 ){
-                update.push('songs that are happy');
-                setMutual([...mutual, ...update])
+            else{
+                updatedDifferent.push(sentences[type]);
             }
         }
-        const updatedDifferent = []
-        if(common.length < 3 && different.length < 3){
-            if(yourMusic.trackQualities.acousticness > .6 && !common.includes('acousticness')){
-                updatedDifferent.push('songs that are acoustic');
-                setDifferent([...different, ...updatedDifferent])
-            }
-            if(yourMusic.trackQualities.danceability > .6 && !common.includes('danceability')){
-                updatedDifferent.push('songs that you can dance to');
-                setDifferent([...different, ...updatedDifferent])
-            }
-            if(yourMusic.trackQualities.energy < .6 && !common.includes('energy')){
-                updatedDifferent.push('songs that are low energy');
-                setDifferent([...different, ...updatedDifferent])
-            }
-            if(yourMusic.trackQualities.valence > .6 && !common.includes('valence')){
-                updatedDifferent.push('songs that are happy');
-                setDifferent([...different, ...updatedDifferent])
-            }
-        }
+        setMutual([...updatedMutual])
+        setDifferent([...updatedDifferent]);
     }
 
     const calculateDifference = (num1, num2) => {
@@ -117,7 +128,6 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
 
     useEffect(() => {
         calculatePercentMatch(yourMusic, trackQualities);
-        calculateCommon();
         setPercentage(Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "%")
     }, [acousticness, danceability, energy, instrumentalness, liveness, valence])
 
@@ -143,7 +153,8 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
                     <div>
                         {
                             mutual.map(sentence => {
-                                return <Statement sentence={sentence}/>
+                                return <Statement sentence={sentence}
+                                    /*key={mutual.findIndex(sentence)}*//>
                             })
                         }
                     </div>

@@ -20,7 +20,7 @@ export function MatchDashboard() {
             id: 1,
             slideTitle: ['it seems you both like', 'you can show them'],
             trackQualities: {
-                acousticness: .5,
+                acousticness: .3,
                 danceability: .7,
                 energy: .6,
                 instrumentalness: .09,
