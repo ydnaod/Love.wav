@@ -53,11 +53,11 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
         for(const quality in musicDiff){
             if(musicDiff[quality] < .2){
                 update.push(quality);
-                setCommon([...common, ...update])
+                //setCommon([...common, ...update])
                 console.log(quality);
             }
         }
-
+        return update;
     }
 
     const calculateSentences = () => {

@@ -1,6 +1,6 @@
 .profilePicture {
-    height: 25em;
-    width: 25em;
+    height: 20em;
+    width: 20em;
     object-fit: cover;
     border-radius: 50%;
     border: 10px solid white;
@@ -16,6 +16,6 @@
 }
 
 #percentMatch{
-    font-size: 5em;
-    color: white;
+    font-size: 3em;
+    color: rgb(255, 255, 255);
 }
