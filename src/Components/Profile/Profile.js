@@ -8,19 +8,21 @@ import {SlidePicture} from '../Slides/SlidePicture/SlidePicture';
 
 export function Profile(props) {
 
+    
+
     if (props.profileInfo.id == 0) {
         return <SlidePicture profileInfo={props.profileInfo} />
     }
-    if (props.profileInfo.id == 3) {
+    if (props.profileInfo.id == 2) {
         return <SlideThemeSong profileInfo={props.profileInfo} />
     }
-    if (props.profileInfo.id == 2) {
+    if (props.profileInfo.id == 1) {
         return <SlidePlaylist profileInfo={props.profileInfo} />
     }
-    if (props.profileInfo.id == 4) {
+    if (props.profileInfo.id == 3) {
         return <SlideFavoriteLyric profileInfo={props.profileInfo} />
     }
-    if (props.profileInfo.id == 1) {
+    if (props.profileInfo.id == 4) {
         return <SlidePercentMatch profileInfo={props.profileInfo} />
     }
 

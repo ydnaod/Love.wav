@@ -16,7 +16,7 @@ export function SlidePicture(props){
                 <div className="pictureSlide">
                     <img className="profilePicture" src={props.profileInfo.image} />
                     <div id="percentMatch">
-                        <h3>{props.profileInfo.percentMatch}</h3>
+                        <h3>{props.percentMatch}</h3>
                     </div>
                 </div>
             </div>

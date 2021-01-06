@@ -1,0 +1,11 @@
+.sentence {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.percentMatchSlide {
+    width: 100%;
+    padding: 0 0 0 2em;
+}

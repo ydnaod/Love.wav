@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlidePercentMatch.css';
 import { Track } from '../Track/Track';
-import {Statement} from '../Statement/Statement';
+import { Statement } from '../Statement/Statement';
 
 export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities } }) {
 
@@ -16,7 +16,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
             valence: 0,
         }
     );
-    
+
     //destructure the difference variables
     const { acousticness, danceability, energy, instrumentalness, liveness, valence } = musicDiff;
 
@@ -47,8 +47,8 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
     const calculateCommon = () => {
 
         const update = [];
-        for(const quality in musicDiff){
-            if(musicDiff[quality] <= .2){
+        for (const quality in musicDiff) {
+            if (musicDiff[quality] <= .2) {
                 update.push(quality);
                 //setCommon([...common, ...update])
                 console.log(quality);
@@ -61,51 +61,42 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
     const calculateSentences = () => {
 
         const sentences = {};
-        if(yourMusic.trackQualities.acousticness > .6){
-            //sentences.push('songs that are acoustic');
+        if (yourMusic.trackQualities.acousticness > .6) {
             sentences.acousticness = "songs that are acoustic";
         }
-        if(yourMusic.trackQualities.danceability > .6){
-            //sentences.push('songs that you can dance to');
+        if (yourMusic.trackQualities.danceability > .6) {
             sentences.danceability = 'songs that you can dance to';
         }
-        if(yourMusic.trackQualities.energy >= .6){
-            //sentences.push('songs that are high energy');
+        if (yourMusic.trackQualities.energy >= .6) {
             sentences.energy = 'songs that are high energy';
         }
-        if(yourMusic.trackQualities.energy < .4){
-            //sentences.push('songs that you can chill out to');
+        if (yourMusic.trackQualities.energy < .4) {
             sentences.energy = 'songs that you can chill out to';
         }
-        if(yourMusic.trackQualities.valence >= .6){
-            //sentences.push('songs that are happy');
+        if (yourMusic.trackQualities.valence >= .6) {
             sentences.valence = 'songs that are happy';
         }
-        if(yourMusic.trackQualities.valence < .4){
-            //sentences.push('songs that you can cry to');
+        if (yourMusic.trackQualities.valence < .4) {
             sentences.valence = 'songs that you can cry to';
         }
-        if(yourMusic.trackQualities.instrumentalness > .5){
-            //sentences.push('songs that you can work to');
+        if (yourMusic.trackQualities.instrumentalness > .5) {
             sentences.instrumentallness = 'songs that you can work to';
         }
-        if(yourMusic.tempo >= 100){
-            //sentences.push('songs that are fast-paced');
+        if (yourMusic.tempo >= 100) {
             sentences.tempo = 'songs that are fast-paced';
         }
-        if(yourMusic.tempo < 80){
-            //sentences.push('songs that you can probably slow dance to');
+        if (yourMusic.tempo < 80) {
             sentences.tempo = 'songs that you can probably slow dance to';
         }
         console.log(sentences);
         const common = calculateCommon();
         const updatedMutual = [];
         const updatedDifferent = [];
-        for(const type in sentences){
-            if(common.includes(type)){
+        for (const type in sentences) {
+            if (common.includes(type)) {
                 updatedMutual.push(sentences[type]);
             }
-            else{
+            else {
                 updatedDifferent.push(sentences[type]);
             }
         }
@@ -120,9 +111,9 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
     const calculatePercentMatch = (yourOwnMusic, theirMusic) => {
 
         const update = {};
-        for(const quality in musicDiff){
+        for (const quality in musicDiff) {
             update[quality] = calculateDifference(yourOwnMusic.trackQualities[quality], theirMusic[quality]);
-            setMusicDiff({ ...musicDiff, ...update})
+            setMusicDiff({ ...musicDiff, ...update })
         }
     }
 
@@ -147,14 +138,11 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
                     <h2>{profileInfo.slideTitle[0]}</h2>
                 </div>
                 <div className="percentMatchSlide">
-                    <div className="facts">
-                        {percentage} match
-                    </div>
-                    <div>
+                    <div className="sentence">
                         {
                             mutual.map(sentence => {
                                 return <Statement sentence={sentence}
-                                    /*key={mutual.findIndex(sentence)}*//>
+                                    /*key={mutual.findIndex(sentence)}*/ />
                             })
                         }
                     </div>
@@ -163,10 +151,10 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
                     <h2>{profileInfo.slideTitle[1]}</h2>
                 </div>
                 <div className="percentMatchSlide">
-                    <div>
+                    <div className="sentence">
                         {
                             different.map(sentence => {
-                                return <Statement sentence={sentence}/>
+                                return <Statement sentence={sentence} />
                             })
                         }
                     </div>

@@ -7,7 +7,7 @@ export function Statement({sentence}){
 
     return (
         <Fragment>
-            <p>{sentence}</p>
+            <p className="sentence">{sentence}</p>
         </Fragment>
     )
 }
