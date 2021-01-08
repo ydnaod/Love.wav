@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const usersRouter = require('./routes/usersRouter')
 const pool = require('./db');
+const loginRouter = require('./routes/login')
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 //routes
 app.use('/users', usersRouter);
+app.use('/login', loginRouter)
 
 app.listen(4000, () => {
     console.log('listening on 4000')
