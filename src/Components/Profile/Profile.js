@@ -8,8 +8,6 @@ import {SlidePicture} from '../Slides/SlidePicture/SlidePicture';
 
 export function Profile(props) {
 
-    
-
     if (props.profileInfo.id == 0) {
         return <SlidePicture profileInfo={props.profileInfo} />
     }
