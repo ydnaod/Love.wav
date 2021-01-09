@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlidePlaylist.css';
 import { Track } from '../Track/Track';
+import {Spotify} from '../../../Util/Spotify';
 
 export function SlidePlaylist(props) {
 

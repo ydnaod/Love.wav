@@ -5,6 +5,7 @@ import playButton from '../../images/PlayButton(swiperight).png'
 import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
+import {Spotify} from '../../Util/Spotify';
 
 export function MatchDashboard() {
 
@@ -149,7 +150,7 @@ export function MatchDashboard() {
     }
 
     useEffect(() => {
-        //fetchData();
+        Spotify.loadUserPlaylist('1210606472');
     }, [])
 
     

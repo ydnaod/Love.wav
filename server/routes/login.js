@@ -5,6 +5,7 @@ require('dotenv').config();
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 const fetch = require('node-fetch');
+const pool = require('../db')
 
 const client_id = process.env.clientId;
 const client_secret = process.env.clientSecret;
@@ -81,37 +82,43 @@ router.get('/callback', async function (req, res) {
                 client_id: client_id,
                 client_secret: client_secret
         }*/
-        const response = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            body: bodyToken,
-            headers: {
-                'Content-Type':'application/x-www-form-urlencoded'
-                //'Authorization': 'Basic ' + ((client_id + ':' + client_secret).toString('base64'))
-            }
-        })
-        const parseRes = await response.json();
-        console.log(parseRes)
-        request.post(authOptions, function (error, response, body) {
+        try {
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                body: bodyToken,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                    //'Authorization': 'Basic ' + ((client_id + ':' + client_secret).toString('base64'))
+                }
+            })
+            const parseRes = await response.json();
+            console.log(parseRes)
             console.log('we made it here')
-            console.log(body);
-            if (!error && response.statusCode === 200) {
+            if (parseRes.access_token) {
 
-                var access_token = body.access_token,
-                    refresh_token = body.refresh_token;
+                var access_token = parseRes.access_token,
+                    refresh_token = parseRes.refresh_token;
 
                 var options = {
-                    url: 'https://api.spotify.com/v1/me',
+                    url: `https://api.spotify.com/v1/users/1210606472/playlists`,
                     headers: { 'Authorization': 'Bearer ' + access_token },
                     json: true
                 };
 
-                // use the access token to access the Spotify Web API
-                request.get(options, function (error, response, body) {
+                //use the access token to access the Spotify Web API
+                /*request.get(options, function (error, response, body) {
                     console.log(body);
-                });
+                });*/
 
+                const responseTwo = await fetch(options.url, {
+                    method: 'GET',
+                    json: true,
+                    headers: { 'Authorization': 'Bearer ' + access_token }
+                })
+                const parseResponseTwo = await responseTwo.json();
+                console.log(parseResponseTwo)
                 // we can also pass the token to the browser to make requests from there
-                res.redirect('/#' +
+                res.redirect('http://localhost:3000/#' +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token
@@ -122,7 +129,11 @@ router.get('/callback', async function (req, res) {
                         error: 'invalid_token'
                     }));
             }
-        });
+        } catch (error) {
+            console.error(error.message)
+        }
+
+
     }
 });
 
