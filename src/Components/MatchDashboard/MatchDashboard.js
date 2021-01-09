@@ -149,8 +149,14 @@ export function MatchDashboard() {
         setCurrent(current == profiles.length - 1 ? 0 : current + 1);
     }
 
-    useEffect(() => {
-        Spotify.loadUserPlaylist('1210606472');
+    useEffect(async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/login/loadPlaylist`);
+            const parseRes = await response.json();
+            console.log(parseRes);
+        } catch (error) {
+            
+        }
     }, [])
 
     
