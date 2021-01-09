@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlidePlaylist.css';
 import { Track } from '../Track/Track';
-import {Spotify} from '../../../Util/Spotify';
+import { Spotify } from '../../../Util/Spotify';
 
 export function SlidePlaylist(props) {
+
 
     return (
         <Fragment>
@@ -17,10 +18,10 @@ export function SlidePlaylist(props) {
                             props.profileInfo.trackList.map(track => {
 
                                 return (
-                                    
+
                                     <Track track={track}
-                                        key={track.playlistIndex}/>
-                                    
+                                        key={track.playlistIndex} />
+
                                 )
 
                             })

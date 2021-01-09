@@ -18,30 +18,47 @@ let expiresIn;
 
 router.use(cookieParser());
 router.use(cors());
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 const authorize = async (req, res, next) => {
-        if(userToken){
-            return userToken;
-        }
-        if(accessToken && expiresIn){
-            userToken = accessToken;
-            setTimeout(() => userToken = '', expiresIn * 1000);
-            return userToken
-        }
-        else{
-            const refresh = await fetch('http://localhost:4000/login/refresh_token');
-            const parseRefresh = await refresh.json();
-            accessToken = parseRefresh.access_token;
-            res.access_token = accessToken
-            userToken = accessToken;
-            expiresIn = parseRefresh.expires_in;
-        }
-    
+    /*
+    if (userToken) {
+        //return userToken;
+    }
+    if (accessToken && expiresIn && userToken) {
+        next();
+        //return userToken
+    }
+    else {
+        const refresh = await fetch('http://localhost:4000/login/refresh_token');
+        const parseRefresh = await refresh.json();
+        accessToken = parseRefresh.access_token;
+        res.access_token = accessToken
+        userToken = accessToken;
+        expiresIn = parseRefresh.expires_in;
+        setTimeout(() => userToken = '', expiresIn * 1000);
+        setTimeout(() => accessToken = '', expiresIn * 1000);
+        setTimeout(() => expiresToken = '', expiresIn * 1000);
+        /*res.redirect('http://localhost:3000/#' +
+                    querystring.stringify({
+                        access_token: res.access_token
+                    }));
+                    
+    }*/
+    const refresh = await fetch('http://localhost:4000/login/refresh_token');
+    const parseRefresh = await refresh.json();
+    accessToken = parseRefresh.access_token;
+    res.access_token = accessToken
+    userToken = accessToken;
+    expiresIn = parseRefresh.expires_in;
+    setTimeout(() => userToken = '', expiresIn * 1000);
+    setTimeout(() => accessToken = '', expiresIn * 1000);
+    setTimeout(() => expiresToken = '', expiresIn * 1000);
+
     next();
 }
 
@@ -56,6 +73,21 @@ router.get('/loadPlaylist', authorize, async (req, res) => {
         console.log(parseResponseTwo)
         res.json(parseResponseTwo)
 
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+router.get('/loadPlaylistTracks', authorize, async (req, res) => {
+    try {
+        const responseTwo = await fetch(`https://api.spotify.com/v1/playlists/0BtWOyxZyTu7EmGIoLQeyH/tracks`, {
+            method: 'GET',
+            json: true,
+            headers: { 'Authorization': 'Bearer ' + res.access_token }
+        })
+        const parseResponseTwo = await responseTwo.json();
+        console.log(parseResponseTwo)
+        res.json(parseResponseTwo)
     } catch (error) {
         console.error(error.message)
     }
@@ -93,9 +125,6 @@ router.get('/', function (req, res) {
 
 router.get('/callback', async function (req, res, next) {
 
-    // your application requests refresh and access tokens
-    // after checking the state parameter
-
     var code = req.query.code || null;
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -117,24 +146,18 @@ router.get('/callback', async function (req, res, next) {
                 }
             })
             const parseRes = await response.json();
-            console.log(parseRes)
             console.log('we made it here')
             if (parseRes.access_token) {
 
                 var access_token = parseRes.access_token,
                     refresh_token = parseRes.refresh_token;
 
-                    const saveRefresh = await pool.query('update user_account set refresh_token = $1 where email = $2', [refresh_token, 'test@gmail.com'])
+                const saveRefresh = await pool.query('update user_account set refresh_token = $1 where email = $2', [refresh_token, 'test@gmail.com'])
                 var options = {
                     url: `https://api.spotify.com/v1/users/1210606472/playlists`,
                     headers: { 'Authorization': 'Bearer ' + access_token },
                     json: true
                 };
-
-                //use the access token to access the Spotify Web API
-                /*request.get(options, function (error, response, body) {
-                    console.log(body);
-                });*/
 
                 const responseTwo = await fetch(options.url, {
                     method: 'GET',
@@ -146,13 +169,12 @@ router.get('/callback', async function (req, res, next) {
                 res.access_token = access_token;
                 res.refresh_token = refresh_token;
                 res.expires_in = 3600;
-                next();
-                // we can also pass the token to the browser to make requests from there
                 res.redirect('http://localhost:3000/#' +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token
                     }));
+                next();
             } else {
                 res.redirect('/#' +
                     querystring.stringify({
@@ -167,43 +189,34 @@ router.get('/callback', async function (req, res, next) {
     }
 });
 
-router.get('/refresh_token', async function(req, res, next) {
+router.get('/refresh_token', async function (req, res, next) {
 
     // requesting access token from refresh token
     var query = await pool.query('select refresh_token from user_account where email = $1', ['test@gmail.com'])
     refresh_token = query.rows[0].refresh_token;
-    /*
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-      form: {
-        grant_type: 'refresh_token',
-        refresh_token: refresh_token
-      },
-      json: true
-    };*/
-  
+
     const idString = client_id + ':' + client_secret;
     const bodyToken = `refresh_token=${refresh_token}&grant_type=refresh_token`;
     const bufferObj = Buffer.from(idString, "utf8")
     const base64String = bufferObj.toString("base64");
     const tokenRequest = await fetch('https://accounts.spotify.com/api/token', {
-                method: 'POST',
-                body: bodyToken,
-                headers: {
-                    'Authorization': 'Basic ' + base64String,
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
+        method: 'POST',
+        body: bodyToken,
+        headers: {
+            'Authorization': 'Basic ' + base64String,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
     const parseTokenRequest = await tokenRequest.json();
-    if(parseTokenRequest){
+    console.log('REFRESHED TOKEN')
+    if (parseTokenRequest) {
         res.access_token = parseTokenRequest.access_token;
         res.expires_in = parseTokenRequest.expires_in;
         res.json(parseTokenRequest);
     }
-    else{
+    else {
         console.log('ooooops')
     }
-  });
+});
 
 module.exports = router;
