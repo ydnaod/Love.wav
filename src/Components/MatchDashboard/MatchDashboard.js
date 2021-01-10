@@ -9,11 +9,19 @@ import { Spotify } from '../../Util/Spotify';
 
 export function MatchDashboard() {
 
-    const loadPlaylistTracks = async () => {
+    //profile will be needed to be fetched from the database
+    const [slides, setSlides] = useState([]);
+    const [profile, setProfile] = useState();
+    const [current, setCurrent] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+    const [trackQualities, setTrackQualities] = useState('');
+
+    const loadPlaylistTracks = async (playlistId) => {
         try {
-            const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks`);
+            let string = '';
+            const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks/${playlistId}`);
             const parseRes = await response.json();
-            console.log(parseRes);
+            //console.log(parseRes);
             const trackList = await parseRes.items.map(track => ({
                 id: track.track.id,
                 name: track.track.name,
@@ -22,30 +30,40 @@ export function MatchDashboard() {
                 uri: track.track.uri,
                 preview_url: track.track.preview_url
             }))
+            trackList.forEach(track => {
+                string = string + track.id + ',';
+            })
+            setTrackQualities(string);
             return trackList;
         } catch (error) {
             console.error(error.message)
         }
     }
 
-    //profile will be needed to be fetched from the database
-    const [profiles, setProfiles] = useState([]);
-    const [current, setCurrent] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
+    const calculatePercentMatch = () => {
+
+    }
+
+    const fetchProfile = async () => {
+        const response = await fetch('http://localhost:4000/profile')
+        const parseRes = await response.json();
+        setProfile(parseRes);
+    }
 
     async function fetchData() {
         try {
+            fetchProfile();
             const profileInfo = [
                 {
                     id: 0,
-                    slideTitle: 'Summer L.',
-                    image: 'https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/134969333_10225175813162837_4579429098583903124_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=7mpxbX422BUAX-r2y0B&_nc_ht=scontent-lga3-1.xx&oh=c1ac92375280c033abdc95fda17b1f1a&oe=601BC1B8',
+                    slideTitle: profile.first_name,
+                    image: profile.photo,
                     percentMatch: '97% match'
                 },
                 {
                     id: 1,
                     slideTitle: 'their playlist',
-                    trackList: await loadPlaylistTracks()
+                    trackList: await loadPlaylistTracks(profile.playlist_id)
                 },
                 {
                     id: 2,
@@ -84,7 +102,7 @@ export function MatchDashboard() {
                     tempo: 100
                 },
             ]
-            setProfiles(profileInfo);
+            setSlides(profileInfo);
             setIsLoading(false);
         } catch (error) {
             console.error(error.message);
@@ -92,11 +110,11 @@ export function MatchDashboard() {
     }
 
     const handleLeftArrowClick = () => {
-        setCurrent(current == 0 ? profiles.length - 1 : current - 1);
+        setCurrent(current == 0 ? slides.length - 1 : current - 1);
     }
 
     const handleRightArrowClick = () => {
-        setCurrent(current == profiles.length - 1 ? 0 : current + 1);
+        setCurrent(current == slides.length - 1 ? 0 : current + 1);
     }
 
 
@@ -113,8 +131,8 @@ export function MatchDashboard() {
                     <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
 
                     {
-                        isLoading ? <p>isLoading</p> : <Profile profileInfo={profiles[current]}
-                        key={profiles[current].id} />
+                        isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
+                        key={slides[current].id} />
                     }
 
                     <img src={RightArrow} onClick={handleRightArrowClick}></img>

@@ -78,9 +78,9 @@ router.get('/loadPlaylist', authorize, async (req, res) => {
     }
 })
 
-router.get('/loadPlaylistTracks', authorize, async (req, res) => {
+router.get('/loadPlaylistTracks/:playlistId/', authorize, async (req, res, id) => {
     try {
-        const responseTwo = await fetch(`https://api.spotify.com/v1/playlists/0BtWOyxZyTu7EmGIoLQeyH/tracks`, {
+        const responseTwo = await fetch(`https://api.spotify.com/v1/playlists/${req.params.playlistId}/tracks`, {
             method: 'GET',
             json: true,
             headers: { 'Authorization': 'Bearer ' + res.access_token }
