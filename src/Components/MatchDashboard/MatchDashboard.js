@@ -11,7 +11,7 @@ export function MatchDashboard() {
 
     //profile will be needed to be fetched from the database
     const [slides, setSlides] = useState([]);
-    const [profile, setProfile] = useState();
+    //const [profile, setProfile] = useState();
     const [current, setCurrent] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [trackQualities, setTrackQualities] = useState('');
@@ -40,6 +40,7 @@ export function MatchDashboard() {
         }
     }
 
+
     const calculatePercentMatch = () => {
 
     }
@@ -47,17 +48,17 @@ export function MatchDashboard() {
     const fetchProfile = async () => {
         const response = await fetch('http://localhost:4000/profile')
         const parseRes = await response.json();
-        setProfile(parseRes);
+        return parseRes;
     }
 
     async function fetchData() {
         try {
-            fetchProfile();
+            const profile = await fetchProfile();
             const profileInfo = [
                 {
                     id: 0,
                     slideTitle: profile.first_name,
-                    image: profile.photo,
+                    image: await profile.photo,
                     percentMatch: '97% match'
                 },
                 {
@@ -132,7 +133,7 @@ export function MatchDashboard() {
 
                     {
                         isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
-                        key={slides[current].id} />
+                            key={slides[current].id} />
                     }
 
                     <img src={RightArrow} onClick={handleRightArrowClick}></img>
