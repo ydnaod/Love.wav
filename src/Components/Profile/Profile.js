@@ -4,7 +4,7 @@ import { SlidePlaylist } from '../Slides/SlidePlayList/SlidePlaylist'
 import { SlideThemeSong } from '../Slides/SlideThemeSong/SlideThemeSong';
 import { SlideFavoriteLyric } from '../Slides/SlideFavoriteLyric/SlideFavoriteLyric';
 import { SlidePercentMatch } from '../Slides/SlidePercentMatch/SlidePercentMatch';
-import {SlidePicture} from '../Slides/SlidePicture/SlidePicture';
+import { SlidePicture } from '../Slides/SlidePicture/SlidePicture';
 
 export function Profile(props) {
 

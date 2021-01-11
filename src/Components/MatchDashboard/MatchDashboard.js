@@ -76,7 +76,7 @@ export function MatchDashboard() {
             for (const quality in average) {
                 average[quality] /= trackQualities.length;
             }
-            console.log(average)
+            //console.log(average)
             return average;
         } catch (error) {
             console.error(error.message);
@@ -87,7 +87,7 @@ export function MatchDashboard() {
         return Math.abs(num1 - num2);
     }
 
-    const calculatePercentMatch = (yourAverageTrack, theirAverageTrack) => {
+    const calculateMusicDiff = (yourAverageTrack, theirAverageTrack) => {
         const musicDiff = {
             acousticness: 0,
             danceability: 0,
@@ -99,8 +99,13 @@ export function MatchDashboard() {
         for (const quality in musicDiff) {
             musicDiff[quality] = calculateDifference(yourAverageTrack[quality], theirAverageTrack[quality]);
         }
+        console.log(musicDiff)
+        return musicDiff;
+    }
+
+    const calculatePercentMatch = (yourAverageTrack, theirAverageTrack) => {
+        const musicDiff = calculateMusicDiff(yourAverageTrack, theirAverageTrack);
         const { acousticness, danceability, energy, instrumentalness, liveness, valence } = musicDiff;
-        console.log(musicDiff);
         return Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "% match"
     }
 
@@ -158,8 +163,8 @@ export function MatchDashboard() {
                 {
                     id: 4,
                     slideTitle: ['it seems you both like', 'you can show them'],
-                    trackQualities: await trackQualities1,
-                    tempo: 100
+                    musicDiff: await calculateMusicDiff(trackQualities1, trackQualities2),
+                    yourTrackQualities: await trackQualities1,
                 },
             ]
             setSlides(profileInfo);
@@ -192,7 +197,7 @@ export function MatchDashboard() {
 
                     {
                         isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
-                            key={slides[current].id} />
+                            key={slides[current].id}/>
                     }
 
                     <img src={RightArrow} onClick={handleRightArrowClick}></img>

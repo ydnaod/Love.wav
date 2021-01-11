@@ -3,38 +3,7 @@ import './SlidePercentMatch.css';
 import { Track } from '../Track/Track';
 import { Statement } from '../Statement/Statement';
 
-export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities } }) {
-
-    //state variables to hold differences between profiles
-    const [musicDiff, setMusicDiff] = useState(
-        {
-            acousticness: 1,
-            danceability: 0,
-            energy: 0,
-            instrumentalness: 0,
-            liveness: 0,
-            valence: 0,
-        }
-    );
-
-    //destructure the difference variables
-    const { acousticness, danceability, energy, instrumentalness, liveness, valence } = musicDiff;
-
-    //percentage match variable
-    const [percentage, setPercentage] = useState("");
-
-    //placeholder data
-    const [yourMusic, setYourMusic] = useState({
-        trackQualities: {
-            acousticness: .7,
-            danceability: .78,
-            energy: .5,
-            instrumentalness: .2,
-            liveness: .3,
-            valence: .7
-        },
-        tempo: 100
-    });
+export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourTrackQualities } }) {
 
     //sentences to show
 
@@ -61,31 +30,31 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
     const calculateSentences = () => {
 
         const sentences = {};
-        if (yourMusic.trackQualities.acousticness > .6) {
+        if (yourTrackQualities.acousticness > .6) {
             sentences.acousticness = "songs that are acoustic";
         }
-        if (yourMusic.trackQualities.danceability > .6) {
+        if (yourTrackQualities.danceability > .6) {
             sentences.danceability = 'songs that you can dance to';
         }
-        if (yourMusic.trackQualities.energy >= .6) {
+        if (yourTrackQualities.energy >= .6) {
             sentences.energy = 'songs that are high energy';
         }
-        if (yourMusic.trackQualities.energy < .4) {
+        if (yourTrackQualities.energy < .4) {
             sentences.energy = 'songs that you can chill out to';
         }
-        if (yourMusic.trackQualities.valence >= .6) {
+        if (yourTrackQualities.valence >= .6) {
             sentences.valence = 'songs that are happy';
         }
-        if (yourMusic.trackQualities.valence < .4) {
+        if (yourTrackQualities.valence < .4) {
             sentences.valence = 'songs that you can cry to';
         }
-        if (yourMusic.trackQualities.instrumentalness > .5) {
+        if (yourTrackQualities.instrumentalness > .5) {
             sentences.instrumentallness = 'songs that you can work to';
         }
-        if (yourMusic.tempo >= 100) {
+        if (yourTrackQualities.tempo >= 100) {
             sentences.tempo = 'songs that are fast-paced';
         }
-        if (yourMusic.tempo < 80) {
+        if (yourTrackQualities.tempo < 80) {
             sentences.tempo = 'songs that you can probably slow dance to';
         }
         console.log(sentences);
@@ -104,32 +73,9 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { trackQualities }
         setDifferent([...updatedDifferent]);
     }
 
-    const calculateDifference = (num1, num2) => {
-        return Math.abs(num1 - num2);
-    }
-
-    const calculatePercentMatch = (yourOwnMusic, theirMusic) => {
-
-        const update = {};
-        for (const quality in musicDiff) {
-            update[quality] = calculateDifference(yourOwnMusic.trackQualities[quality], theirMusic[quality]);
-            setMusicDiff({ ...musicDiff, ...update })
-        }
-    }
-
-    useEffect(() => {
-        calculatePercentMatch(yourMusic, trackQualities);
-        setPercentage(Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "%")
-    }, [acousticness, danceability, energy, instrumentalness, liveness, valence])
-
     useEffect(() => {
         calculateSentences();
     }, [musicDiff]);
-
-    //need to find a way to render sentences based on the differences
-    //also come up with these sentences!
-    //i.e. you both like... songs that... you can dance to
-    // you can show them... songs that... you can cry to
 
     return (
         <Fragment>
