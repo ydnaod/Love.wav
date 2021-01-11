@@ -34,7 +34,6 @@ export function MatchDashboard() {
                 trackList.indexOf(track) === trackList.length - 1 ? string += track.id : string += track.id + ',';
             })
             setPlaylistTrackIds(string);
-            calculateTrackQualities(playlistTrackIds);
             return trackList;
         } catch (error) {
             console.error(error.message)
@@ -45,7 +44,34 @@ export function MatchDashboard() {
         try {
             const response = await fetch(`http://localhost:4000/login/getPlaylistQualities/${trackIds}`);
             const parseRes = await response.json();
-            console.log(parseRes);
+            const trackQualities = await parseRes.audio_features.map(track => ({
+                acousticness: track.acousticness,
+                danceability: track.danceability,
+                energy: track.energy,
+                instrumentalness: track.instrumentalness,
+                liveness: track.liveness,
+                valence: track.valence,
+                tempo: track.tempo
+            }))
+            console.log(trackQualities)
+            const average = {
+                acousticness: 0,
+                danceability: 0,
+                energy: 0,
+                instrumentalness: 0,
+                liveness: 0,
+                valence: 0,
+                tempo: 0
+            }
+            trackQualities.forEach(track => {
+                for (const quality in track) {
+                    average[quality] += track[quality];
+                }
+            })
+            for (const quality in average) {
+                average[quality] /= trackQualities.length;
+            }
+            return average;
         } catch (error) {
             console.error(error.message);
         }
@@ -102,14 +128,7 @@ export function MatchDashboard() {
                 {
                     id: 4,
                     slideTitle: ['it seems you both like', 'you can show them'],
-                    trackQualities: {
-                        acousticness: .3,
-                        danceability: .7,
-                        energy: .6,
-                        instrumentalness: .09,
-                        liveness: .159,
-                        valence: .6
-                    },
+                    trackQualities: calculateTrackQualities(playlistTrackIds),
                     tempo: 100
                 },
             ]

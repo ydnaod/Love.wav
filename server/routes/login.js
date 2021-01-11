@@ -86,7 +86,6 @@ router.get('/loadPlaylistTracks/:playlistId/', authorize, async (req, res) => {
             headers: { 'Authorization': 'Bearer ' + res.access_token }
         })
         const parseResponseTwo = await responseTwo.json();
-        console.log(parseResponseTwo)
         res.json(parseResponseTwo)
     } catch (error) {
         console.error(error.message)
