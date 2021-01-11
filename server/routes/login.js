@@ -78,7 +78,7 @@ router.get('/loadPlaylist', authorize, async (req, res) => {
     }
 })
 
-router.get('/loadPlaylistTracks/:playlistId/', authorize, async (req, res, id) => {
+router.get('/loadPlaylistTracks/:playlistId/', authorize, async (req, res) => {
     try {
         const responseTwo = await fetch(`https://api.spotify.com/v1/playlists/${req.params.playlistId}/tracks`, {
             method: 'GET',
@@ -90,6 +90,21 @@ router.get('/loadPlaylistTracks/:playlistId/', authorize, async (req, res, id) =
         res.json(parseResponseTwo)
     } catch (error) {
         console.error(error.message)
+    }
+})
+
+router.get('/getPlaylistQualities/:playlistTrackIds', authorize, async (req, res) => {
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/audio-features/?ids=${req.params.playlistTrackIds}`, {
+            method: 'GET',
+            json: true,
+            headers: { 'Authorization': 'Bearer ' + res.access_token }
+        })
+        const parseRes = await response.json();
+        console.log(parseRes);
+        res.json(parseRes);
+    } catch (error) {
+        console.error(error.message);
     }
 })
 

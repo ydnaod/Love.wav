@@ -9,12 +9,12 @@ import { Spotify } from '../../Util/Spotify';
 
 export function MatchDashboard() {
 
-    //profile will be needed to be fetched from the database
+    //profiles will be needed to be fetched from the database
     const [slides, setSlides] = useState([]);
     //const [profile, setProfile] = useState();
     const [current, setCurrent] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
-    const [trackQualities, setTrackQualities] = useState('');
+    const [playlistTrackIds, setPlaylistTrackIds] = useState('');
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
@@ -31,15 +31,25 @@ export function MatchDashboard() {
                 preview_url: track.track.preview_url
             }))
             trackList.forEach(track => {
-                string = string + track.id + ',';
+                trackList.indexOf(track) === trackList.length - 1 ? string += track.id : string += track.id + ',';
             })
-            setTrackQualities(string);
+            setPlaylistTrackIds(string);
+            calculateTrackQualities(playlistTrackIds);
             return trackList;
         } catch (error) {
             console.error(error.message)
         }
     }
 
+    const calculateTrackQualities = async (trackIds) => {
+        try {
+            const response = await fetch(`http://localhost:4000/login/getPlaylistQualities/${trackIds}`);
+            const parseRes = await response.json();
+            console.log(parseRes);
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
 
     const calculatePercentMatch = () => {
 
@@ -58,7 +68,7 @@ export function MatchDashboard() {
                 {
                     id: 0,
                     slideTitle: profile.first_name,
-                    image: await profile.photo,
+                    image: profile.photo,
                     percentMatch: '97% match'
                 },
                 {
