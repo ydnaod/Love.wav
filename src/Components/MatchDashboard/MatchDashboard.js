@@ -76,7 +76,7 @@ export function MatchDashboard() {
             for (const quality in average) {
                 average[quality] /= trackQualities.length;
             }
-            //console.log(average)
+            console.log(average)
             return average;
         } catch (error) {
             console.error(error.message);

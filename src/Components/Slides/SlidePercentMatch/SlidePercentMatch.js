@@ -19,10 +19,8 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         for (const quality in musicDiff) {
             if (musicDiff[quality] <= .2) {
                 update.push(quality);
-                //setCommon([...common, ...update])
                 console.log(quality);
             }
-            //console.log(quality);
         }
         return update;
     }
@@ -33,8 +31,11 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         if (yourTrackQualities.acousticness > .6) {
             sentences.acousticness = "songs that are acoustic";
         }
-        if (yourTrackQualities.danceability > .6) {
+        if (yourTrackQualities.danceability >= .6) {
             sentences.danceability = 'songs that you can dance to';
+        }
+        if (yourTrackQualities.danceability < .6) {
+            sentences.danceability = 'songs that are more for listening than dancing';
         }
         if (yourTrackQualities.energy >= .6) {
             sentences.energy = 'songs that are high energy';
@@ -54,8 +55,8 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         if (yourTrackQualities.tempo >= 100) {
             sentences.tempo = 'songs that are fast-paced';
         }
-        if (yourTrackQualities.tempo < 80) {
-            sentences.tempo = 'songs that you can probably slow dance to';
+        if (yourTrackQualities.tempo < 100) {
+            sentences.tempo = 'songs that are great for slow dancing and only slow dancing';
         }
         console.log(sentences);
         const common = calculateCommon();
