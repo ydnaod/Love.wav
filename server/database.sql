@@ -31,6 +31,11 @@ create table lyrics_slide
     line_six varchar(64)
 );
 
+--create user
+insert into user_account (first_name, last_name, email, password)
+values ('andy', 'test', 'test2@gmail.com', 'testpass');
+
+--create profile
 insert into user_profile
     (user_account_id, playlist_id, photo, theme_song_id)
 values

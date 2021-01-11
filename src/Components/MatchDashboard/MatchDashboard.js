@@ -14,11 +14,10 @@ export function MatchDashboard() {
     //const [profile, setProfile] = useState();
     const [current, setCurrent] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
-    const [playlistTrackIds, setPlaylistTrackIds] = useState('');
+    //const [playlistTrackIds, setPlaylistTrackIds] = useState('');
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
-            let string = '';
             const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks/${playlistId}`);
             const parseRes = await response.json();
             //console.log(parseRes);
@@ -30,14 +29,20 @@ export function MatchDashboard() {
                 uri: track.track.uri,
                 preview_url: track.track.preview_url
             }))
-            trackList.forEach(track => {
-                trackList.indexOf(track) === trackList.length - 1 ? string += track.id : string += track.id + ',';
-            })
-            setPlaylistTrackIds(string);
+            //let string = await generatePlaylistIdString(trackList);
+            //setPlaylistTrackIds(string);
             return trackList;
         } catch (error) {
             console.error(error.message)
         }
+    }
+
+    const generatePlaylistIdString = async (trackList) => {
+        let string = '';
+        await trackList.forEach(track => {
+            trackList.indexOf(track) === trackList.length - 1 ? string += track.id : string += track.id + ',';
+        })
+        return string;
     }
 
     const calculateTrackQualities = async (trackIds) => {
@@ -53,7 +58,7 @@ export function MatchDashboard() {
                 valence: track.valence,
                 tempo: track.tempo
             }))
-            console.log(trackQualities)
+            //console.log(trackQualities)
             const average = {
                 acousticness: 0,
                 danceability: 0,
@@ -71,36 +76,61 @@ export function MatchDashboard() {
             for (const quality in average) {
                 average[quality] /= trackQualities.length;
             }
+            console.log(average)
             return average;
         } catch (error) {
             console.error(error.message);
         }
     }
 
-    const calculatePercentMatch = () => {
-
+    const calculateDifference = (num1, num2) => {
+        return Math.abs(num1 - num2);
     }
 
-    const fetchProfile = async () => {
-        const response = await fetch('http://localhost:4000/profile')
+    const calculatePercentMatch = (yourAverageTrack, theirAverageTrack) => {
+        const musicDiff = {
+            acousticness: 0,
+            danceability: 0,
+            energy: 0,
+            instrumentalness: 0,
+            liveness: 0,
+            valence: 0,
+        };
+        for (const quality in musicDiff) {
+            musicDiff[quality] = calculateDifference(yourAverageTrack[quality], theirAverageTrack[quality]);
+        }
+        const { acousticness, danceability, energy, instrumentalness, liveness, valence } = musicDiff;
+        console.log(musicDiff);
+        return Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "% match"
+    }
+
+    const fetchProfile = async (id) => {
+        const response = await fetch(`http://localhost:4000/profile/${id}`)
         const parseRes = await response.json();
         return parseRes;
     }
 
     async function fetchData() {
         try {
-            const profile = await fetchProfile();
+            const profile = await fetchProfile(1);
+            const profile2 = await fetchProfile(3);
+            const playlist1 = await loadPlaylistTracks(profile.playlist_id);
+            const playlist2 = await loadPlaylistTracks(profile2.playlist_id);
+            const idString1 = await generatePlaylistIdString(playlist1);
+            const idString2 = await generatePlaylistIdString(playlist2);
+            const trackQualities1 = await calculateTrackQualities(idString1);
+            const trackQualities2 = await calculateTrackQualities(idString2)
             const profileInfo = [
                 {
                     id: 0,
                     slideTitle: profile.first_name,
                     image: profile.photo,
-                    percentMatch: '97% match'
+                    percentMatch: await calculatePercentMatch(trackQualities1, trackQualities2)
                 },
                 {
                     id: 1,
                     slideTitle: 'their playlist',
-                    trackList: await loadPlaylistTracks(profile.playlist_id)
+                    trackList: await playlist1
                 },
                 {
                     id: 2,
@@ -128,7 +158,7 @@ export function MatchDashboard() {
                 {
                     id: 4,
                     slideTitle: ['it seems you both like', 'you can show them'],
-                    trackQualities: calculateTrackQualities(playlistTrackIds),
+                    trackQualities: await trackQualities1,
                     tempo: 100
                 },
             ]
