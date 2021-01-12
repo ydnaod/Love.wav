@@ -9,19 +9,19 @@ export function NavBar() {
                 <div className="logo">
                     <h1 id="logo">love.wav</h1>
                 </div>
-                <nav>
-                    <a>
+                <nav id="nav">
+                    <li>
                         <Link to='/'>dashboard</Link>
-                    </a>
-                    <a>
+                    </li>
+                    <li>
                         <Link to='/profile'>profile</Link>
-                    </a>
-                    <a>
+                    </li>
+                    <li>
                         <Link to='/settings'>settings</Link>
-                    </a>
-                    <a>
+                    </li>
+                    <li>
                         <Link to='/login'>logout</Link>
-                    </a>
+                    </li>
                 </nav>
             </div>
         </Fragment>

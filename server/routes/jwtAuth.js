@@ -50,7 +50,7 @@ router.post('/login', validInfo, async (req, res) => {
     }
 })
 
-jwtAuthRouter.get('/verify', authorization, async (req, res, next) => {
+router.get('/verify', authorization, async (req, res, next) => {
     try {
         res.json(true);
     } catch (error) {
