@@ -109,9 +109,17 @@ export function MatchDashboard() {
         return Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "% match"
     }
 
+
     const fetchProfile = async (id) => {
         const response = await fetch(`http://localhost:4000/profile/${id}`)
         const parseRes = await response.json();
+        return parseRes;
+    }
+
+    const fetchThemeSong = async (themeSongId) => {
+        const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`);
+        const parseRes = await response.json();
+        console.log(parseRes);
         return parseRes;
     }
 
@@ -124,7 +132,8 @@ export function MatchDashboard() {
             const idString1 = await generatePlaylistIdString(playlist1);
             const idString2 = await generatePlaylistIdString(playlist2);
             const trackQualities1 = await calculateTrackQualities(idString1);
-            const trackQualities2 = await calculateTrackQualities(idString2)
+            const trackQualities2 = await calculateTrackQualities(idString2);
+            const themeSong = await fetchThemeSong(profile2.theme_song_id);
             const profileInfo = [
                 {
                     id: 0,
@@ -140,9 +149,9 @@ export function MatchDashboard() {
                 {
                     id: 2,
                     slideTitle: 'theme song',
-                    image: 'https://images-na.ssl-images-amazon.com/images/I/61uo57hXGxL._SX522_.jpg',
-                    title: '"Adore You"',
-                    artist: 'Harry Styles'
+                    image: themeSong.album.images[0].url,
+                    title: themeSong.name,
+                    artist: themeSong.artists[0].name
                 },
                 {
                     id: 3,

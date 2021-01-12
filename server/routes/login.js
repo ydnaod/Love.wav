@@ -107,6 +107,20 @@ router.get('/getPlaylistQualities/:playlistTrackIds', authorize, async (req, res
     }
 })
 
+router.get('/theme_song/:id', authorize, async (req, res) => {
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/tracks/${req.params.id}`, {
+            method: 'GET',
+            json: true,
+            headers: { 'Authorization' : 'Bearer ' + res.access_token}
+        })
+        const parseRes = await response.json();
+        res.json(parseRes);
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 var generateRandomString = function (length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
