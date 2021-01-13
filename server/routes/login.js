@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 const pool = require('../db');
 const { getMaxListeners } = require('process');
 const { parse } = require('path');
+const authorization = require('../middleware/authorization')
 
 const client_id = process.env.clientId;
 const client_secret = process.env.clientSecret;
@@ -23,6 +24,7 @@ router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+router.use(authorization);
 
 const authorize = async (req, res, next) => {
     /*
@@ -49,7 +51,12 @@ const authorize = async (req, res, next) => {
                     }));
                     
     }*/
-    const refresh = await fetch('http://localhost:4000/login/refresh_token');
+    const id = req.user;
+    //console.log(req.user);
+    const refresh = await fetch(`http://localhost:4000/login/refresh_token/${id}`, {
+        method: "GET",
+        headers: {token: req.header('token')}
+    });
     const parseRefresh = await refresh.json();
     accessToken = parseRefresh.access_token;
     res.access_token = accessToken
@@ -112,7 +119,9 @@ router.get('/theme_song/:id', authorize, async (req, res) => {
         const response = await fetch(`https://api.spotify.com/v1/tracks/${req.params.id}`, {
             method: 'GET',
             json: true,
-            headers: { 'Authorization' : 'Bearer ' + res.access_token}
+            headers: {
+                'Authorization': 'Bearer ' + res.access_token,
+            }
         })
         const parseRes = await response.json();
         res.json(parseRes);
@@ -217,33 +226,38 @@ router.get('/callback', async function (req, res, next) {
     }
 });
 
-router.get('/refresh_token', async function (req, res, next) {
+router.get('/refresh_token/:id', async function (req, res, next) {
+    try {
+        console.log(req.params.id)
+        // requesting access token from refresh token
+        var query = await pool.query('select refresh_token from user_account where id = $1', [req.params.id])
 
-    // requesting access token from refresh token
-    var query = await pool.query('select refresh_token from user_account where email = $1', ['test@gmail.com'])
-    refresh_token = query.rows[0].refresh_token;
+        refresh_token = await query.rows[0].refresh_token;
 
-    const idString = client_id + ':' + client_secret;
-    const bodyToken = `refresh_token=${refresh_token}&grant_type=refresh_token`;
-    const bufferObj = Buffer.from(idString, "utf8")
-    const base64String = bufferObj.toString("base64");
-    const tokenRequest = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        body: bodyToken,
-        headers: {
-            'Authorization': 'Basic ' + base64String,
-            'Content-Type': 'application/x-www-form-urlencoded'
+        const idString = client_id + ':' + client_secret;
+        const bodyToken = `refresh_token=${refresh_token}&grant_type=refresh_token`;
+        const bufferObj = Buffer.from(idString, "utf8")
+        const base64String = bufferObj.toString("base64");
+        const tokenRequest = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            body: bodyToken,
+            headers: {
+                'Authorization': 'Basic ' + base64String,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        const parseTokenRequest = await tokenRequest.json();
+        console.log('REFRESHED TOKEN')
+        if (parseTokenRequest) {
+            res.access_token = parseTokenRequest.access_token;
+            res.expires_in = parseTokenRequest.expires_in;
+            res.json(parseTokenRequest);
         }
-    })
-    const parseTokenRequest = await tokenRequest.json();
-    console.log('REFRESHED TOKEN')
-    if (parseTokenRequest) {
-        res.access_token = parseTokenRequest.access_token;
-        res.expires_in = parseTokenRequest.expires_in;
-        res.json(parseTokenRequest);
-    }
-    else {
-        console.log('ooooops')
+        else {
+            console.log('ooooops')
+        }
+    } catch (error) {
+        console.error(error.message)
     }
 });
 

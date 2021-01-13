@@ -17,7 +17,10 @@ export function MatchDashboard() {
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
-            const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks/${playlistId}`);
+            const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks/${playlistId}`, {
+                method: 'GET',
+                headers: {token: sessionStorage.token}
+            });
             const parseRes = await response.json();
             //console.log(parseRes);
             const trackList = await parseRes.items.map(track => ({
@@ -46,7 +49,10 @@ export function MatchDashboard() {
 
     const calculateTrackQualities = async (trackIds) => {
         try {
-            const response = await fetch(`http://localhost:4000/login/getPlaylistQualities/${trackIds}`);
+            const response = await fetch(`http://localhost:4000/login/getPlaylistQualities/${trackIds}`, {
+                method: 'GET',
+                headers: {token: sessionStorage.token}
+            });
             const parseRes = await response.json();
             const trackQualities = await parseRes.audio_features.map(track => ({
                 acousticness: track.acousticness,
@@ -110,13 +116,19 @@ export function MatchDashboard() {
 
 
     const fetchProfile = async (id) => {
-        const response = await fetch(`http://localhost:4000/profile/${id}`)
+        const response = await fetch(`http://localhost:4000/profile/${id}`, {
+            method: 'GET',
+            headers: {token: sessionStorage.token}
+        })
         const parseRes = await response.json();
         return parseRes;
     }
 
     const fetchThemeSong = async (themeSongId) => {
-        const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`);
+        const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`, {
+            method: 'GET',
+            headers: {token: sessionStorage.token}
+        });
         const parseRes = await response.json();
         console.log(parseRes);
         return parseRes;
