@@ -18,9 +18,10 @@ router.post('/register', validInfo, async (req, res) => {
             const salt = await bcrypt.genSalt(saltRound);
             const bcryptPassword = await bcrypt.hash(password, salt);
 
-            const newUser = pool.query('insert into user_account (first_name, last_name, email, password) values ($1, $2, $3, $4)', [first_name, last_name, email, bcryptPassword]);
+            const newUser = await pool.query('insert into user_account (first_name, last_name, email, password) values ($1, $2, $3, $4) returning *', [first_name, last_name, email, bcryptPassword]);
 
-            const token = jwtGenerator(newUser.rows[0].id);
+            console.log(newUser)
+            const token = await jwtGenerator(newUser.rows[0].id);
             res.json({token})
         }
     } catch (error) {
@@ -32,6 +33,7 @@ router.post('/register', validInfo, async (req, res) => {
 router.post('/login', validInfo, async (req, res) => {
     try {
         const {email, password} = req.body;
+        //console.log(email + password)
         const user = await pool.query('select * from user_account where email = $1', [email]);
         if(user.rows.length === 0){
             res.status(400).send("We don't have a user registered with that email");

@@ -70,7 +70,7 @@ router.get('/loadPlaylist', authorize, async (req, res) => {
             headers: { 'Authorization': 'Bearer ' + res.access_token }
         })
         const parseResponseTwo = await responseTwo.json();
-        console.log(parseResponseTwo)
+        //console.log(parseResponseTwo)
         res.json(parseResponseTwo)
 
     } catch (error) {
@@ -100,7 +100,7 @@ router.get('/getPlaylistQualities/:playlistTrackIds', authorize, async (req, res
             headers: { 'Authorization': 'Bearer ' + res.access_token }
         })
         const parseRes = await response.json();
-        console.log(parseRes);
+        //console.log(parseRes);
         res.json(parseRes);
     } catch (error) {
         console.error(error.message);

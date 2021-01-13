@@ -5,7 +5,6 @@ import playButton from '../../images/PlayButton(swiperight).png'
 import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
-import { Spotify } from '../../Util/Spotify';
 
 export function MatchDashboard() {
 
