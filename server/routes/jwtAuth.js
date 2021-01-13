@@ -20,7 +20,6 @@ router.post('/register', validInfo, async (req, res) => {
 
             const newUser = await pool.query('insert into user_account (first_name, last_name, email, password) values ($1, $2, $3, $4) returning *', [first_name, last_name, email, bcryptPassword]);
 
-            console.log(newUser)
             const token = await jwtGenerator(newUser.rows[0].id);
             res.json({token})
         }
@@ -58,6 +57,15 @@ router.get('/verify', authorization, async (req, res, next) => {
     } catch (error) {
         console.error(error.message);
         res.status(500).send('oops server error');
+    }
+})
+
+router.get('/getId', authorization, async (req, res, next) => {
+    try {
+        const id = req.user;
+        res.json(id);
+    } catch (error) {
+        console.error(error.message);
     }
 })
 

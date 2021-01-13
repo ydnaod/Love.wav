@@ -20,7 +20,6 @@ export function Login({handleAuthorization}) {
             e.preventDefault();
 
             const body = { email, password };
-
             const response = await fetch('http://localhost:4000/account/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

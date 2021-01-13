@@ -29,7 +29,22 @@ function App(props) {
     <MessageList />
   </div>
 
-  useEffect(async () => {
+  const isAuth = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/account/verify', {
+        method: 'GET',
+        headers: {token: sessionStorage.token}
+      });
+      const parseRes = await response.json();
+      console.log(parseRes)
+      handleAuthorization(parseRes);
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  useEffect(() => {
+    isAuth();
   }, [])
 
   return (

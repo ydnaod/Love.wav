@@ -122,6 +122,15 @@ export function MatchDashboard() {
         return parseRes;
     }
 
+    const fetchUserId = async () => {
+        const response = await fetch('http://localhost:4000/account/getId', {
+            method: 'GET',
+            headers: {token: sessionStorage.token}
+        });
+        const parseRes = await response.json();
+        return parseRes;
+    }
+
     async function fetchData() {
         try {
             const profile = await fetchProfile(1);

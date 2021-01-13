@@ -4,8 +4,9 @@ import './NavBar.css';
 
 export function NavBar({ isAuthorized, handleAuthorization }) {
 
-    const handleClick = (e) => {
+    const handleLogout = (e) => {
         handleAuthorization(false);
+        sessionStorage.setItem('token', '')
     }
 
     const loggedIn = <nav id="nav">
@@ -19,7 +20,7 @@ export function NavBar({ isAuthorized, handleAuthorization }) {
             <Link to='/settings'>settings</Link>
         </li>
         <li>
-            <Link to='/login' onClick={handleClick}>logout</Link>
+            <Link to='/login' onClick={handleLogout}>logout</Link>
         </li>
     </nav>
 
