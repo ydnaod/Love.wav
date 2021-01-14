@@ -40,13 +40,16 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         if (yourTrackQualities.energy >= .6) {
             sentences.energy = 'songs that are high energy';
         }
+        if (yourTrackQualities.energy < .6) {
+            sentences.energy = 'songs that are low energy';
+        }
         if (yourTrackQualities.energy < .4) {
             sentences.energy = 'songs that you can chill out to';
         }
         if (yourTrackQualities.valence >= .6) {
             sentences.valence = 'songs that are happy';
         }
-        if (yourTrackQualities.valence < .4) {
+        if (yourTrackQualities.valence < .5) {
             sentences.valence = 'songs that you can cry to';
         }
         if (yourTrackQualities.instrumentalness > .5) {
@@ -89,7 +92,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
                         {
                             mutual.map(sentence => {
                                 return <Statement sentence={sentence}
-                                    /*key={mutual.findIndex(sentence)}*/ />
+                                    key={mutual.indexOf(sentence)} />
                             })
                         }
                     </div>
@@ -101,7 +104,8 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
                     <div className="sentence">
                         {
                             different.map(sentence => {
-                                return <Statement sentence={sentence} />
+                                return <Statement sentence={sentence} 
+                                key={mutual.indexOf(sentence)}/>
                             })
                         }
                     </div>

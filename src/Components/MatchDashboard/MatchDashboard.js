@@ -130,7 +130,7 @@ export function MatchDashboard() {
             headers: {token: sessionStorage.token}
         });
         const parseRes = await response.json();
-        console.log(parseRes);
+        //console.log(parseRes);
         return parseRes;
     }
 
