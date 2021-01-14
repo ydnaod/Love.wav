@@ -12,7 +12,7 @@ const authorization = require('../middleware/authorization')
 
 const client_id = process.env.clientId;
 const client_secret = process.env.clientSecret;
-const redirect_uri = 'http://localhost:4000/login/callback/';
+let redirect_uri = 'http://localhost:4000/login/callback/';
 let userToken;
 let accessToken;
 let expiresIn;
@@ -20,8 +20,10 @@ let expiresIn;
 router.use(cookieParser());
 router.use(cors());
 router.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     next();
 });
 router.use(authorization);
@@ -55,7 +57,7 @@ const authorize = async (req, res, next) => {
     //console.log(req.user);
     const refresh = await fetch(`http://localhost:4000/login/refresh_token/${id}`, {
         method: "GET",
-        headers: {token: req.header('token')}
+        headers: { token: req.header('token') }
     });
     const parseRefresh = await refresh.json();
     accessToken = parseRefresh.access_token;
@@ -144,19 +146,28 @@ var stateKey = 'spotify_auth_state';
 
 router.get('/', function (req, res) {
 
-    var state = generateRandomString(16);
+    var state = req.user;
     res.cookie(stateKey, state);
-
+    console.log('this happens')
     // your application requests authorization
     var scope = 'user-library-read';
-    res.redirect('https://accounts.spotify.com/authorize?' +
+    const url = 'https://accounts.spotify.com/authorize?' +
+        querystring.stringify({
+            response_type: 'code',
+            client_id: client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state,
+        });
+    res.json(url);
+    /*res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
             client_id: client_id,
             scope: scope,
             redirect_uri: redirect_uri,
             state: state
-        }));
+        }));*/
 });
 
 
@@ -166,12 +177,14 @@ router.get('/callback', async function (req, res, next) {
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
 
+    /*
+    console.log(code)
     if (state === null || state !== storedState) {
         res.redirect('/#' +
             querystring.stringify({
                 error: 'state_mismatch'
             }));
-    } else {
+    } else {*/
         res.clearCookie(stateKey);
         const bodyToken = `code=${code}&redirect_uri=${redirect_uri}&grant_type=authorization_code&client_id=${client_id}&client_secret=${client_secret}`;
         try {
@@ -183,13 +196,16 @@ router.get('/callback', async function (req, res, next) {
                 }
             })
             const parseRes = await response.json();
-            console.log('we made it here')
+            //console.log('we made it here')
+            console.log(response)
+            console.log(parseRes)
             if (parseRes.access_token) {
 
                 var access_token = parseRes.access_token,
                     refresh_token = parseRes.refresh_token;
-
-                const saveRefresh = await pool.query('update user_account set refresh_token = $1 where email = $2', [refresh_token, 'test@gmail.com'])
+                console.log(state)
+                console.log(refresh_token)
+                const saveRefresh = await pool.query('update user_account set refresh_token = $1 where id = $2', [refresh_token, state])
                 var options = {
                     url: `https://api.spotify.com/v1/users/1210606472/playlists`,
                     headers: { 'Authorization': 'Bearer ' + access_token },
@@ -223,12 +239,12 @@ router.get('/callback', async function (req, res, next) {
         }
 
 
-    }
+    //}
 });
 
 router.get('/refresh_token/:id', async function (req, res, next) {
     try {
-        console.log(req.params.id)
+        //console.log(req.params.id)
         // requesting access token from refresh token
         var query = await pool.query('select refresh_token from user_account where id = $1', [req.params.id])
 

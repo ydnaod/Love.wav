@@ -36,7 +36,7 @@ function App(props) {
         headers: {token: sessionStorage.token}
       });
       const parseRes = await response.json();
-      console.log(parseRes)
+      //console.log(parseRes)
       handleAuthorization(parseRes);
     } catch (error) {
       console.error(error.message)
