@@ -13,7 +13,11 @@ import { MatchDashboard } from './Components/MatchDashboard/MatchDashboard';
 import { Login } from './Components/Login/Login';
 import { Settings } from './Components/Settings/Settings';
 import { EditProfile } from './Components/EditProfile/EditProfile';
-import { Register } from './Components/Register/Register'
+import { Register } from './Components/Register/Register';
+import {ProfilePicture} from './Components/ProfilePicture/ProfilePicture';
+import {YourPlaylist} from './Components/YourPlaylist/YourPlaylist';
+import {YourThemeSong} from './Components/YourThemeSong/YourThemeSong';
+import {FavoriteLyric} from './Components/FavoriteLyric/FavoriteLyric';
 import Cookies from 'universal-cookie';
 
 function App(props) {
@@ -33,7 +37,7 @@ function App(props) {
     try {
       const response = await fetch('http://localhost:4000/account/verify', {
         method: 'GET',
-        headers: {token: sessionStorage.token}
+        headers: { token: sessionStorage.token }
       });
       const parseRes = await response.json();
       //console.log(parseRes)
@@ -54,7 +58,7 @@ function App(props) {
           <NavBar isAuthorized={isAuthorized}
             handleAuthorization={handleAuthorization} />
           <Switch>
-            <Route exact path="/" render={props => isAuthorized ? dashboard : <Redirect to='/login'/>} />
+            <Route exact path="/" render={props => isAuthorized ? dashboard : <Redirect to='/login' />} />
             <Route exact path='/profile'>
               <EditProfile />
             </Route>
