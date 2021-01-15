@@ -71,9 +71,17 @@ const authorize = async (req, res, next) => {
     next();
 }
 
-router.get('/loadPlaylist', authorize, async (req, res) => {
+//Spotify Routes for fetching music
+
+router.get('/loadPlaylists', authorize, async (req, res) => {
     try {
-        const responseTwo = await fetch(`https://api.spotify.com/v1/users/1210606472/playlists`, {
+        const response = await fetch('https://api.spotify.com/v1/me', {
+            method: 'GET',
+            json: true,
+            headers: {'Authorization':'Bearer ' + res.access_token}
+        })
+        const parseRes = await response.json();
+        const responseTwo = await fetch(`https://api.spotify.com/v1/users/${parseRes.id}/playlists`, {
             method: 'GET',
             json: true,
             headers: { 'Authorization': 'Bearer ' + res.access_token }
@@ -81,7 +89,6 @@ router.get('/loadPlaylist', authorize, async (req, res) => {
         const parseResponseTwo = await responseTwo.json();
         //console.log(parseResponseTwo)
         res.json(parseResponseTwo)
-
     } catch (error) {
         console.error(error.message)
     }
@@ -132,22 +139,13 @@ router.get('/theme_song/:id', authorize, async (req, res) => {
     }
 })
 
-var generateRandomString = function (length) {
-    var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    for (var i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-};
 
+//Spotify Authorization
 var stateKey = 'spotify_auth_state';
 
 router.get('/', function (req, res) {
 
-    var state = req.user;
-    res.cookie(stateKey, state);
     console.log('this happens')
     // your application requests authorization
     var scope = 'user-library-read';
