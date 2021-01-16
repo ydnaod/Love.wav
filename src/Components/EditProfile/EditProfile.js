@@ -12,29 +12,31 @@ import { YourPlaylist } from '../YourPlaylist/YourPlaylist';
 import { YourThemeSong } from '../YourThemeSong/YourThemeSong';
 import { FavoriteLyric } from '../FavoriteLyric/FavoriteLyric';
 
-export function EditProfile() {
+export function EditProfile({fetchUserId}) {
 
     return (
         <Router>
             <Fragment>
-                <li>
-                    <Link to='/profilePicture'>profile picture</Link>
-                </li>
-                <li>
-                    <Link to='/yourPlaylist'>your playlist</Link>
-                </li>
-                <li>
-                    <Link to='/yourThemeSong'>your theme song</Link>
-                </li>
-                <li>
-                    <Link to='/favoriteLyric' >your favorite lyric</Link>
-                </li>
+                <nav id="nav" className='editProfileNav'>
+                    <li>
+                        <Link to='/profilePicture'>profile picture</Link>
+                    </li>
+                    <li>
+                        <Link to='/yourPlaylist'>your playlist</Link>
+                    </li>
+                    <li>
+                        <Link to='/yourThemeSong'>your theme song</Link>
+                    </li>
+                    <li>
+                        <Link to='/favoriteLyric' >your favorite lyric</Link>
+                    </li>
+                </nav>
                 <Switch>
                     <Route exact path='/profilePicture'>
                         <ProfilePicture />
                     </Route>
                     <Route exact path='/yourPlaylist'>
-                        <YourPlaylist />
+                        <YourPlaylist fetchUserId={fetchUserId}/>
                     </Route>
                     <Route exact path='/yourThemeSong'>
                         <YourThemeSong />

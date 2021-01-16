@@ -6,7 +6,7 @@ import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
 
-export function MatchDashboard() {
+export function MatchDashboard({fetchUserId}) {
 
     //profiles will be needed to be fetched from the database
     const [slides, setSlides] = useState([]);
@@ -131,15 +131,6 @@ export function MatchDashboard() {
         });
         const parseRes = await response.json();
         //console.log(parseRes);
-        return parseRes;
-    }
-
-    const fetchUserId = async () => {
-        const response = await fetch('http://localhost:4000/account/getId', {
-            method: 'GET',
-            headers: {token: sessionStorage.token}
-        });
-        const parseRes = await response.json();
         return parseRes;
     }
 
