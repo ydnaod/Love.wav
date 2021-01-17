@@ -139,6 +139,24 @@ router.get('/theme_song/:id', authorize, async (req, res) => {
     }
 })
 
+//search spotify for songs
+
+router.get('/search-tracks/:term', authorize, async (req, res) => {
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${req.params.term}`, {
+            method: 'GET',
+            json: true,
+            headers: {
+                'Authorization': 'Bearer ' + res.access_token,
+            }
+        })
+        const parseRes = await response.json();
+        res.json(parseRes.tracks)
+    } catch (error) {
+        console.error(error.message);
+    }
+});
+
 
 
 //Spotify Authorization
