@@ -3,7 +3,7 @@ create table user_account
     id serial primary key,
     first_name varchar(64) NOT NULL,
     last_name varchar(64) NOT NULL,
-    email varchar(128) NOT NULL,
+    email varchar(128) UNIQUE NOT NULL,
     password varchar(64) NOT NULL,
     refresh_token varchar(255)
 );
@@ -11,7 +11,7 @@ create table user_account
 create table user_profile
 (
     id serial primary key,
-    user_account_id int references user_account(id) NOT NULL,
+    user_account_id int references user_account(id) UNIQUE NOT NULL,
     playlist_id varchar(128) NOT NULL,
     photo text NOT NULL,
     theme_song_id varchar(128) not null

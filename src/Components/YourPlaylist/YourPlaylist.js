@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect} from 'react';
 import {Playlist} from '../Playlist/Playlist'
 import './YourPlaylist.css';
 
-export function YourPlaylist(){
+export function YourPlaylist({fetchUserId}){
 
     const [playlists, setPlaylists] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +33,8 @@ export function YourPlaylist(){
             {
                 isLoading ? <p>isLoading</p> : playlists.map(playlist => {
                     return <Playlist playlist={playlist}
-                        key={playlist.id}/>
+                        key={playlist.id}
+                        fetchUserId={fetchUserId}/>
                 })
             }
         </Fragment>

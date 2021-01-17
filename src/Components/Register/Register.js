@@ -33,6 +33,11 @@ export function Register({handleAuthorization}){
             console.log(parseRes)
             sessionStorage.setItem('token', parseRes.token);
             handleAuthorization(true);
+            const response2 = await fetch(`http://localhost:4000/profile/create-profile`, {
+            method: 'POST',
+            headers: {token: sessionStorage.token}
+        });
+        console.log(response2);
         } catch (error) {
             console.error(error.message);
         }

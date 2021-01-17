@@ -26,7 +26,25 @@ router.get('/:id', async (req, res) => {
 
 //update playlist
 router.put('/:id/playlist', async (req, res) => {
-    const query = await pool.query('update user_profile')
+    try {
+        const {playlistId} = req.body;
+        //console.log(playlistId);
+        const query = await pool.query(`update user_profile set playlist_id=$1 where user_account_id = $2 returning *`, [playlistId, req.id])
+        console.log(query)
+        res.json(query.rows);
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
+//create profile
+router.post('/create-profile', async (req, res) => {
+    try {
+        const query = await pool.query('insert into user_profile (user_account_id) values ($1) returning *', [req.user]);
+        res.json(query.rows);
+    } catch (error) {
+        console.error(error.message)
+    }
 })
 
 module.exports = router;
