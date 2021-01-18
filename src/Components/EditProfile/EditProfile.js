@@ -33,16 +33,16 @@ export function EditProfile({fetchUserId}) {
                 </nav>
                 <Switch>
                     <Route exact path='/profilePicture'>
-                        <ProfilePicture />
+                        <ProfilePicture fetchUserId={fetchUserId}/>
                     </Route>
                     <Route exact path='/yourPlaylist'>
                         <YourPlaylist fetchUserId={fetchUserId}/>
                     </Route>
                     <Route exact path='/yourThemeSong'>
-                        <YourThemeSong />
+                        <YourThemeSong fetchUserId={fetchUserId}/>
                     </Route>
                     <Route exact path='/favoriteLyric'>
-                        <FavoriteLyric />
+                        <FavoriteLyric fetchUserId={fetchUserId}/>
                     </Route>
                 </Switch>
             </Fragment>

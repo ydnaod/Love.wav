@@ -37,6 +37,17 @@ router.put('/:id/playlist', async (req, res) => {
     }
 })
 
+//update theme song
+router.put('/:id/theme-song/:songId', async (req, res) => {
+    try {
+        const query = await pool.query(`update user_profile set theme_song_id=$1 where user_account_id = $2 returning *`, [req.params.songId, req.id])
+        //console.log(query)
+        res.json(query.rows[0]);
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 //create profile
 router.post('/create-profile', async (req, res) => {
     try {
@@ -46,29 +57,5 @@ router.post('/create-profile', async (req, res) => {
         console.error(error.message)
     }
 })
-
-
-const search = async (term) => {
-    const accessToken = Spotify.getAccessToken();
-    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,
-    { headers: {
-        Authorization: `Bearer ${accessToken}`
-    }} ).then(response => {
-        return response.json();
-    }).then(jsonResponse => {
-        if(!jsonResponse.tracks) {
-            return [];
-        }
-        console.log(jsonResponse.tracks);
-        return jsonResponse.tracks.items.map(track => ({
-            id: track.id,
-            name: track.name,
-            artist: track.artists[0].name,
-            album: track.album.name,
-            uri: track.uri,
-            preview_url: track.preview_url
-        }))
-    })
-}
 
 module.exports = router;

@@ -11,10 +11,14 @@ export function Track(props) {
       //setState({isPlaying: true})
     }
 
+    const handleSelectSong = () => {
+        props.handleSelectedThemeSong(props.track.id);
+    }
+
     return (
         <Fragment>
             <div className="trackList">
-                <div className="track">
+                <div className="track" onClick={handleSelectSong}>
                     <img className="sampleButton" src={playSampleButton} onClick={handlePlaySample}/>
                     <p>{props.track.playlistIndex || props.track.playlistIndex == 0 ? props.track.playlistIndex + 1 + ". "  : ""}<span className="title">{props.track.name}</span> | {props.track.artist} | {props.track.album}</p>
                 </div>

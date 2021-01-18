@@ -1,7 +1,7 @@
-import React, {useState, Fragment} from 'react';
+import React, { useState, Fragment } from 'react';
 import './Register.css';
 
-export function Register({handleAuthorization}){
+export function Register({ handleAuthorization }) {
 
     const [inputs, setInputs] = useState({
         first_name: '',
@@ -11,22 +11,22 @@ export function Register({handleAuthorization}){
         passwordConfirmation: ''
     });
 
-    const {first_name, last_name, email, password, passwordConfirmation} = inputs;
+    const { first_name, last_name, email, password, passwordConfirmation } = inputs;
 
     const handleChange = (e) => {
-        setInputs({...inputs, [e.target.name]: e.target.value});
+        setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const body = {first_name, last_name, email, password}
-            if(password !== passwordConfirmation){
+            const body = { first_name, last_name, email, password }
+            if (password !== passwordConfirmation) {
                 throw 'passwords must match'
             }
-            const response = await fetch('http://localhost:4000/account/register',{
+            const response = await fetch('http://localhost:4000/account/register', {
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
             })
             const parseRes = await response.json();
@@ -34,16 +34,16 @@ export function Register({handleAuthorization}){
             sessionStorage.setItem('token', parseRes.token);
             handleAuthorization(true);
             const response2 = await fetch(`http://localhost:4000/profile/create-profile`, {
-            method: 'POST',
-            headers: {token: sessionStorage.token}
-        });
-        console.log(response2);
+                method: 'POST',
+                headers: { token: sessionStorage.token }
+            });
+            console.log(response2);
         } catch (error) {
             console.error(error.message);
         }
     }
 
-    return(
+    return (
         <Fragment>
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
