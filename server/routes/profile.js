@@ -48,6 +48,17 @@ router.put('/:id/theme-song/:songId', async (req, res) => {
     }
 })
 
+//get profile picture
+router.get('/:id/photo', async (req, res) => {
+    try {
+        const query = await pool.query('select photo from user_profile where user_account_id = $1', [req.id]);
+        //console.log(query)
+        res.json(query.rows[0].photo);
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
 //create profile
 router.post('/create-profile', async (req, res) => {
     try {
