@@ -1,9 +1,10 @@
-import React, {useState, Fragment} from 'react';
+import React, { useState, Fragment } from 'react';
 import './FavoriteLyric.css';
-import {TrackList} from './TrackList/TrackList';
-import {LyricTrack} from './LyricTrack/LyricTrack';
+import { TrackList } from './TrackList/TrackList';
+import { LyricTrack } from './LyricTrack/LyricTrack';
+import { Lyric } from './Lyric/Lyric';
 
-export function FavoriteLyric(){
+export function FavoriteLyric() {
 
     const [input, setInput] = useState('');
     const [tracks, setTracks] = useState([]);
@@ -18,11 +19,13 @@ export function FavoriteLyric(){
         try {
             const response = await fetch(`http://localhost:4000/lyrics/${selectedTrack}`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             //console.log(parseRes.lyrics_body)
-            setLyrics(parseRes.lyrics_body)
+            const array = parseRes.lyrics_body.split('\n')
+            array.splice(array.length - 2, 3);
+            setLyrics(array)
         } catch (error) {
             console.error(error.message)
         }
@@ -37,7 +40,7 @@ export function FavoriteLyric(){
         try {
             const response = await fetch(`http://localhost:4000/lyrics/search/${input}`, {
                 method: 'GET',
-                headers: {token : sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             console.log(parseRes);
@@ -47,7 +50,7 @@ export function FavoriteLyric(){
         }
     }
 
-    return(
+    return (
         <Fragment>
             <p>Favorite lyric</p>
 
@@ -57,13 +60,13 @@ export function FavoriteLyric(){
             </form>
             {
                 tracks.length > 0 ? <TrackList tracks={tracks}
-                    handleTrackClick={handleTrackClick}/> : ''
+                    handleTrackClick={handleTrackClick} /> : ''
             }
             {
                 selectedTrack ? <button onClick={fetchLyrics}>find lyrics</button> : ''
             }
             {
-                lyrics ? <p>{lyrics}</p> : ''
+                lyrics ? <Lyric lyrics={lyrics} /> : ''
             }
         </Fragment>
     )

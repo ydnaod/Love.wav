@@ -11,7 +11,7 @@ router.get('/:trackId', async (req, res) => {
         method: 'GET'
     });
     const parseRes = await response.json();
-    //console.log(parseRes.message.body.lyrics);
+    console.log(parseRes.message.body.lyrics);
     res.json(parseRes.message.body.lyrics);
 })
 
