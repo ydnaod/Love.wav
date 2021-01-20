@@ -1,10 +1,12 @@
 import React, {useState, Fragment} from 'react';
 import './FavoriteLyric.css';
-require('dotenv').config();
+import {TrackList} from './TrackList/TrackList';
+import {LyricTrack} from './LyricTrack/LyricTrack';
 
 export function FavoriteLyric(){
 
     const [input, setInput] = useState('');
+    const [tracks, setTracks] = useState([]);
 
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -32,6 +34,7 @@ export function FavoriteLyric(){
             });
             const parseRes = await response.json();
             console.log(parseRes);
+            setTracks(parseRes);
         } catch (error) {
             console.error(error.message);
         }
@@ -45,6 +48,9 @@ export function FavoriteLyric(){
                 <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
                 <button>search</button>
             </form>
+            {
+                tracks.length > 0 ? <TrackList tracks={tracks}/> : ''
+            }
         </Fragment>
     )
 }
