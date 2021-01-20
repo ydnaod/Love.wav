@@ -6,8 +6,8 @@ const fetch = require('node-fetch');
 
 router.use(authorization);
 
-router.get('/', async (req, res) => {
-    const response = await fetch(`https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=15953433&apikey=${process.env.musix_match_apikey}`, {
+router.get('/:trackId', async (req, res) => {
+    const response = await fetch(`https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${req.params.trackId}&apikey=${process.env.musix_match_apikey}`, {
         method: 'GET'
     });
     const parseRes = await response.json();
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/search/:term', async (req, res) => {
-    const response = await fetch(`http://api.musixmatch.com/ws/1.1/track.search?q_track=${req.params.term}&apikey=${process.env.musix_match_apikey}`, {
+    const response = await fetch(`http://api.musixmatch.com/ws/1.1/track.search?q_track=${req.params.term}&f_has_lyrics&s_track_rating=desc&apikey=${process.env.musix_match_apikey}`, {
         method: 'GET'
     });
     const parseRes = await response.json();

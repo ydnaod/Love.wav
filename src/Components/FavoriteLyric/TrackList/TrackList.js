@@ -2,7 +2,7 @@ import React, {useState, Fragment} from 'react';
 import './TrackList.css';
 import {LyricTrack} from '../LyricTrack/LyricTrack';
 
-export function TrackList({tracks}){
+export function TrackList({tracks, handleTrackClick}){
     return(
         <Fragment>
             {
@@ -12,7 +12,8 @@ export function TrackList({tracks}){
                         artist_name={track.track.artist_name}
                         album_name={track.track.album_name}
                         track_name={track.track.track_name}
-                        has_lyrics={track.track.has_lyrics}/>
+                        has_lyrics={track.track.has_lyrics}
+                        handleTrackClick={handleTrackClick}/>
                 })
             }
         </Fragment>
