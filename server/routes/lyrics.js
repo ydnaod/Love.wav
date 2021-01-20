@@ -15,4 +15,13 @@ router.get('/', async (req, res) => {
     res.json(parseRes.message.body.lyrics);
 })
 
+router.get('/search/:term', async (req, res) => {
+    const response = await fetch(`http://api.musixmatch.com/ws/1.1/track.search?q_track=${req.params.term}&apikey=${process.env.musix_match_apikey}`, {
+        method: 'GET'
+    });
+    const parseRes = await response.json();
+    //console.log(parseRes.message.body.lyrics);
+    res.json(parseRes.message.body.track_list);
+})
+
 module.exports = router;
