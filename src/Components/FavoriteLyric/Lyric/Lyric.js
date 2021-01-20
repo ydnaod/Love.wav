@@ -7,10 +7,10 @@ export function Lyric({ lyrics }) {
         <Fragment>
             <div>
                 {
-                    lyrics.map(line => {
+                    lyrics.map((line, index) => {
                         return <Line line={line}
-                            index={lyrics.indexOf(line)}
-                            key={lyrics.indexOf(line)}/>
+                            index={index}
+                            key={index}/>
                     })
                 }
             </div>
