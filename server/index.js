@@ -5,6 +5,7 @@ const pool = require('./db');
 const loginRouter = require('./routes/login')
 const profileRouter = require('./routes/profile')
 const jwtRouter = require('./routes/jwtAuth');
+const lyricsRouter = require('./routes/lyrics')
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
 app.use('/account', jwtRouter);
+app.use('/lyrics', lyricsRouter);
 
 app.listen(4000, () => {
     console.log('listening on 4000')
