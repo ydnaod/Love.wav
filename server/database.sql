@@ -20,15 +20,15 @@ create table user_profile
 create table lyrics_slide
 (
     id serial primary key,
-    user_profile_id int references user_profile(id) NOT NULL,
-    song_id varchar(128) NOT NULL,
+    user_account_id int references user_account(id) NOT NULL,
+    song_artist varchar(128) NOT NULL,
+    song_title varchar(128) NOT NULL,
     favorite_lyric varchar(64) NOT NULL,
     line_one varchar(64) NOT NULL,
     line_two varchar(64) NOT NULL,
     line_three varchar(64),
     line_four varchar(64),
-    line_five varchar(64),
-    line_six varchar(64)
+    line_five varchar(64)
 );
 
 --create user

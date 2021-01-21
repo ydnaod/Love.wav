@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import './Lyric.css';
 import {Line} from '../Line/Line'
 
-export function Lyric({ lyrics }) {
+export function Lyric({ lyrics, handleLineSelect,handleFavoriteLyricSelect }) {
     return (
         <Fragment>
             <div>
@@ -10,7 +10,9 @@ export function Lyric({ lyrics }) {
                     lyrics.map((line, index) => {
                         return <Line line={line}
                             index={index}
-                            key={index}/>
+                            key={index}
+                            handleLineSelect={handleLineSelect}
+                            handleFavoriteLyricSelect={handleFavoriteLyricSelect}/>
                     })
                 }
             </div>
