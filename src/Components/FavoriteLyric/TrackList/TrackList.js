@@ -8,11 +8,10 @@ export function TrackList({tracks, handleTrackClick}){
             {
                 tracks.map(track => {
                     return <LyricTrack track={track}
-                        key={track.track.track_id}
-                        artist_name={track.track.artist_name}
-                        album_name={track.track.album_name}
-                        track_name={track.track.track_name}
-                        has_lyrics={track.track.has_lyrics}
+                        key={track.id}
+                        artist={track.artist.name}
+                        album={track.album.title}
+                        title={track.title}
                         handleTrackClick={handleTrackClick}/>
                 })
             }

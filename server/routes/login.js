@@ -184,6 +184,7 @@ router.get('/', function (req, res) {
     console.log('this happens')
     // your application requests authorization
     var scope = 'user-library-read';
+    var state = req.user;
     const url = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -239,6 +240,7 @@ router.get('/callback', async function (req, res, next) {
                 console.log(state)
                 console.log(refresh_token)
                 const saveRefresh = await pool.query('update user_account set refresh_token = $1 where id = $2', [refresh_token, state])
+                /*
                 var options = {
                     url: `https://api.spotify.com/v1/users/1210606472/playlists`,
                     headers: { 'Authorization': 'Bearer ' + access_token },
@@ -252,6 +254,7 @@ router.get('/callback', async function (req, res, next) {
                 })
                 const parseResponseTwo = await responseTwo.json();
                 console.log(parseResponseTwo)
+                */
                 res.access_token = access_token;
                 res.refresh_token = refresh_token;
                 res.expires_in = 3600;

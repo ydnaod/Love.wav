@@ -1,16 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import './LyricTrack.css';
 
-export function LyricTrack({ track, artist_name, album_name, track_name, has_lyrics, handleTrackClick }) {
+export function LyricTrack({ track, artist, album, title, handleTrackClick }) {
 
     const handleClick = () => {
-        handleTrackClick(track.track.track_id);
+        handleTrackClick(artist, title);
     }
 
     return (
         <Fragment>
             <div className="track" onClick={handleClick}>
-                <p><span className="title">{track_name}</span> | {artist_name} | {album_name}</p>
+                <p><span className="title">{title}</span> | {artist} | {album}</p>
             </div>
         </Fragment>
     )

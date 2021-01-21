@@ -8,7 +8,7 @@ export function FavoriteLyric() {
 
     const [input, setInput] = useState('');
     const [tracks, setTracks] = useState([]);
-    const [selectedTrack, setSelectedTrack] = useState();
+    const [selectedTrack, setSelectedTrack] = useState([]);
     const [lyrics, setLyrics] = useState();
 
     const handleChange = (e) => {
@@ -17,22 +17,21 @@ export function FavoriteLyric() {
 
     const fetchLyrics = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/lyrics/${selectedTrack}`, {
+            const response = await fetch(`http://localhost:4000/lyrics/${selectedTrack[0]}/${selectedTrack[1]}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
-            //console.log(parseRes.lyrics_body)
-            const array = parseRes.lyrics_body.split('\n')
-            array.splice(array.length - 2, 3);
+            console.log(parseRes)
+            const array = await parseRes.split('\n')
             setLyrics(array)
         } catch (error) {
             console.error(error.message)
         }
     }
 
-    const handleTrackClick = (trackId) => {
-        setSelectedTrack(trackId);
+    const handleTrackClick = (artist, title) => {
+        setSelectedTrack([artist, title]);
     }
 
     const search = async (e) => {
