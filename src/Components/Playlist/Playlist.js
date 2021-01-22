@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import './Playlist.css';
 
-export function Playlist({ playlist, fetchUserId }) {
+export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist }) {
 
 
     const handleClick = async (e) => {
@@ -17,6 +17,7 @@ export function Playlist({ playlist, fetchUserId }) {
             body: JSON.stringify(body)
         });
         const parseRes = await response.json();
+        fetchCurrentPlaylist();
         //console.log(parseRes);
     }
 

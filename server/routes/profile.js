@@ -37,6 +37,17 @@ router.put('/:id/playlist', async (req, res) => {
     }
 })
 
+//get current playlist
+router.get('/:id/playlist', async (req, res) => {
+    try {
+        const query = await pool.query(`select playlist_id from user_profile where user_account_id = $1`, [req.id])
+        console.log(query)
+        res.json(query.rows[0]);
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 //get theme song
 router.get('/:id/theme-song/', async (req, res) => {
     try {

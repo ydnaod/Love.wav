@@ -123,6 +123,21 @@ router.get('/getPlaylistQualities/:playlistTrackIds', authorize, async (req, res
     }
 })
 
+// fetch data for a single playlist
+router.get('/load-playlist/:playlistId/', authorize, async (req, res) => {
+    try {
+        const responseTwo = await fetch(`https://api.spotify.com/v1/playlists/${req.params.playlistId}`, {
+            method: 'GET',
+            json: true,
+            headers: { 'Authorization': 'Bearer ' + res.access_token }
+        })
+        const parseResponseTwo = await responseTwo.json();
+        res.json(parseResponseTwo)
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
 router.get('/theme_song/:id', authorize, async (req, res) => {
     try {
         const response = await fetch(`https://api.spotify.com/v1/tracks/${req.params.id}`, {
