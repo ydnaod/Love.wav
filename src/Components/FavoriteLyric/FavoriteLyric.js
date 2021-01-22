@@ -109,6 +109,7 @@ export function FavoriteLyric() {
                 const parseRes = await response.json();
                 console.log(parseRes);
             }
+            fetchFavoriteLyric();
         } catch (error) {
             console.error(error.message);
         }
@@ -122,11 +123,12 @@ export function FavoriteLyric() {
             });
             const parseRes = await response.json();
             console.log(parseRes);
-            if (parseRes) {
+            if (parseRes && !favoriteLyricFromDatabase) {
                 setFavoriteLyricFromDatabase(parseRes)
             }
-            else {
-
+            else if(favoriteLyricFromDatabase.song_artist !== parseRes.song_artist || favoriteLyricFromDatabase.song_title !== parseRes.song_title){
+                setFavoriteLyricFromDatabase(parseRes)
+                console.log('sup')
             }
         } catch (error) {
             console.error(error.message);
