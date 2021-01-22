@@ -3,6 +3,7 @@ import './FavoriteLyric.css';
 import { TrackList } from './TrackList/TrackList';
 import { LyricTrack } from './LyricTrack/LyricTrack';
 import { Lyric } from './Lyric/Lyric';
+import { MyFavoriteLyrics } from './MyFavoriteLyrics/MyFavoriteLyrics';
 
 export function FavoriteLyric() {
 
@@ -14,6 +15,7 @@ export function FavoriteLyric() {
     const [selectedLine, setSelectedLine] = useState();
     const [selectedLines, setSelectedLines] = useState([]);
     const [favoriteLyric, setFavoriteLyric] = useState();
+    const [favoriteLyricFromDatabase, setFavoriteLyricFromDatabase] = useState();
 
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -21,7 +23,7 @@ export function FavoriteLyric() {
 
     const fetchLyrics = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/lyrics/${selectedTrack}`, {
+            const response = await fetch(`http://localhost:4000/lyrics/track/${selectedTrack}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -80,7 +82,7 @@ export function FavoriteLyric() {
             const body = {
                 song_artist: trackInfo[0],
                 song_title: trackInfo[1],
-                favorite_lyric: selectedLines[favoriteLyric],
+                favorite_lyric: favoriteLyric,
                 line_one: selectedLines[0],
                 line_two: selectedLines[1],
                 line_three: selectedLines[2],
@@ -88,32 +90,67 @@ export function FavoriteLyric() {
                 line_five: selectedLines[4],
             };
             const print = JSON.stringify(body);
-            console.log(print)
-            const response = await fetch(`http://localhost:4000/lyrics/save-favorite-lyric`, {
-                method: 'POST',
-                headers: {token: sessionStorage.token, 'Content-Type': 'application/json'},
-                body: JSON.stringify(body)
+            //console.log(print)
+            if (!favoriteLyricFromDatabase) {
+                const response = await fetch(`http://localhost:4000/lyrics/save-favorite-lyric`, {
+                    method: 'POST',
+                    headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const parseRes = await response.json();
+                console.log(parseRes);
+            }
+            else{
+                const response = await fetch(`http://localhost:4000/lyrics/edit-favorite-lyric`, {
+                    method: 'PUT',
+                    headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const parseRes = await response.json();
+                console.log(parseRes);
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    const fetchFavoriteLyric = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/lyrics/favorite`, {
+                method: 'GET',
+                headers: { token: sessionStorage.token }
             });
-            const parseRes = response.json();
+            const parseRes = await response.json();
             console.log(parseRes);
+            if (parseRes) {
+                setFavoriteLyricFromDatabase(parseRes)
+            }
+            else {
+
+            }
         } catch (error) {
             console.error(error.message);
         }
     }
 
     useEffect(() => {
-        if(selectedLine || selectedLine == 0){
+        fetchFavoriteLyric();
+        if (selectedLine || selectedLine == 0) {
             const lines = [];
-            for(let i=selectedLine; i < selectedLine + 5 || i < (selectedLine + 4); i++){
+            for (let i = selectedLine; i < selectedLine + 5 || i < (selectedLine + 4); i++) {
                 lines.push(lyrics[i]);
             }
             setSelectedLines(lines);
         }
-    }, [selectedLine])
+    }, [selectedLine, favoriteLyricFromDatabase])
 
     return (
         <Fragment>
-            <p>Favorite lyric</p>
+            <p>your favorite lyrics</p>
+            {
+                favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : ''
+            }
+            <p>find some lyrics</p>
 
             <form onSubmit={search}>
                 <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
@@ -122,18 +159,18 @@ export function FavoriteLyric() {
             {
                 tracks.length > 0 ? <TrackList tracks={tracks}
                     handleTrackClick={handleTrackClick}
-                    handleLineSelect={handleLineSelect}/> : ''
+                    handleLineSelect={handleLineSelect} /> : ''
             }
             {
                 selectedTrack ? <button onClick={fetchLyrics}>find lyrics</button> : ''
             }
             {
-                lyrics ? <Lyric lyrics={lyrics} 
-                handleLineSelect={handleLineSelect}/> : ''
+                lyrics ? <Lyric lyrics={lyrics}
+                    handleLineSelect={handleLineSelect} /> : ''
             }
             {
                 selectedLines ? <Lyric lyrics={selectedLines}
-                    handleFavoriteLyricSelect={handleFavoriteLyricSelect}/> : ''
+                    handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
             }
             {
                 favoriteLyric ? <button onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''

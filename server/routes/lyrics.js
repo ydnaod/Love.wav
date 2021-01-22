@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 router.use(authorization);
 
 //musixmatch api
-router.get('/:trackId', async (req, res) => {
+router.get('/track/:trackId', async (req, res) => {
     const response = await fetch(`https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${req.params.trackId}&apikey=${process.env.musix_match_apikey}`, {
         method: 'GET'
     });
@@ -25,12 +25,30 @@ router.get('/search/:term', async (req, res) => {
     res.json(parseRes.message.body.track_list);
 })
 
+router.get('/favorite', async (req, res) => {
+    try {
+        const query = await pool.query('select * from lyrics_slide where user_account_id = $1', [req.user]);
+        console.log(query.rows[0]);
+        res.json(query.rows[0]);
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
 router.post('/save-favorite-lyric', async (req, res) => {
-    const {song_artist, song_title, favorite_lyric, line_one, line_two, line_three, line_four, line_five} = req.body;
+    const { song_artist, song_title, favorite_lyric, line_one, line_two, line_three, line_four, line_five } = req.body;
     //console.log(song_artist);
     const query = await pool.query('insert into lyrics_slide (user_account_id, song_artist, song_title, favorite_lyric, line_one, line_two, line_three, line_four, line_five) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *', [req.user, song_artist, song_title, favorite_lyric, line_one, line_two, line_three, line_four, line_five]);
     res.json(query.rows[0]);
-})
+});
+
+router.put('/edit-favorite-lyric', async (req, res) => {
+    const { song_artist, song_title, favorite_lyric, line_one, line_two, line_three, line_four, line_five } = req.body;
+    //console.log(song_artist);
+    const query = await pool.query('update lyrics_slide set song_artist = $1, song_title = $2, favorite_lyric = $3, line_one =$4, line_two =$5, line_three = $6, line_four = $7, line_five = $8 where user_account_id=$9 returning *', [song_artist, song_title, favorite_lyric, line_one, line_two, line_three, line_four, line_five, req.user]);
+    res.json(query.rows[0]);
+});
+
 
 //free apis aren't compatible enough with each other for this
 /*

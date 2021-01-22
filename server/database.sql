@@ -20,7 +20,7 @@ create table user_profile
 create table lyrics_slide
 (
     id serial primary key,
-    user_account_id int references user_account(id) NOT NULL,
+    user_account_id int references user_account(id) UNIQUE NOT NULL,
     song_artist varchar(128) NOT NULL,
     song_title varchar(128) NOT NULL,
     favorite_lyric varchar(64) NOT NULL,
