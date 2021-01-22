@@ -23,8 +23,17 @@ export function YourPlaylist({fetchUserId}){
         setIsLoading(false);
     }
 
+    const fetchCurrentPlaylist = async () => {
+        try {
+            
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     useEffect(() => {
         fetchPlaylists();
+        fetchCurrentPlaylist();
     }, []);
 
     return (

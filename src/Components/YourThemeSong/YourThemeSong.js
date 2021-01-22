@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useImperativeHandle } from 'react';
+import React, { useState, Fragment, useImperativeHandle, useEffect } from 'react';
 import './YourThemeSong.css';
 import {Track} from '../Slides/Track/Track'
 
@@ -7,6 +7,7 @@ export function YourThemeSong({fetchUserId}) {
     const [input, setInput] = useState('');
     const [tracks, setTracks] = useState([]);
     const [selectedThemeSong, setSelectedThemeSong] = useState();
+    const [currentThemeSong, setCurrentThemeSong] = useState();
 
     const handleChange = (e) => {
         setInput(e.target.value)
@@ -57,14 +58,49 @@ export function YourThemeSong({fetchUserId}) {
             })
             const parseRes = await response.json();
             //console.log(parseRes);
+            fetchThemeSong();
         } catch (error) {
             console.error(error.message);
         }
     }
 
+    const fetchThemeSong = async () => {
+        try {
+            const userId = await fetchUserId();
+            const response = await fetch(`http://localhost:4000/profile/${userId}/theme-song/`, {
+                method: 'GET',
+                json: true,
+                headers: {token:sessionStorage.token}
+            })
+            const parseRes = await response.json();
+            const responseTwo = await fetch(`http://localhost:4000/login/theme_song/${parseRes.theme_song_id}`, {
+                method: 'GET',
+                headers: {token: sessionStorage.token}
+            });
+            const parseTwo = await responseTwo.json();
+            const track = {
+                name: parseTwo.name,
+                album: parseTwo.album.name,
+                artist: parseTwo.artists[0].name,
+                id: parseTwo.id,
+                preview_url: parseTwo.preview_url
+            }
+            setCurrentThemeSong(track);
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        fetchThemeSong();
+    }, []);
+
     return (
         <Fragment>
             <p>your theme song</p>
+            {
+                currentThemeSong ? <Track track={currentThemeSong}/> : ''
+            }
             <form onSubmit={handleSubmit}>
                 <input type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange}/>
                 <button>Search</button>
