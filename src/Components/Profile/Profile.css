@@ -1,7 +1,7 @@
 .Profile {
     width: 75%;
     height: 90%;
-    background-color: #C4C4C4;
+    background: linear-gradient(to right bottom, rgb(255,255,255,.8), rgb(255,255,255,.4));
     display: flex;
     justify-content: center;
     align-items: center;

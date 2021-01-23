@@ -10,4 +10,6 @@
 .dashboard{
   display:flex;
   height: 92%;
+  padding-bottom: 20px;
+  padding-right: 20px;
 }

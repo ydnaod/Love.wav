@@ -1,7 +1,8 @@
 .MessageList {
     width: 30%;
     display: flex;
-    background-color: rgb(241, 241, 241);
+    background: linear-gradient(to right bottom, rgb(255,255,255,.8), rgb(255,255,255,.4));
+    border-radius: 10%/5%;
     flex-direction: column;
     justify-content: start;
     text-align: start;
