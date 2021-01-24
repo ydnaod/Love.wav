@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Profile } from '../Profile/Profile';
 import './MatchDashboard.css';
-import playButton from '../../images/PlayButton(swiperight).png'
+import playButton from '../../images/Playbutton(swiperight).png'
 import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
@@ -225,8 +225,8 @@ export function MatchDashboard({fetchUserId}) {
                 </div>
                 <div className="nameSection">
                     <div className="buttons">
-                        <img className="button" src={stopButton}></img>
-                        <img className="button" src={playButton}></img>
+                        <img className="dashboardButton" src={stopButton}></img>
+                        <img className="dashboardButton" src={playButton}></img>
                     </div>
                 </div>
             </div>

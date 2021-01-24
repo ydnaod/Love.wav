@@ -44,11 +44,11 @@ export function ProfilePicture({ fetchUserId }) {
     return (
         <Fragment>
             <div className="editProfilePicture editProfileSetting">
-                <p>profile picture</p>
+                <h1>your profile picture</h1>
                 {
                     isLoading ? <p>loading</p> : <img src={photo} className="profilePicture"></img>
                 }
-                <button onClick={handleImportFromSpotify}>import photo from Spotify</button>
+                <div className='button glass' onClick={handleImportFromSpotify}>import photo from Spotify</div>
             </div>
         </Fragment>
     )

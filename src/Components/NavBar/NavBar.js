@@ -9,7 +9,7 @@ export function NavBar({ isAuthorized, handleAuthorization }) {
         sessionStorage.setItem('token', '')
     }
 
-    const loggedIn = <nav id="nav">
+    const loggedIn = <nav id="nav1">
         <li>
             <Link to='/'>dashboard</Link>
         </li>

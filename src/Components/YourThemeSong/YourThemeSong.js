@@ -1,8 +1,8 @@
 import React, { useState, Fragment, useImperativeHandle, useEffect } from 'react';
 import './YourThemeSong.css';
-import {Track} from '../Slides/Track/Track'
+import { Track } from '../Slides/Track/Track'
 
-export function YourThemeSong({fetchUserId}) {
+export function YourThemeSong({ fetchUserId }) {
 
     const [input, setInput] = useState('');
     const [tracks, setTracks] = useState([]);
@@ -54,7 +54,7 @@ export function YourThemeSong({fetchUserId}) {
             const response = await fetch(`http://localhost:4000/profile/${userId}/theme-song/${selectedThemeSong}`, {
                 method: 'PUT',
                 json: true,
-                headers: {token:sessionStorage.token}
+                headers: { token: sessionStorage.token }
             })
             const parseRes = await response.json();
             //console.log(parseRes);
@@ -70,12 +70,12 @@ export function YourThemeSong({fetchUserId}) {
             const response = await fetch(`http://localhost:4000/profile/${userId}/theme-song/`, {
                 method: 'GET',
                 json: true,
-                headers: {token:sessionStorage.token}
+                headers: { token: sessionStorage.token }
             })
             const parseRes = await response.json();
             const responseTwo = await fetch(`http://localhost:4000/login/theme_song/${parseRes.theme_song_id}`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseTwo = await responseTwo.json();
             const track = {
@@ -97,23 +97,25 @@ export function YourThemeSong({fetchUserId}) {
 
     return (
         <Fragment>
-            <p>your theme song</p>
-            {
-                currentThemeSong ? <Track track={currentThemeSong}/> : ''
-            }
-            <form onSubmit={handleSubmit}>
-                <input type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange}/>
-                <button>Search</button>
-            </form>
-            {
-                tracks.map(track => {
-                    return <Track track={track}
-                        key={track.id}
-                        handleSelectedThemeSong={handleSelectedThemeSong}
+            <div className='editProfileSetting'>
+                <p>your theme song</p>
+                {
+                    currentThemeSong ? <Track track={currentThemeSong} /> : ''
+                }
+                <form onSubmit={handleSubmit}>
+                    <input type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange} />
+                    <div className='button'>Search</div>
+                </form>
+                {
+                    tracks.map(track => {
+                        return <Track track={track}
+                            key={track.id}
+                            handleSelectedThemeSong={handleSelectedThemeSong}
                         />
-                })
-            }
-            <button onClick={handleThemeSongSubmit}>make this my theme song</button>
+                    })
+                }
+                <div className='button' onClick={handleThemeSongSubmit}>make this my theme song</div>
+            </div>
         </Fragment>
     )
 }

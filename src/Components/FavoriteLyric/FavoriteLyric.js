@@ -100,7 +100,7 @@ export function FavoriteLyric() {
                 const parseRes = await response.json();
                 console.log(parseRes);
             }
-            else{
+            else {
                 const response = await fetch(`http://localhost:4000/lyrics/edit-favorite-lyric`, {
                     method: 'PUT',
                     headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
@@ -126,7 +126,7 @@ export function FavoriteLyric() {
             if (parseRes && !favoriteLyricFromDatabase) {
                 setFavoriteLyricFromDatabase(parseRes)
             }
-            else if(favoriteLyricFromDatabase.song_artist !== parseRes.song_artist || favoriteLyricFromDatabase.song_title !== parseRes.song_title){
+            else if (favoriteLyricFromDatabase.song_artist !== parseRes.song_artist || favoriteLyricFromDatabase.song_title !== parseRes.song_title) {
                 setFavoriteLyricFromDatabase(parseRes)
                 console.log('sup')
             }
@@ -148,35 +148,37 @@ export function FavoriteLyric() {
 
     return (
         <Fragment>
-            <p>your favorite lyrics</p>
-            {
-                favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : ''
-            }
-            <p>find some lyrics</p>
+            <div className='editProfileSettings'>
+                <p>your favorite lyrics</p>
+                {
+                    favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : ''
+                }
+                <p>find some lyrics</p>
 
-            <form onSubmit={search}>
-                <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
-                <button>search</button>
-            </form>
-            {
-                tracks.length > 0 ? <TrackList tracks={tracks}
-                    handleTrackClick={handleTrackClick}
-                    handleLineSelect={handleLineSelect} /> : ''
-            }
-            {
-                selectedTrack ? <button onClick={fetchLyrics}>find lyrics</button> : ''
-            }
-            {
-                lyrics ? <Lyric lyrics={lyrics}
-                    handleLineSelect={handleLineSelect} /> : ''
-            }
-            {
-                selectedLines ? <Lyric lyrics={selectedLines}
-                    handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
-            }
-            {
-                favoriteLyric ? <button onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
-            }
+                <form onSubmit={search}>
+                    <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
+                    <button>search</button>
+                </form>
+                {
+                    tracks.length > 0 ? <TrackList tracks={tracks}
+                        handleTrackClick={handleTrackClick}
+                        handleLineSelect={handleLineSelect} /> : ''
+                }
+                {
+                    selectedTrack ? <button onClick={fetchLyrics}>find lyrics</button> : ''
+                }
+                {
+                    lyrics ? <Lyric lyrics={lyrics}
+                        handleLineSelect={handleLineSelect} /> : ''
+                }
+                {
+                    selectedLines ? <Lyric lyrics={selectedLines}
+                        handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
+                }
+                {
+                    favoriteLyric ? <button onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
+                }
+            </div>
         </Fragment>
     )
 }

@@ -1,8 +1,8 @@
-import React, {Fragment, useState, useEffect} from 'react';
-import {Playlist} from '../Playlist/Playlist'
+import React, { Fragment, useState, useEffect } from 'react';
+import { Playlist } from '../Playlist/Playlist'
 import './YourPlaylist.css';
 
-export function YourPlaylist({fetchUserId}){
+export function YourPlaylist({ fetchUserId }) {
 
     const [playlists, setPlaylists] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -29,13 +29,13 @@ export function YourPlaylist({fetchUserId}){
             const id = await fetchUserId();
             const response = await fetch(`http://localhost:4000/profile/${id}/playlist`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             console.log(parseRes);
             const responseTwo = await fetch(`http://localhost:4000/login/load-playlist/${parseRes.playlist_id}`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             })
             const parseTwo = await responseTwo.json();
             const playlist = {
@@ -56,19 +56,21 @@ export function YourPlaylist({fetchUserId}){
 
     return (
         <Fragment>
-            <p>your current playlist</p>
-            {
-                currentPlaylist ? <Playlist playlist={currentPlaylist}/> : ''
-            }
-            <p>your other playlists</p>
-            {
-                isLoading ? <p>isLoading</p> : playlists.map(playlist => {
-                    return <Playlist playlist={playlist}
-                        key={playlist.id}
-                        fetchUserId={fetchUserId}
-                        fetchCurrentPlaylist={fetchCurrentPlaylist}/>
-                })
-            }
+            <div className='editProfileSetting'>
+                <p>your current playlist</p>
+                {
+                    currentPlaylist ? <Playlist playlist={currentPlaylist} /> : ''
+                }
+                <p>your other playlists</p>
+                {
+                    isLoading ? <p>isLoading</p> : playlists.map(playlist => {
+                        return <Playlist playlist={playlist}
+                            key={playlist.id}
+                            fetchUserId={fetchUserId}
+                            fetchCurrentPlaylist={fetchCurrentPlaylist} />
+                    })
+                }
+            </div>
         </Fragment>
     )
 }

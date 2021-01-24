@@ -18,7 +18,7 @@ export function EditProfile({ fetchUserId }) {
         <Router>
             <Fragment>
                 <div className='editProfile glass'>
-                    <nav id="nav" className='editProfileNav'>
+                    <nav id="nav" className='editProfileNav glass'>
                         <li>
                             <Link to='/profilePicture'>profile picture</Link>
                         </li>
