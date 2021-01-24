@@ -5,7 +5,9 @@
   color: #372470;
 }
 
-
+.glass{
+  background: linear-gradient(to right bottom, rgb(255,255,255,.8), rgb(255,255,255,.4));
+}
 
 .dashboard{
   display:flex;

@@ -1,7 +1,7 @@
-import React, {useState, Fragment, useEffect} from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import './ProfilePicture.css';
 
-export function ProfilePicture({fetchUserId}){
+export function ProfilePicture({ fetchUserId }) {
 
     const [photo, setPhoto] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +10,7 @@ export function ProfilePicture({fetchUserId}){
         try {
             const response = await fetch(`http://localhost:4000/login/profile-picture`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             console.log(parseRes)
@@ -25,7 +25,7 @@ export function ProfilePicture({fetchUserId}){
             const userId = await fetchUserId();
             const response = await fetch(`http://localhost:4000/profile/${userId}/photo`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             //console.log(parseRes);
@@ -39,15 +39,17 @@ export function ProfilePicture({fetchUserId}){
     useEffect(() => {
         fetchPhoto();
         //console.log('this is happening')
-    },[photo])
+    }, [photo])
 
-    return(
+    return (
         <Fragment>
-            <p>profile picture</p>
-            {
-                isLoading ? <p>loading</p> : <img src={photo} className="profilePicture"></img>
-            }
-            <button onClick={handleImportFromSpotify}>import photo from Spotify</button>
+            <div className="editProfilePicture editProfileSetting">
+                <p>profile picture</p>
+                {
+                    isLoading ? <p>loading</p> : <img src={photo} className="profilePicture"></img>
+                }
+                <button onClick={handleImportFromSpotify}>import photo from Spotify</button>
+            </div>
         </Fragment>
     )
 }

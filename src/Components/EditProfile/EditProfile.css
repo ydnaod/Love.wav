@@ -1,3 +1,18 @@
 .editProfileNav {
     padding-left: 2em;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+}
+
+.editProfile{
+    display: flex;
+    height: 87%;
+    margin: 20px;
+    border-radius: 4%/8%;
+}
+
+.editProfileSetting {
+    display: flex;
+    height: 50%;
 }
