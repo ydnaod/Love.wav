@@ -48,7 +48,7 @@ export function ProfilePicture({ fetchUserId }) {
                 {
                     isLoading ? <p>loading</p> : <img src={photo} className="profilePicture"></img>
                 }
-                <div className='button glass' onClick={handleImportFromSpotify}>import photo from Spotify</div>
+                <button className='button glass' onClick={handleImportFromSpotify}>import photo from Spotify</button>
             </div>
         </Fragment>
     )

@@ -37,6 +37,11 @@
     background: linear-gradient(to left bottom, #ff1778 45%, #ebb617);
 }
 
+.button{
+    border-width: 0;
+    border-color:white;
+}
+
 .button:hover {
     cursor: pointer;
 }

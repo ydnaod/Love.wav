@@ -157,7 +157,7 @@ export function FavoriteLyric() {
 
                 <form onSubmit={search}>
                     <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
-                    <button>search</button>
+                    <button className='button'>search</button>
                 </form>
                 {
                     tracks.length > 0 ? <TrackList tracks={tracks}
@@ -165,7 +165,7 @@ export function FavoriteLyric() {
                         handleLineSelect={handleLineSelect} /> : ''
                 }
                 {
-                    selectedTrack ? <button onClick={fetchLyrics}>find lyrics</button> : ''
+                    selectedTrack ? <button className='button' onClick={fetchLyrics}>find lyrics</button> : ''
                 }
                 {
                     lyrics ? <Lyric lyrics={lyrics}
@@ -176,7 +176,7 @@ export function FavoriteLyric() {
                         handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
                 }
                 {
-                    favoriteLyric ? <button onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
+                    favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
                 }
             </div>
         </Fragment>

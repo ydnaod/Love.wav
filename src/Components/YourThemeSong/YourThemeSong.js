@@ -104,7 +104,7 @@ export function YourThemeSong({ fetchUserId }) {
                 }
                 <form onSubmit={handleSubmit}>
                     <input type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange} />
-                    <div className='button'>Search</div>
+                    <button className='button'>Search</button>
                 </form>
                 {
                     tracks.map(track => {
@@ -114,7 +114,7 @@ export function YourThemeSong({ fetchUserId }) {
                         />
                     })
                 }
-                <div className='button' onClick={handleThemeSongSubmit}>make this my theme song</div>
+                <button className='button' onClick={handleThemeSongSubmit}>make this my theme song</button>
             </div>
         </Fragment>
     )
