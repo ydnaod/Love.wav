@@ -1,0 +1,20 @@
+.editYourPlaylist{
+    display: flex;
+    flex-direction: column;
+}
+
+.yourPlaylists{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 80%;
+    padding-top: 20px;
+}
+
+.currentPlaylist{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}

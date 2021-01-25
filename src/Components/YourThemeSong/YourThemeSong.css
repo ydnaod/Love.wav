@@ -1,0 +1,29 @@
+.editThemeSong{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    background: linear-gradient(to right bottom, rgb(255,255,255,1), rgb(255,255,255,.6));
+    border: 0px;
+    border-radius: 2px / 4px;
+    height: 30px;
+    width: 400px;
+    display: flex;
+    text-align: center;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.themeSong{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

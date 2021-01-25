@@ -97,13 +97,13 @@ export function YourThemeSong({ fetchUserId }) {
 
     return (
         <Fragment>
-            <div className='editProfileSetting'>
-                <p>your theme song</p>
+            <div className='editProfileSetting editThemeSong'>
+                <h3>your theme song</h3>
                 {
                     currentThemeSong ? <Track track={currentThemeSong} /> : ''
                 }
-                <form onSubmit={handleSubmit}>
-                    <input type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange} />
+                <form className='form' onSubmit={handleSubmit}>
+                    <input className='input' type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange} />
                     <button className='button'>Search</button>
                 </form>
                 {

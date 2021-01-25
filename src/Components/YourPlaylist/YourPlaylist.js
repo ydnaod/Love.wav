@@ -56,20 +56,24 @@ export function YourPlaylist({ fetchUserId }) {
 
     return (
         <Fragment>
-            <div className='editProfileSetting'>
-                <p>your current playlist</p>
-                {
-                    currentPlaylist ? <Playlist playlist={currentPlaylist} /> : ''
-                }
-                <p>your other playlists</p>
-                {
-                    isLoading ? <p>isLoading</p> : playlists.map(playlist => {
-                        return <Playlist playlist={playlist}
-                            key={playlist.id}
-                            fetchUserId={fetchUserId}
-                            fetchCurrentPlaylist={fetchCurrentPlaylist} />
-                    })
-                }
+            <div className='editProfileSetting editYourPlaylist'>
+                <div className='currentPlaylist'>
+                    <h3>your current playlist</h3>
+                    {
+                        currentPlaylist ? <Playlist playlist={currentPlaylist} /> : ''
+                    }
+                    <h3>your other playlists</h3>
+                </div>
+                <div className='yourPlaylists'>
+                    {
+                        isLoading ? <p>isLoading</p> : playlists.map(playlist => {
+                            return <Playlist playlist={playlist}
+                                key={playlist.id}
+                                fetchUserId={fetchUserId}
+                                fetchCurrentPlaylist={fetchCurrentPlaylist} />
+                        })
+                    }
+                </div>
             </div>
         </Fragment>
     )
