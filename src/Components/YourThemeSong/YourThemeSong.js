@@ -98,23 +98,29 @@ export function YourThemeSong({ fetchUserId }) {
     return (
         <Fragment>
             <div className='editProfileSetting editThemeSong'>
-                <h3>your theme song</h3>
-                {
-                    currentThemeSong ? <Track track={currentThemeSong} /> : ''
-                }
+                <div className='currentThemeSong'>
+                    <h3>your theme song</h3>
+                    {
+                        currentThemeSong ? <Track track={currentThemeSong} /> : ''
+                    }
+                </div>
                 <form className='form' onSubmit={handleSubmit}>
                     <input className='input' type='text' name='search' value={input} placeholder="search for a song" onChange={handleChange} />
-                    <button className='button'>Search</button>
+                    <button id='searchButton' className='button'>Search</button>
                 </form>
-                {
-                    tracks.map(track => {
-                        return <Track track={track}
-                            key={track.id}
-                            handleSelectedThemeSong={handleSelectedThemeSong}
-                        />
-                    })
-                }
-                <button className='button' onClick={handleThemeSongSubmit}>make this my theme song</button>
+                <div className='trackListThemeSong'>
+                    {
+                        tracks.map(track => {
+                            return <Track track={track}
+                                key={track.id}
+                                handleSelectedThemeSong={handleSelectedThemeSong}
+                            />
+                        })
+                    }
+                    {
+                        selectedThemeSong ? <button id='submitThemeSong'className='button' onClick={handleThemeSongSubmit}>make this my theme song</button> : ''
+                    }
+                </div>
             </div>
         </Fragment>
     )

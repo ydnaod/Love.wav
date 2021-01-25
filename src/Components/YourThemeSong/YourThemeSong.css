@@ -1,18 +1,19 @@
 .editThemeSong{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
 input {
-    background: linear-gradient(to right bottom, rgb(255,255,255,1), rgb(255,255,255,.6));
+    background: linear-gradient(to bottom, rgb(255,255,255,1), rgb(223, 223, 223));
     border: 0px;
-    border-radius: 2px / 4px;
+    border-radius: 4px / 8px;
     height: 30px;
     width: 400px;
     display: flex;
     text-align: center;
+    margin-bottom: 15px;
 }
 
 .form{
@@ -22,8 +23,19 @@ input {
     flex-direction: column;
 }
 
-.themeSong{
+#searchButton{
+    max-height: 30px;
+}
+
+.trackListThemeSong{
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 80%;
     align-items: center;
-    justify-content: center;
+}
+
+#submitThemeSong{
+    margin-top: 30px;
+    width: 60%;
 }
