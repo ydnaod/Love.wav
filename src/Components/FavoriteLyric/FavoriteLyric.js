@@ -4,6 +4,7 @@ import { TrackList } from './TrackList/TrackList';
 import { LyricTrack } from './LyricTrack/LyricTrack';
 import { Lyric } from './Lyric/Lyric';
 import { MyFavoriteLyrics } from './MyFavoriteLyrics/MyFavoriteLyrics';
+import {Popup} from '../Popup/Popup'
 
 export function FavoriteLyric() {
 
@@ -16,9 +17,14 @@ export function FavoriteLyric() {
     const [selectedLines, setSelectedLines] = useState([]);
     const [favoriteLyric, setFavoriteLyric] = useState();
     const [favoriteLyricFromDatabase, setFavoriteLyricFromDatabase] = useState();
+    const [popupSeen, setPopupSeen] = useState(false);
 
     const handleChange = (e) => {
         setInput(e.target.value);
+    }
+
+    const handleXClick = () => {
+        setPopupSeen(false);
     }
 
     const fetchLyrics = async () => {
@@ -63,6 +69,7 @@ export function FavoriteLyric() {
             const parseRes = await response.json();
             console.log(parseRes);
             setTracks(parseRes);
+            setPopupSeen(true);
         } catch (error) {
             console.error(error.message);
         }
@@ -162,9 +169,11 @@ export function FavoriteLyric() {
                         <button id='searchButton' className='button'>search</button>
                     </form>
                     {
-                        tracks.length > 0 ? <TrackList tracks={tracks}
+                        tracks.length > 0 ? <Popup tracks={tracks}
                             handleTrackClick={handleTrackClick}
-                            handleLineSelect={handleLineSelect} /> : ''
+                            handleLineSelect={handleLineSelect} 
+                            isSeen={popupSeen}
+                            handleXClick={handleXClick}/> : ''
                     }
                     {
                         selectedTrack ? <button className='button' onClick={fetchLyrics}>find lyrics</button> : ''

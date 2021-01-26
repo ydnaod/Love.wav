@@ -7,6 +7,7 @@
 
 .glass{
   background: linear-gradient(to right bottom, rgb(255,255,255,.8), rgb(255,255,255,.4));
+  backdrop-filter: blur(2rem);
 }
 
 .dashboard{

@@ -1,0 +1,23 @@
+.popup{
+    height: 100vh;
+    position: absolute;
+    top: -9%;
+    left: -10%;
+    right: -1.7%;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.window {
+    border-radius: 8px / 4px;
+    width: 60%;
+    margin-left: 40px;
+    padding: 40px 60px;
+    text-align: left;
+}
+
+.x{
+    position: absolute;
+    right: 4%;
+    top: 7%;
+}
