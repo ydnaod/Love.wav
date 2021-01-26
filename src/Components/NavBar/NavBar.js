@@ -24,7 +24,7 @@ export function NavBar({ isAuthorized, handleAuthorization }) {
         </li>
     </nav>
 
-    const loggedOut = <nav id="nav">
+    const loggedOut = <nav id="nav1">
         <li>
             <Link to='/register'>register</Link>
         </li>

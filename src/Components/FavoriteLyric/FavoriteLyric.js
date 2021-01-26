@@ -148,36 +148,39 @@ export function FavoriteLyric() {
 
     return (
         <Fragment>
-            <div className='editProfileSettings'>
-                <p>your favorite lyrics</p>
-                {
-                    favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : ''
-                }
-                <p>find some lyrics</p>
-
-                <form onSubmit={search}>
-                    <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
-                    <button className='button'>search</button>
-                </form>
-                {
-                    tracks.length > 0 ? <TrackList tracks={tracks}
-                        handleTrackClick={handleTrackClick}
-                        handleLineSelect={handleLineSelect} /> : ''
-                }
-                {
-                    selectedTrack ? <button className='button' onClick={fetchLyrics}>find lyrics</button> : ''
-                }
-                {
-                    lyrics ? <Lyric lyrics={lyrics}
-                        handleLineSelect={handleLineSelect} /> : ''
-                }
-                {
-                    selectedLines ? <Lyric lyrics={selectedLines}
-                        handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
-                }
-                {
-                    favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
-                }
+            <div className='editProfileSetting flexCenterColumn editFavoriteLyrics'>
+                <div className='currentFavorite'>
+                    <h3>your favorite lyrics</h3>
+                    {
+                        favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : ''
+                    }
+                </div>
+                <div className='lyricSearch'>
+                    <h3>find some lyrics</h3>
+                    <form className='form' onSubmit={search}>
+                        <input type="text" name="search" placeholder="type a song name" onChange={handleChange} value={input}></input>
+                        <button id='searchButton' className='button'>search</button>
+                    </form>
+                    {
+                        tracks.length > 0 ? <TrackList tracks={tracks}
+                            handleTrackClick={handleTrackClick}
+                            handleLineSelect={handleLineSelect} /> : ''
+                    }
+                    {
+                        selectedTrack ? <button className='button' onClick={fetchLyrics}>find lyrics</button> : ''
+                    }
+                    {
+                        lyrics ? <Lyric lyrics={lyrics}
+                            handleLineSelect={handleLineSelect} /> : ''
+                    }
+                    {
+                        selectedLines ? <Lyric lyrics={selectedLines}
+                            handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
+                    }
+                    {
+                        favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
+                    }
+                </div>
             </div>
         </Fragment>
     )

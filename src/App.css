@@ -15,3 +15,12 @@
   padding-bottom: 20px;
   padding-right: 20px;
 }
+
+.flexCenterColumn {
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}

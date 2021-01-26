@@ -38,7 +38,7 @@ export function Login({handleAuthorization}) {
     return (
         <Fragment>
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <form className='form' onSubmit={handleSubmit}>
                 <input type='email' name='email' placeholder='email' value={email} onChange={handleChange}></input>
                 <input type='password' name='password' placeholder='password' value={password} onChange={handleChange}></input>
                 <button>Login</button>
