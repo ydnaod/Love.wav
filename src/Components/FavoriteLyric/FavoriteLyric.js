@@ -4,7 +4,7 @@ import { TrackList } from './TrackList/TrackList';
 import { LyricTrack } from './LyricTrack/LyricTrack';
 import { Lyric } from './Lyric/Lyric';
 import { MyFavoriteLyrics } from './MyFavoriteLyrics/MyFavoriteLyrics';
-import {Popup} from '../Popup/Popup'
+import { Popup } from '../Popup/Popup'
 
 export function FavoriteLyric() {
 
@@ -14,7 +14,7 @@ export function FavoriteLyric() {
     const [trackInfo, setTrackInfo] = useState([]);
     const [lyrics, setLyrics] = useState([]);
     const [selectedLine, setSelectedLine] = useState();
-    const [selectedLines, setSelectedLines] = useState([]);
+    const [selectedLines, setSelectedLines] = useState({});
     const [favoriteLyric, setFavoriteLyric] = useState();
     const [favoriteLyricFromDatabase, setFavoriteLyricFromDatabase] = useState();
     const [popupSeen, setPopupSeen] = useState(false);
@@ -145,9 +145,15 @@ export function FavoriteLyric() {
     useEffect(() => {
         fetchFavoriteLyric();
         if (selectedLine || selectedLine == 0) {
-            const lines = [];
-            for (let i = selectedLine; i < selectedLine + 5 || i < (selectedLine + 4); i++) {
-                lines.push(lyrics[i]);
+            const lines = {};
+            let maxLines = 5;
+            for (let i = selectedLine; i < selectedLine + maxLines || i < (selectedLine + 4); i++) {
+                if (lyrics[i]) {
+                    lines[i] = lyrics[i];
+                }
+                else if(lyrics[i] === ""){
+                    maxLines ++;
+                }
             }
             setSelectedLines(lines);
         }
@@ -171,20 +177,22 @@ export function FavoriteLyric() {
                     {
                         tracks.length > 0 ? <Popup tracks={tracks}
                             handleTrackClick={handleTrackClick}
-                            handleLineSelect={handleLineSelect} 
+                            handleLineSelect={handleLineSelect}
                             isSeen={popupSeen}
-                            handleXClick={handleXClick}/> : ''
+                            handleXClick={handleXClick}
+                            selectedTrack={selectedTrack}
+                            fetchLyrics={fetchLyrics}
+                            lyrics={lyrics}
+                            handleLineSelect={handleLineSelect}
+                            selectedLines={selectedLines} /> : ''
                     }
                     {
-                        selectedTrack ? <button className='button' onClick={fetchLyrics}>find lyrics</button> : ''
+                        //lyrics ? <Lyric lyrics={lyrics}
+                        // handleLineSelect={handleLineSelect} /> : ''
                     }
                     {
-                        lyrics ? <Lyric lyrics={lyrics}
-                            handleLineSelect={handleLineSelect} /> : ''
-                    }
-                    {
-                        selectedLines ? <Lyric lyrics={selectedLines}
-                            handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
+                        //selectedLines ? <Lyric lyrics={selectedLines}
+                        // handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
                     }
                     {
                         favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
