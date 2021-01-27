@@ -85,16 +85,20 @@ export function FavoriteLyric() {
             const body = {
                 trackInfo, favoriteLyric, selectedLines
             };*/
-
+            let tempArray = [];
+            for(const line in selectedLines){
+                tempArray.push(selectedLines[line]);
+            }
+            console.log(tempArray)
             const body = {
                 song_artist: trackInfo[0],
                 song_title: trackInfo[1],
                 favorite_lyric: favoriteLyric,
-                line_one: selectedLines[0],
-                line_two: selectedLines[1],
-                line_three: selectedLines[2],
-                line_four: selectedLines[3],
-                line_five: selectedLines[4],
+                line_one: tempArray[0],
+                line_two: tempArray[1],
+                line_three: tempArray[2],
+                line_four: tempArray[3],
+                line_five: tempArray[4],
             };
             const print = JSON.stringify(body);
             //console.log(print)
@@ -116,6 +120,7 @@ export function FavoriteLyric() {
                 const parseRes = await response.json();
                 console.log(parseRes);
             }
+            setPopupSeen(false);
             fetchFavoriteLyric();
         } catch (error) {
             console.error(error.message);
@@ -184,7 +189,10 @@ export function FavoriteLyric() {
                             fetchLyrics={fetchLyrics}
                             lyrics={lyrics}
                             handleLineSelect={handleLineSelect}
-                            selectedLines={selectedLines} /> : ''
+                            selectedLines={selectedLines}
+                            handleFavoriteLyricSelect={handleFavoriteLyricSelect}
+                            favoriteLyric={favoriteLyric}
+                            handleFavoriteSubmission={handleFavoriteSubmission}/> : ''
                     }
                     {
                         //lyrics ? <Lyric lyrics={lyrics}
@@ -195,7 +203,7 @@ export function FavoriteLyric() {
                         // handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
                     }
                     {
-                        favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
+                        //favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
                     }
                 </div>
             </div>
