@@ -7,6 +7,7 @@ export function YourPlaylist({ fetchUserId }) {
     const [playlists, setPlaylists] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [currentPlaylist, setCurrentPlaylist] = useState();
+    const [selectedPlaylist, setSelectedPlaylist] = useState();
 
     const fetchPlaylists = async () => {
         const response = await fetch('http://localhost:4000/login/loadPlaylists', {
@@ -22,6 +23,10 @@ export function YourPlaylist({ fetchUserId }) {
         }))
         setPlaylists(playlists);
         setIsLoading(false);
+    }
+
+    const handleSelectedPlaylist = (playlist) => {
+        setSelectedPlaylist(playlist);
     }
 
     const fetchCurrentPlaylist = async () => {
@@ -70,7 +75,9 @@ export function YourPlaylist({ fetchUserId }) {
                             return <Playlist playlist={playlist}
                                 key={playlist.id}
                                 fetchUserId={fetchUserId}
-                                fetchCurrentPlaylist={fetchCurrentPlaylist} />
+                                fetchCurrentPlaylist={fetchCurrentPlaylist}
+                                handleSelectedPlaylist={handleSelectedPlaylist}
+                                isSelected={selectedPlaylist == playlist.id ? true : false}/>
                         })
                     }
                 </div>

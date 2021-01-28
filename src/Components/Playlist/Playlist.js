@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from 'react';
 import './Playlist.css';
+const style = require('../../Util/selectedStyling')
 
-export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist }) {
+export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist, handleSelectedPlaylist, isSelected }) {
 
 
     const handleClick = async (e) => {
@@ -18,13 +19,14 @@ export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist }) {
         });
         const parseRes = await response.json();
         fetchCurrentPlaylist();
+        handleSelectedPlaylist(playlistId);
         //console.log(parseRes);
     }
 
     return (
         <Fragment>
             <div>
-                <div className='playlist' onClick={handleClick}>
+                <div style={isSelected ? style.selected : style.defaultStyle} className='playlist' onClick={handleClick}>
                     <p>{playlist.name} | {playlist.owner}</p>
                 </div>
             </div>
