@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import './Line.css';
+const style = require('../../../Util/selectedStyling');
 
 export function Line({ line, index, handleLineSelect, handleFavoriteLyricSelect, isSelected, selectedLines }) {
 
@@ -12,24 +13,9 @@ export function Line({ line, index, handleLineSelect, handleFavoriteLyricSelect,
         }
     }
 
-    //orange
-    //const selectedColor = 'rgb(235,182,23)';
-
-    //pink
-    const selectedColor = 'rgb(255, 23, 120, .75)';
-
-    const selected = {
-        backgroundColor: selectedColor,
-        color: 'rgb(255,255,255)'
-    }
-
-    const defaultStyle = {
-
-    }
-
     return (
         <Fragment>
-            <div className="selectedLines" style={isSelected ? selected : defaultStyle}>
+            <div className="selectedLines" style={isSelected ? style.selected : style.defaultStyle}>
                 <p onClick={handleClick}>{line}</p>
             </div>
         </Fragment>

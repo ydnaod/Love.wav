@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import './Track.css';
 import playSampleButton from '../../../images/playSampleButton.png'
+const style = require('../../../Util/selectedStyling')
 
 export function Track(props) {
 
@@ -20,7 +21,7 @@ export function Track(props) {
     return (
         <Fragment>
             <div className="trackList">
-                <div className="track" onClick={handleSelectSong}>
+                <div style={props.isSelected ? style.selected : style.defaultStyle} className="track" onClick={handleSelectSong}>
                     <img className="sampleButton" src={playSampleButton} onClick={handlePlaySample} />
                     <p>{props.track.playlistIndex || props.track.playlistIndex == 0 ? props.track.playlistIndex + 1 + ". " : ""}<span className="title">{props.track.name}</span> | {props.track.artist} | {props.track.album}</p>
                 </div>

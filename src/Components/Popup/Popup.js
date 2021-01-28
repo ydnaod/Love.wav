@@ -68,7 +68,8 @@ export function Popup(props) {
                         {
                             props.tracks ? <TrackList tracks={props.tracks}
                                 handleTrackClick={props.handleTrackClick}
-                                handleLineSelect={props.handleLineSelect} /> : ''
+                                handleLineSelect={props.handleLineSelect} 
+                                selectedTrack={props.selectedTrack ? props.selectedTrack : null}/> : ''
                         }
                         {
                             props.selectedTrack ? <button className='button' onClick={handleFetchLyrics}>find lyrics</button> : ''

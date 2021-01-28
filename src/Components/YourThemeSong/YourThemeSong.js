@@ -114,6 +114,7 @@ export function YourThemeSong({ fetchUserId }) {
                             return <Track track={track}
                                 key={track.id}
                                 handleSelectedThemeSong={handleSelectedThemeSong}
+                                isSelected={selectedThemeSong == track.id ? true : false}
                             />
                         })
                     }
