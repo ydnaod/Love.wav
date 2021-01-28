@@ -29,7 +29,7 @@ export function Line({ line, index, handleLineSelect, handleFavoriteLyricSelect,
 
     return (
         <Fragment>
-            <div className="selectedLines"style={isSelected ? selected : defaultStyle}>
+            <div className="selectedLines" style={isSelected ? selected : defaultStyle}>
                 <p onClick={handleClick}>{line}</p>
             </div>
         </Fragment>

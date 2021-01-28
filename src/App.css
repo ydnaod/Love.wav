@@ -3,6 +3,10 @@
   height: 100vh;
   background: linear-gradient(to right top, #FF2D86 30%, #FFC211 90%);
   color: #372470;
+  -webkit-transition: all .25s ease-in;
+  -moz-transition: all .25s ease-in;
+  -o-transition: all .25s ease-in;
+  transition: all .25s ease-in;
 }
 
 .glass{

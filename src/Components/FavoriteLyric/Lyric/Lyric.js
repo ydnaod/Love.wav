@@ -2,9 +2,9 @@ import React, { useState, Fragment } from 'react';
 import './Lyric.css';
 import { Line } from '../Line/Line'
 
-export function Lyric({ lyrics, handleLineSelect, handleFavoriteLyricSelect, selectedLines, favoriteLyric, lyricsSubmitted }) {
+export function Lyric({ lyrics, handleLineSelect, handleFavoriteLyricSelect, selectedLines, favoriteLyric, lyricsSubmitted, favorite }) {
 
-    if (favoriteLyric) {
+    if (favorite) {
         return (
             <div>
                 {
@@ -12,7 +12,22 @@ export function Lyric({ lyrics, handleLineSelect, handleFavoriteLyricSelect, sel
                         return <Line line={line}
                             index={index}
                             key={index}
-                            isSelected={favoriteLyric === index ? true : false} />
+                            isSelected={favorite == index ? true : false}/>
+                    })
+                }
+            </div>
+        )
+    }
+    else if (favoriteLyric || favoriteLyric == 0) {
+        return (
+            <div>
+                {
+                    lyrics.map((line, index) => {
+                        return <Line line={line}
+                            index={index}
+                            key={index}
+                            isSelected={favoriteLyric === index ? true : false}
+                            handleFavoriteLyricSelect={handleFavoriteLyricSelect}/>
                     })
                 }
             </div>

@@ -24,6 +24,13 @@ export function FavoriteLyric() {
     }
 
     const handleXClick = () => {
+        setInput('');
+        setTracks([]);
+        setSelectedTrack();
+        setLyrics([]);
+        setSelectedLine();
+        setSelectedLines({});
+        setFavoriteLyric();
         setPopupSeen(false);
     }
 
@@ -75,10 +82,6 @@ export function FavoriteLyric() {
         }
     }
 
-    const handleLyricsSubmission = () => {
-
-    }
-
     const handleFavoriteSubmission = async () => {
         try {
             /*
@@ -86,7 +89,7 @@ export function FavoriteLyric() {
                 trackInfo, favoriteLyric, selectedLines
             };*/
             let tempArray = [];
-            for(const line in selectedLines){
+            for (const line in selectedLines) {
                 tempArray.push(selectedLines[line]);
             }
             console.log(tempArray)
@@ -122,6 +125,13 @@ export function FavoriteLyric() {
             }
             setPopupSeen(false);
             fetchFavoriteLyric();
+            setInput('');
+            setTracks([]);
+            setSelectedTrack();
+            setLyrics([]);
+            setSelectedLine();
+            setSelectedLines({});
+            setFavoriteLyric();
         } catch (error) {
             console.error(error.message);
         }
@@ -138,7 +148,7 @@ export function FavoriteLyric() {
             if (parseRes && !favoriteLyricFromDatabase) {
                 setFavoriteLyricFromDatabase(parseRes)
             }
-            else if (favoriteLyricFromDatabase.song_artist !== parseRes.song_artist || favoriteLyricFromDatabase.song_title !== parseRes.song_title) {
+            else if (favoriteLyricFromDatabase.song_artist !== parseRes.song_artist || favoriteLyricFromDatabase.song_title !== parseRes.song_title || favoriteLyricFromDatabase.line_one !== parseRes.line_one || favoriteLyricFromDatabase.favorite_lyric !== parseRes.favorite_lyric) {
                 setFavoriteLyricFromDatabase(parseRes)
                 console.log('sup')
             }
@@ -156,8 +166,8 @@ export function FavoriteLyric() {
                 if (lyrics[i]) {
                     lines[i] = lyrics[i];
                 }
-                else if(lyrics[i] === ""){
-                    maxLines ++;
+                else if (lyrics[i] === "") {
+                    maxLines++;
                 }
             }
             setSelectedLines(lines);
@@ -192,7 +202,7 @@ export function FavoriteLyric() {
                             selectedLines={selectedLines}
                             handleFavoriteLyricSelect={handleFavoriteLyricSelect}
                             favoriteLyric={favoriteLyric}
-                            handleFavoriteSubmission={handleFavoriteSubmission}/> : ''
+                            handleFavoriteSubmission={handleFavoriteSubmission} /> : ''
                     }
                     {
                         //lyrics ? <Lyric lyrics={lyrics}

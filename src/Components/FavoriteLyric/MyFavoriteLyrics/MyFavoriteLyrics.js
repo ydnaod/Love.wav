@@ -20,7 +20,8 @@ export function MyFavoriteLyrics({lyrics}){
         <Fragment>
             <p>{lyrics.song_title} | {lyrics.song_artist}</p>
             {
-                lyricsArray ? <Lyric lyrics={lyricsArray}/> : ''
+                lyricsArray ? <Lyric lyrics={lyricsArray}
+                    favorite={lyrics.favorite_lyric}/> : ''
             }
         </Fragment>
     )
