@@ -6,7 +6,7 @@ import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
 
-export function MatchDashboard({ fetchUserId, matches }) {
+export function MatchDashboard({ fetchUserId }) {
 
     //profiles will be needed to be fetched from the database
     const [slides, setSlides] = useState([]);
@@ -14,6 +14,7 @@ export function MatchDashboard({ fetchUserId, matches }) {
     const [current, setCurrent] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     //const [playlistTrackIds, setPlaylistTrackIds] = useState('');
+    const [profiles, setProfiles] = useState();
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
@@ -203,8 +204,17 @@ export function MatchDashboard({ fetchUserId, matches }) {
         setCurrent(current == slides.length - 1 ? 0 : current + 1);
     }
 
-    const fetchRandomMatches = () => {
-        
+    const fetchRandomProfiles = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/fetch-profiles/random`, {
+                method: 'GET',
+                headers: {token: sessionStorage.token}
+            });
+            const parseRes = await response.json();
+            console.log(parseRes);
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 
 
@@ -232,9 +242,9 @@ export function MatchDashboard({ fetchUserId, matches }) {
         </div>
     </div>
 
-    const findMatches = <div className="profileSection">
+    const findProfiles = <div className="profileSection">
 
-            <button onClick={fetchRandomMatches} className='button'>roll the die</button>
+            <button onClick={fetchRandomProfiles} className='button'>roll the die</button>
 
     </div>
 
@@ -242,7 +252,7 @@ export function MatchDashboard({ fetchUserId, matches }) {
         <Fragment>
             <div className="MatchDashboard">
                 {
-                    matches ? profileSection : findMatches
+                    profiles ? profileSection : findProfiles
                 }
             </div>
         </Fragment>

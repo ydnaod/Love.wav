@@ -49,3 +49,18 @@ insert into user_profile
 values
     (1, '0BtWOyxZyTu7EmGIoLQeyH', 'https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/134969333_10225175813162837_4579429098583903124_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=7mpxbX422BUAX-r2y0B&_nc_ht=scontent-lga3-1.xx&oh=c1ac92375280c033abdc95fda17b1f1a&oe=601BC1B8'
         , '3jjujdWJ72nww5eGnfs2E7')
+
+--select random matches
+select id
+from user_account
+where id not in
+	(select other_user_account_id
+   from swipes
+   where user_account_id = $1)
+AND id != $1
+limit 10;
+
+--insert swipe
+insert into swipes
+(user_account_id, other_user_account_id, swiped)
+values (7, 1, 'no');
