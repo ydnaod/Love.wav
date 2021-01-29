@@ -23,6 +23,7 @@ import Cookies from 'universal-cookie';
 function App(props) {
 
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [matches, setMatches] = useState();
 
   const handleAuthorization = (boolValue) => {
     setIsAuthorized(boolValue);
@@ -38,7 +39,8 @@ function App(props) {
   }
 
   const dashboard = <div className="dashboard">
-    <MatchDashboard fetchUserId={fetchUserId}/>
+    <MatchDashboard fetchUserId={fetchUserId}
+      matches={matches}/>
     <MessageList />
   </div>
 

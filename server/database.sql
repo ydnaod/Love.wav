@@ -31,6 +31,14 @@ create table lyrics_slide
     line_five varchar(64)
 );
 
+create table swipes
+(
+    user_account_id int references user_account(id) NOT NULL,
+    other_user_account_id int references user_account(id) NOT NULL,
+    swiped varchar(128) NOT NULL,
+    swipe_date DATE NOT NULL DEFAULT CURRENT_DATE
+);
+
 --create user
 insert into user_account (first_name, last_name, email, password)
 values ('andy', 'test', 'test2@gmail.com', 'testpass');

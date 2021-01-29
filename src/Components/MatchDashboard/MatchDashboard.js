@@ -6,7 +6,7 @@ import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
 
-export function MatchDashboard({fetchUserId}) {
+export function MatchDashboard({ fetchUserId, matches }) {
 
     //profiles will be needed to be fetched from the database
     const [slides, setSlides] = useState([]);
@@ -19,7 +19,7 @@ export function MatchDashboard({fetchUserId}) {
         try {
             const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks/${playlistId}`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             //console.log(parseRes);
@@ -51,7 +51,7 @@ export function MatchDashboard({fetchUserId}) {
         try {
             const response = await fetch(`http://localhost:4000/login/getPlaylistQualities/${trackIds}`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             const trackQualities = await parseRes.audio_features.map(track => ({
@@ -118,7 +118,7 @@ export function MatchDashboard({fetchUserId}) {
     const fetchProfile = async (id) => {
         const response = await fetch(`http://localhost:4000/profile/${id}`, {
             method: 'GET',
-            headers: {token: sessionStorage.token}
+            headers: { token: sessionStorage.token }
         })
         const parseRes = await response.json();
         return parseRes;
@@ -127,7 +127,7 @@ export function MatchDashboard({fetchUserId}) {
     const fetchThemeSong = async (themeSongId) => {
         const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`, {
             method: 'GET',
-            headers: {token: sessionStorage.token}
+            headers: { token: sessionStorage.token }
         });
         const parseRes = await response.json();
         //console.log(parseRes);
@@ -203,32 +203,47 @@ export function MatchDashboard({fetchUserId}) {
         setCurrent(current == slides.length - 1 ? 0 : current + 1);
     }
 
+    const fetchRandomMatches = () => {
+        
+    }
+
 
     useEffect(async () => {
         fetchData();
     }, [])
 
 
+    const profileSection = <div className="MatchDashboard">
+        <div className="profileSection">
+            <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
+
+            {
+                isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
+                    key={slides[current].id} />
+            }
+
+            <img src={RightArrow} onClick={handleRightArrowClick}></img>
+        </div>
+        <div className="nameSection">
+            <div className="buttons">
+                <img className="dashboardButton" src={stopButton}></img>
+                <img className="dashboardButton" src={playButton}></img>
+            </div>
+        </div>
+    </div>
+
+    const findMatches = <div className="profileSection">
+
+            <button onClick={fetchRandomMatches} className='button'>roll the die</button>
+
+    </div>
 
     return (
         <Fragment>
             <div className="MatchDashboard">
-                <div className="profileSection">
-                    <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
-
-                    {
-                        isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
-                            key={slides[current].id}/>
-                    }
-
-                    <img src={RightArrow} onClick={handleRightArrowClick}></img>
-                </div>
-                <div className="nameSection">
-                    <div className="buttons">
-                        <img className="dashboardButton" src={stopButton}></img>
-                        <img className="dashboardButton" src={playButton}></img>
-                    </div>
-                </div>
+                {
+                    matches ? profileSection : findMatches
+                }
             </div>
         </Fragment>
     )
