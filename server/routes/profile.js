@@ -8,7 +8,7 @@ router.use(authorization);
 
 router.param('id', async (req, res, next) => {
     try {
-        const query = await pool.query('select playlist_id, photo,theme_song_id, first_name from user_profile,user_account where user_account_id = $1', [req.params.id])
+        const query = await pool.query('select playlist_id, photo,theme_song_id, first_name from user_profile where user_account_id = $1', [req.params.id])
         if (query.rows.length == 0) {
             res.status(404).send('user not found');
         }
@@ -20,7 +20,7 @@ router.param('id', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const query = await pool.query('select playlist_id, photo,theme_song_id, first_name from user_profile,user_account where user_account_id = $1', [req.id])
+    const query = await pool.query('select playlist_id, photo,theme_song_id, first_name from user_profile where user_account_id = $1', [req.id])
     res.json(query.rows[0]);
 })
 
@@ -73,6 +73,7 @@ router.put('/:id/theme-song/:songId', async (req, res) => {
 //get profile picture
 router.get('/:id/photo', async (req, res) => {
     try {
+        console.log('this happens')
         const query = await pool.query('select photo from user_profile where user_account_id = $1', [req.id]);
         //console.log(query)
         res.json(query.rows[0].photo);
@@ -84,7 +85,9 @@ router.get('/:id/photo', async (req, res) => {
 //create profile
 router.post('/create-profile', async (req, res) => {
     try {
-        const query = await pool.query('insert into user_profile (user_account_id) values ($1) returning *', [req.user]);
+        const {first_name} = req.body;
+        //console.log(req.body);
+        const query = await pool.query('insert into user_profile (user_account_id, first_name) values ($1, $2) returning *', [req.user, first_name]);
         res.json(query.rows);
     } catch (error) {
         console.error(error.message)

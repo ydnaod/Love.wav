@@ -1,20 +1,20 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlideFavoriteLyric.css';
-import {Track} from '../Track/Track'
+import { Track } from '../Track/Track'
 
-export function SlideFavoriteLyric(props) {
+export function SlideFavoriteLyric({profileInfo}) {
 
     return (
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{props.profileInfo.slideTitle}</h2>
+                    <h2>{profileInfo.slideTitle}</h2>
                 </div>
                 <div className="lyricSlide">
                     <div className="lyrics">
-                        <Track track={props.profileInfo}/>
+                        <h3>{ profileInfo.title} | {profileInfo.artist }</h3>
                         {
-                            props.profileInfo.lyrics.map(lyric => {
+                            profileInfo.lyrics.map(lyric => {
 
                                 return (
                                     <p className="lyric" >{lyric}</p>
@@ -23,7 +23,6 @@ export function SlideFavoriteLyric(props) {
                             })
                         }
                     </div>
-                    <img className="lyricImage" src={props.profileInfo.image}/>
                 </div>
             </div>
         </Fragment>

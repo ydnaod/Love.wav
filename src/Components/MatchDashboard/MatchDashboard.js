@@ -142,6 +142,12 @@ export function MatchDashboard({ fetchUserId }) {
         });
         const parseRes = await response.json();
         console.log(parseRes);
+        parseRes.lyrics = [];
+        parseRes.lyrics.push(parseRes.line_one);
+        parseRes.lyrics.push(parseRes.line_two);
+        parseRes.lyrics.push(parseRes.line_three);
+        parseRes.lyrics.push(parseRes.line_four);
+        parseRes.lyrics.push(parseRes.line_five);
         return parseRes;
     }
 
@@ -149,6 +155,7 @@ export function MatchDashboard({ fetchUserId }) {
         try {
             const userId = await fetchUserId();
             const profile = await fetchProfile(profiles[0].id);
+            console.log(profile)
             const profile2 = await fetchProfile(userId);
             const playlist1 = await loadPlaylistTracks(profile.playlist_id);
             const playlist2 = await loadPlaylistTracks(profile2.playlist_id);
@@ -180,18 +187,10 @@ export function MatchDashboard({ fetchUserId }) {
                 {
                     id: 3,
                     slideTitle: 'guess their favorite lyric',
-                    lyrics: [
-                        "You are sick, and you're married",
-                        "And you might be dying",
-                        "But you're holding me like water in your hands",
-                        "When you saw the dead little bird, you started crying",
-                        "But you know the killer doesn't understand"
-                    ],
-                    favoriteLyric: "But you're holding me like water in your hands",
-                    title: '"Moon Song"',
-                    artist: 'Phoebe Bridgers',
-                    album: "Punisher",
-                    image: "https://upload.wikimedia.org/wikipedia/en/2/23/Phoebe_Bridgers_Punisher_%282020%29.png"
+                    lyrics: favoriteLyrics.lyrics,
+                    favoriteLyric: favoriteLyrics.favorite_lyric,
+                    title: favoriteLyrics.song_title,
+                    artist: favoriteLyrics.song_artist
                 },
                 {
                     id: 4,
@@ -247,6 +246,7 @@ export function MatchDashboard({ fetchUserId }) {
             const parseRes = await response.json();
             console.log(parseRes);
             tempArray.shift();
+            console.log(tempArray)
             setProfiles(tempArray)
         } catch (error) {
             console.error(error.message);

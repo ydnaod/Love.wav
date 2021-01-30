@@ -35,9 +35,10 @@ export function Register({ handleAuthorization }) {
             handleAuthorization(true);
             const response2 = await fetch(`http://localhost:4000/profile/create-profile`, {
                 method: 'POST',
-                headers: { token: sessionStorage.token }
+                headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
             });
-            console.log(response2);
+            console.log(response2.json());
         } catch (error) {
             console.error(error.message);
         }
