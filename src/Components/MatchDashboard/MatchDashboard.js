@@ -138,7 +138,7 @@ export function MatchDashboard({ fetchUserId }) {
     async function fetchData() {
         try {
             const userId = await fetchUserId();
-            const profile = await fetchProfile(1);
+            const profile = await fetchProfile(profiles[0].id);
             const profile2 = await fetchProfile(userId);
             const playlist1 = await loadPlaylistTracks(profile.playlist_id);
             const playlist2 = await loadPlaylistTracks(profile2.playlist_id);
@@ -146,7 +146,7 @@ export function MatchDashboard({ fetchUserId }) {
             const idString2 = await generatePlaylistIdString(playlist2);
             const trackQualities1 = await calculateTrackQualities(idString1);
             const trackQualities2 = await calculateTrackQualities(idString2);
-            const themeSong = await fetchThemeSong(profile2.theme_song_id);
+            const themeSong = await fetchThemeSong(profile.theme_song_id);
             const profileInfo = [
                 {
                     id: 0,
@@ -208,43 +208,69 @@ export function MatchDashboard({ fetchUserId }) {
         try {
             const response = await fetch(`http://localhost:4000/fetch-profiles/random`, {
                 method: 'GET',
-                headers: {token: sessionStorage.token}
+                headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
-            console.log(parseRes);
+            const tempArray = [];
+            parseRes.map(id => tempArray.push(id));
+            setProfiles(tempArray)
+            console.log(tempArray);
         } catch (error) {
             console.error(error.message);
         }
     }
 
+    const handleSwipe = async (swipe) => {
+        try {
+            const body = {
+                swiped: swipe,
+                user_account_id: await fetchUserId(),
+                other_user_account_id: profiles[0].id
+            }
+            const tempArray = profiles;
+            const response = await fetch(`http://localhost:4000/swipes`, {
+                method: 'POST',
+                headers: {token: sessionStorage.token, 'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            });
+            const parseRes = await response.json();
+            console.log(parseRes);
+            tempArray.shift();
+            setProfiles(tempArray)
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
 
     useEffect(async () => {
         fetchData();
-    }, [])
+    }, [profiles])
 
 
-    const profileSection = <div className="MatchDashboard">
-        <div className="profileSection">
-            <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
+    const profileSection =
+        <Fragment>
+            <div className="profileSection">
+                <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
 
-            {
-                isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
-                    key={slides[current].id} />
-            }
+                {
+                    isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
+                        key={slides[current].id} />
+                }
 
-            <img src={RightArrow} onClick={handleRightArrowClick}></img>
-        </div>
-        <div className="nameSection">
-            <div className="buttons">
-                <img className="dashboardButton" src={stopButton}></img>
-                <img className="dashboardButton" src={playButton}></img>
+                <img src={RightArrow} onClick={handleRightArrowClick}></img>
             </div>
-        </div>
-    </div>
+            <div className="nameSection">
+                <div className="buttons">
+                    <img onClick={()=>handleSwipe('left')} className="dashboardButton" src={stopButton}></img>
+                    <img onClick={()=>handleSwipe('right')} className="dashboardButton" src={playButton}></img>
+                </div>
+            </div>
+        </Fragment>
+
 
     const findProfiles = <div className="profileSection">
 
-            <button onClick={fetchRandomProfiles} className='button'>roll the die</button>
+        <button onClick={fetchRandomProfiles} className='button'>roll the die</button>
 
     </div>
 
