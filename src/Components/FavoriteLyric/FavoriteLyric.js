@@ -6,7 +6,7 @@ import { Lyric } from './Lyric/Lyric';
 import { MyFavoriteLyrics } from './MyFavoriteLyrics/MyFavoriteLyrics';
 import { Popup } from '../Popup/Popup'
 
-export function FavoriteLyric() {
+export function FavoriteLyric({fetchUserId}) {
 
     const [input, setInput] = useState('');
     const [tracks, setTracks] = useState([]);
@@ -139,7 +139,8 @@ export function FavoriteLyric() {
 
     const fetchFavoriteLyric = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/lyrics/favorite`, {
+            const id = await fetchUserId();
+            const response = await fetch(`http://localhost:4000/lyrics/${id}/favorite`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });

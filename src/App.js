@@ -72,7 +72,7 @@ function App(props) {
               <EditProfile fetchUserId={fetchUserId}/>
             </Route>
             <Route exact path='/settings'>
-              <Settings />
+              <Settings fetchUserId={fetchUserId}/>
             </Route>
             <Route exact path='/login' render={props => !isAuthorized ? <Login isAuthorized={isAuthorized}
               handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />

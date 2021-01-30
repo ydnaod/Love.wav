@@ -1,11 +1,12 @@
 import React, { useState, Fragment } from 'react';
 import './Settings.css';
 
-export function Settings() {
+export function Settings({fetchUserId}) {
 
     const handleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:4000/login', {
+            const id = await fetchUserId();
+            const response = await fetch(`http://localhost:4000/login/login/${id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token, "Access-Control-Allow-Origin" : "http://localhost:3000" }, 
             })

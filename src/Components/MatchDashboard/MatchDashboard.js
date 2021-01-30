@@ -135,6 +135,16 @@ export function MatchDashboard({ fetchUserId }) {
         return parseRes;
     }
 
+    const fetchFavoriteLyrics = async (id) => {
+        const response = await fetch(`http://localhost:4000/lyrics/${id}/favorite/`, {
+            method: 'GET',
+            headers: { token: sessionStorage.token }
+        });
+        const parseRes = await response.json();
+        console.log(parseRes);
+        return parseRes;
+    }
+
     async function fetchData() {
         try {
             const userId = await fetchUserId();
@@ -147,6 +157,7 @@ export function MatchDashboard({ fetchUserId }) {
             const trackQualities1 = await calculateTrackQualities(idString1);
             const trackQualities2 = await calculateTrackQualities(idString2);
             const themeSong = await fetchThemeSong(profile.theme_song_id);
+            const favoriteLyrics = await fetchFavoriteLyrics(profiles[0].id);
             const profileInfo = [
                 {
                     id: 0,

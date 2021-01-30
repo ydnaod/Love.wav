@@ -194,11 +194,13 @@ router.get('/profile-picture', authorize, async (req, res) => {
 //Spotify Authorization
 var stateKey = 'spotify_auth_state';
 
-router.get('/', function (req, res) {
+router.get('/login/:id', function (req, res) {
 
     console.log('this happens')
     // your application requests authorization
     var scope = 'user-library-read';
+    var state = req.params.id;
+    console.log(req.params.id)
     const url = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -233,7 +235,7 @@ router.get('/callback', async function (req, res, next) {
                 error: 'state_mismatch'
             }));
     } else {*/
-        res.clearCookie(stateKey);
+        //res.clearCookie(stateKey);
         const bodyToken = `code=${code}&redirect_uri=${redirect_uri}&grant_type=authorization_code&client_id=${client_id}&client_secret=${client_secret}`;
         try {
             const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -245,14 +247,14 @@ router.get('/callback', async function (req, res, next) {
             })
             const parseRes = await response.json();
             //console.log('we made it here')
-            console.log(response)
-            console.log(parseRes)
-            if (parseRes.access_token) {
+            //console.log(response)
+            console.log('res1' + parseRes)
+            if (await parseRes.access_token) {
 
-                var access_token = parseRes.access_token,
-                    refresh_token = parseRes.refresh_token;
-                console.log(state)
-                console.log(refresh_token)
+                var access_token = await parseRes.access_token,
+                    refresh_token = await parseRes.refresh_token;
+                console.log('state' + state)
+                console.log('token' + refresh_token)
                 const saveRefresh = await pool.query('update user_account set refresh_token = $1 where id = $2', [refresh_token, state])
                 var options = {
                     url: `https://api.spotify.com/v1/users/1210606472/playlists`,
@@ -266,7 +268,7 @@ router.get('/callback', async function (req, res, next) {
                     headers: { 'Authorization': 'Bearer ' + access_token }
                 })
                 const parseResponseTwo = await responseTwo.json();
-                console.log(parseResponseTwo)
+                console.log('res1' + parseResponseTwo)
                 res.access_token = access_token;
                 res.refresh_token = refresh_token;
                 res.expires_in = 3600;

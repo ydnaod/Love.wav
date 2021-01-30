@@ -23,25 +23,3 @@
     width: 80%;
 }
 
-.button {
-    color: white;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    width: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 5px/6px;
-    background: linear-gradient(to left bottom, #ff1778 45%, #ebb617);
-}
-
-.button{
-    border-width: 0;
-    border-color:white;
-}
-
-.button:hover {
-    cursor: pointer;
-}

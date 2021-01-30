@@ -6,6 +6,19 @@ const fetch = require('node-fetch');
 
 router.use(authorization);
 
+router.param('id', async (req, res, next) => {
+    try {
+        const query = await pool.query('select * from lyrics_slide where user_account_id = $1', [req.params.id])
+        if (query.rows.length == 0) {
+            res.status(404).send('user not found');
+        }
+        req.id = req.params.id;
+        next();
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 //musixmatch api
 router.get('/track/:trackId', async (req, res) => {
     const response = await fetch(`https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${req.params.trackId}&apikey=${process.env.musix_match_apikey}`, {
@@ -25,9 +38,9 @@ router.get('/search/:term', async (req, res) => {
     res.json(parseRes.message.body.track_list);
 })
 
-router.get('/favorite', async (req, res) => {
+router.get('/:id/favorite', async (req, res) => {
     try {
-        const query = await pool.query('select * from lyrics_slide where user_account_id = $1', [req.user]);
+        const query = await pool.query('select * from lyrics_slide where user_account_id = $1', [req.id]);
         console.log(query.rows[0]);
         res.json(query.rows[0]);
     } catch (error) {
