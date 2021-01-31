@@ -248,6 +248,8 @@ export function MatchDashboard({ fetchUserId }) {
             tempArray.shift();
             console.log(tempArray)
             setProfiles(tempArray)
+            setIsLoading(true);
+            fetchData();
         } catch (error) {
             console.error(error.message);
         }
@@ -255,7 +257,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     useEffect(async () => {
         fetchData();
-    }, [profiles])
+    }, [])
 
 
     const profileSection =
