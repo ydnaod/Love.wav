@@ -8,7 +8,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import { NavBar } from './Components/NavBar/NavBar';
-import { MessageList } from './Components/MessageList/MessageList';
+import { ConversationList } from './Components/ConversationList/ConversationList';
 import { MatchDashboard } from './Components/MatchDashboard/MatchDashboard';
 import { Login } from './Components/Login/Login';
 import { Settings } from './Components/Settings/Settings';
@@ -39,7 +39,7 @@ function App(props) {
 
   const dashboard = <div className="dashboard">
     <MatchDashboard fetchUserId={fetchUserId}/>
-    <MessageList />
+    <ConversationList />
   </div>
 
   const isAuth = async () => {

@@ -257,7 +257,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     useEffect(async () => {
         fetchData();
-    }, [])
+    }, [profiles])
 
 
     const profileSection =

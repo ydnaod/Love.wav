@@ -1,14 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import './MessageList.css';
-import {Message} from '../Message/Message'
+import './ConversationList.css';
+import {Conversation} from '../Conversation/Conversation'
 
-export function MessageList() {
+export function ConversationList() {
 
-    const [messageList, setMessageList] = useState([]);
+    const [conversationList, setConversationList] = useState([]);
 
     useEffect(() => {
         try {
-            const messages = [
+            const conversations = [
                 {
                     
                         id: 1,
@@ -43,7 +43,7 @@ export function MessageList() {
                 }
 
             ]
-            setMessageList(messages);
+            setConversationList(conversations);
         } catch (error) {
             console.error(error.message);
         }
@@ -51,11 +51,11 @@ export function MessageList() {
 
     return (
         <Fragment>
-            <div className="MessageList">
+            <div className="ConversationList">
                 <h1 className="label">messages</h1>
                 {
-                    messageList.map(conversation => {
-                       return <Message conversation={conversation}
+                    conversationList.map(conversation => {
+                       return <Conversation conversation={conversation}
                             key={conversation.id}/>
                     })
                 }
