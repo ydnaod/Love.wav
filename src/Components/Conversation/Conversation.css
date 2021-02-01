@@ -1,27 +1,21 @@
+.backArrow{
+    width: 15px;
+    height: auto;
+}
+
 .Conversation{
-    max-height: 100px;
-    width:100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3em 0 3em 0;
-}
-
-.conversationIcon {
-    border-radius: 50%;
-    height: 5em;
-    width: 5em;
-    object-fit: cover;
-}
-
-.conversationPreviewText {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    text-align: start;
-    padding-left: 20px;
 }
 
-.lastText{
-    font-weight: 400;
+.messageForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.messageButton{
+    height: 30px;
+    margin-top: 0;
+    margin-bottom: 15px;
 }
