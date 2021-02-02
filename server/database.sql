@@ -57,7 +57,7 @@ create table message
     user_account_id int references user_account(id) NOT NULL,
     conversation_id int references conversation(id) NOT NULL,
     message text,
-    ts CURRENT_TIMESTAMP
+    ts timestamp not null default CURRENT_TIMESTAMP
 );
 
 --create user

@@ -1,7 +1,8 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import './Conversation.css';
 import backArrow from '../../images/backArrow.png'
 import {Message} from '../Message/Message'
+import socketIOClient from "socket.io-client";
 
 export function Conversation({handleConversationSelect}) {
 
@@ -25,6 +26,40 @@ export function Conversation({handleConversationSelect}) {
             console.error(error.message)
         }
     }
+
+    const SOCKET_SERVER_URL = "http://localhost:4000";
+
+    useEffect(() => {
+    
+        // Creates a WebSocket connection
+        const socket = socketIOClient(SOCKET_SERVER_URL, {
+            withCredentials: true,
+            extraHeaders: {
+              "my-custom-header": "abcd"
+            }
+          });
+        console.log('socket was created')
+        //when you need to pass info back to server (convo id)
+        /*const socket = socketIOClient(SOCKET_SERVER_URL, {
+            query: { roomId },
+          });*/
+        
+        // Listens for incoming messages
+        /*
+        socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
+          const incomingMessage = {
+            ...message,
+            ownedByCurrentUser: message.senderId === socketRef.current.id,
+          };
+          setMessages((messages) => [...messages, incomingMessage]);
+        });*/
+        
+        // Destroys the socket reference
+        // when the connection is closed
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
 
     return (
         <Fragment>
