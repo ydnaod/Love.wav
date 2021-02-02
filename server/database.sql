@@ -11,7 +11,7 @@ create table user_account
 create table user_profile
 (
     id serial primary key,
-    first_name varchar(128) NOT NULL,
+    first_name varchar(128) REFERENCES user_account(first_name) NOT NULL,
     user_account_id int references user_account(id) UNIQUE NOT NULL,
     playlist_id varchar(128) NOT NULL,
     photo text NOT NULL,
@@ -37,7 +37,27 @@ create table swipes
     user_account_id int references user_account(id) NOT NULL,
     other_user_account_id int references user_account(id) NOT NULL,
     swiped varchar(128) NOT NULL,
-    swipe_date DATE NOT NULL DEFAULT CURRENT_DATE
+    favorite_lyric_guess int,
+    swipe_date DATE NOT NULL DEFAULT current_date,
+    constraint id primary key (user_account_id, other_user_account_id)
+);
+
+create table conversation
+(
+    id serial primary key,
+    user_account_id int references user_account(id) NOT NULL,
+    other_user_Account_id int references user_account(id) NOT NULL,
+    time_started timestamp not null default CURRENT_TIMESTAMP,
+    time_closed TIMESTAMP
+);
+
+create table message
+(
+    id serial primary key,
+    user_account_id int references user_account(id) NOT NULL,
+    conversation_id int references conversation(id) NOT NULL,
+    message text,
+    ts CURRENT_TIMESTAMP
 );
 
 --create user
