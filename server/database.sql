@@ -64,6 +64,10 @@ create table message
 insert into user_account (first_name, last_name, email, password)
 values ('andy', 'test', 'test2@gmail.com', 'testpass');
 
+--create admin user
+insert into user_account (id, first_name, last_name, email, password)
+values (999, 'admin', 'andy', 'admin@gmail.com', 'adminpassword');
+
 --create profile
 insert into user_profile
     (user_account_id, playlist_id, photo, theme_song_id)

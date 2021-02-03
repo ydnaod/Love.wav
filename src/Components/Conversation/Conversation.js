@@ -47,6 +47,7 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
         });*/
 
         socketRef.current.on('chat message', (msg) => {
+            console.log(msg)
             setMessages((messages)=>[...messages, msg]);
         })
         
@@ -57,10 +58,10 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
         };
       }, []);
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userId = fetchUserId();
+            const userId = await fetchUserId();
             //setMessages([...messages, input]);
             socketRef.current.emit('chat message', {
                 body: input,
@@ -81,8 +82,10 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
                 <div>
                     {
                         messages.map((message, index) => {
-                            return <Message message={message}
-                                key={index}/>
+                            return <Message message={message.body}
+                                key={index}
+                                owner={message.userId}
+                                fetchUserId={fetchUserId}/>
                         })
                     }
                 </div>
