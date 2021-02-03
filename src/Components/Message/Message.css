@@ -1,5 +1,7 @@
 .my-message{
-    background-color: blue;
+    background-color: rgb(255, 0, 128);
+    color: white;
+    margin-left: auto;
 }
 
 .love.wav-message{
@@ -8,4 +10,14 @@
 
 .their-message{
     background-color: rgb(255, 255, 255);
+    margin-right: auto;
+}
+
+.message{
+    border-radius: 10px / 8px;
+    padding: 4px;
+}
+
+.messageContainer {
+    display: flex;
 }

@@ -26,8 +26,8 @@ export function Message({ message, owner, fetchUserId }) {
     
     return (
         <Fragment>
-            <div className={`message ${messageOwner}`}>
-                <p>{message}</p>
+            <div className="messageContainer">
+                <p className={`message ${messageOwner}`}>{message}</p>
             </div>
         </Fragment>
     )
