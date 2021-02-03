@@ -3,7 +3,7 @@ import './ConversationList.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import {Conversation} from '../Conversation/Conversation'
 
-export function ConversationList() {
+export function ConversationList({fetchUserId}) {
 
     const [conversationList, setConversationList] = useState([]);
     const [selectedConversation, setSelectedConversation] = useState();
@@ -71,7 +71,8 @@ export function ConversationList() {
         <Fragment>
             <div className="ConversationList">
                 {selectedConversation ? <Conversation id={selectedConversation}
-                    handleConversationSelect={handleConversationSelect}/> : conversationListDiv}
+                    handleConversationSelect={handleConversationSelect}
+                    fetchUserId={fetchUserId}/> : conversationListDiv}
             </div>
         </Fragment>
     )

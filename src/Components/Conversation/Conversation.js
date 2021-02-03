@@ -4,10 +4,10 @@ import backArrow from '../../images/backArrow.png'
 import {Message} from '../Message/Message'
 import socketIOClient from "socket.io-client";
 
-export function Conversation({handleConversationSelect}) {
+export function Conversation({handleConversationSelect, id, fetchUserId}) {
 
     const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState();
+    const [input, setInput] = useState('');
     const socketRef = useRef();
 
     const handleChange = (e) => {
@@ -27,7 +27,8 @@ export function Conversation({handleConversationSelect}) {
             withCredentials: true,
             extraHeaders: {
               "my-custom-header": "abcd"
-            }
+            },
+            query: {id}
           });
         console.log('socket was created')
         //when you need to pass info back to server (convo id)
@@ -59,8 +60,13 @@ export function Conversation({handleConversationSelect}) {
       const handleSubmit = (e) => {
         e.preventDefault();
         try {
+            const userId = fetchUserId();
             //setMessages([...messages, input]);
-            socketRef.current.emit('chat message', input);
+            socketRef.current.emit('chat message', {
+                body: input,
+                conversationId: id,
+                userId: userId
+            });
             setInput('');
         } catch (error) {
             console.error(error.message)

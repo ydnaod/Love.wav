@@ -39,7 +39,7 @@ function App(props) {
 
   const dashboard = <div className="dashboard">
     <MatchDashboard fetchUserId={fetchUserId}/>
-    <ConversationList />
+    <ConversationList fetchUserId={fetchUserId}/>
   </div>
 
   const isAuth = async () => {

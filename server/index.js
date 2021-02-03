@@ -24,11 +24,11 @@ app.use('/lyrics', lyricsRouter);
 app.use('/fetch-profiles', fetchProfilesRouter);
 app.use('/swipes', swipesRouter);
 
-//socket.io
+//socket.io 
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: 'http://localhost:3000',
       methods: ["GET", "POST"],
       allowedHeaders: ["my-custom-header"],
       credentials: true
@@ -36,15 +36,20 @@ const io = require('socket.io')(http, {
   });
 
 io.on('connection', (socket) => {
-    console.log('a user has connected');
+
+    const { id } = socket.handshake.query;
+    socket.join(id);
+
+    console.log('a user has connected to room ' + id);
     socket.on('disconnect', () => {
         console.log('user disconnected');
+        socket.leave(id);
       });
 
     socket.on('chat message', (msg) => {
       console.log(msg)
       //socket.broadcast.emit('chat message', msg);
-      io.emit('chat message', msg);
+      io.in(id).emit('chat message', msg.body);
     })
 });
 
