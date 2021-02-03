@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect, useRef } from 'react';
 import './Conversation.css';
 import backArrow from '../../images/backArrow.png'
 import {Message} from '../Message/Message'
@@ -8,6 +8,7 @@ export function Conversation({handleConversationSelect}) {
 
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState();
+    const socketRef = useRef();
 
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -17,22 +18,12 @@ export function Conversation({handleConversationSelect}) {
         handleConversationSelect('');
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        try {
-            setMessages([...messages, input]);
-            setInput('');
-        } catch (error) {
-            console.error(error.message)
-        }
-    }
-
     const SOCKET_SERVER_URL = "http://localhost:4000";
 
     useEffect(() => {
     
         // Creates a WebSocket connection
-        const socket = socketIOClient(SOCKET_SERVER_URL, {
+        socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             withCredentials: true,
             extraHeaders: {
               "my-custom-header": "abcd"
@@ -53,13 +44,29 @@ export function Conversation({handleConversationSelect}) {
           };
           setMessages((messages) => [...messages, incomingMessage]);
         });*/
+
+        socketRef.current.on('chat message', (msg) => {
+            setMessages((messages)=>[...messages, msg]);
+        })
         
         // Destroys the socket reference
         // when the connection is closed
         return () => {
-          socket.disconnect();
+          socketRef.current.disconnect();
         };
       }, []);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        try {
+            //setMessages([...messages, input]);
+            socketRef.current.emit('chat message', input);
+            setInput('');
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
 
     return (
         <Fragment>
