@@ -70,6 +70,19 @@ router.put('/:id/theme-song/:songId', async (req, res) => {
     }
 })
 
+//get name
+router.get('/:id/name', async (req, res) => {
+    try {
+        console.log('this happens')
+        const query = await pool.query('select first_name from user_profile where user_account_id = $1', [req.id]);
+        //console.log(query)
+        res.json(query.rows[0].first_name);
+    } catch (error) {
+        console.error(error.message)
+    }
+})
+
+
 //get profile picture
 router.get('/:id/photo', async (req, res) => {
     try {

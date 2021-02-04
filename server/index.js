@@ -8,6 +8,7 @@ const jwtRouter = require('./routes/jwtAuth');
 const lyricsRouter = require('./routes/lyrics');
 const fetchProfilesRouter = require('./routes/fetchProfiles')
 const swipesRouter = require('./routes/swipes');
+const conversationsRouter = require('./routes/conversations')
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/account', jwtRouter);
 app.use('/lyrics', lyricsRouter);
 app.use('/fetch-profiles', fetchProfilesRouter);
 app.use('/swipes', swipesRouter);
+app.use('/conversations', conversationsRouter);
 
 //socket.io 
 const http = require('http').Server(app);

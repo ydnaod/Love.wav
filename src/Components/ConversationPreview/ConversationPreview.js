@@ -1,6 +1,5 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import './ConversationPreview.css';
-import redSummer from '../../imagesForDev/92702565_10157230252121762_5471155548982345728_n 1.png'
 
 export function ConversationPreview(props){
 
