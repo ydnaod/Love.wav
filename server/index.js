@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
 
     socket.on('chat message', (msg) => {
       console.log(msg)
+      const query = pool.query('insert into message (user_account_id, conversation_id, message) values ($1, $2, $3)', [msg.userId, msg.conversationId, msg.body]);
       //socket.broadcast.emit('chat message', msg);
       io.in(id).emit('chat message', msg);
     })
