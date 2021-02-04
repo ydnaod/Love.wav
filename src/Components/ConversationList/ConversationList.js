@@ -6,8 +6,20 @@ import { Conversation } from '../Conversation/Conversation'
 export function ConversationList({ fetchUserId }) {
 
     const [conversationList, setConversationList] = useState([]);
+    const [conversationIdList, setConversationIdList] = useState();
     const [selectedConversation, setSelectedConversation] = useState();
     const [isLoading, setIsLoading] = useState(true);
+
+    const fetchLastMessage = async (id) => {
+        const response = await fetch(`http://localhost:4000/conversations/last-message/${id}`, {
+            method: 'GET',
+            headers: {token:sessionStorage.token}
+        });
+        //console.log(response)
+        const parseRes = await response.json();
+        //console.log(parseRes)
+        return parseRes;
+    }
 
     const createConvoPreview = async (conversation) => {
         const myId = await fetchUserId();
@@ -21,12 +33,14 @@ export function ConversationList({ fetchUserId }) {
             nameToFetch = await getNameFromId(conversation.user_account_id);
             photoToFetch = await getPhotoFromId(conversation.user_account_id);
         }
+        const lastMessage = await fetchLastMessage(conversation.id);
+        //console.log( lastMessage);
         //console.log(nameToFetch);
         //console.log(photoToFetch)
         return {
             id: conversation.id,
             name: nameToFetch,
-            lastText: 'idk yet',
+            lastText: lastMessage.message,
             picture: photoToFetch
         };
     }
@@ -40,7 +54,7 @@ export function ConversationList({ fetchUserId }) {
             });
             const parseRes = await response.json();
             let hasMatches;
-            //console.log(parseRes)
+            console.log(parseRes)
             if (parseRes.length == 0) {
                 hasMatches = false;
             }
@@ -55,23 +69,16 @@ export function ConversationList({ fetchUserId }) {
             });
             console.log(tempConvos);
             setConversationList(tempConvos);
+            // if(conversationList.length == 0 && hasMatches){
+            //     setConversationList(tempConvos);
+            // }
+            // else{
+            //     setIsLoading(false);
+            // }
+            //setIsLoading(false)
             setInterval(() => {
                 setIsLoading(false)
             }, 1500)
-            // while (isLoading || counter >0) {
-            //     if (hasMatches == true) {
-            //         setConversationList(tempConvos);
-            //     }
-            //     if (conversationList.length > 0) {
-            //         setIsLoading(false);
-            //     }
-            //     else if(hasMatches == 0){
-            //         setIsLoading(false);
-            //     }
-            //     else{
-            //         counter --;
-            //     }
-            // }
         } catch (error) {
             console.error(error.message);
         }
@@ -106,32 +113,11 @@ export function ConversationList({ fetchUserId }) {
     }
 
     useEffect(() => {
+        fetchConversations();
         try {
             // const conversations = [
-            //     {
-
-            //         id: 1,
-            //         name: 'Red Summer',
-            //         lastText: 'haha what are you up to?',
-            //         picture: 'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/92702565_10157230252121762_5471155548982345728_n.jpg?_nc_cat=100&ccb=2&_nc_sid=09cbfe&_nc_ohc=WtYksnctH3IAX-kVadz&_nc_ht=scontent-iad3-1.xx&oh=8457b4f429152c78675a801954d646e4&oe=603E9544'
-
-            //     },
-            //     {
-
-            //         id: 2,
-            //         name: 'Blonde Summer',
-            //         lastText: 'have you read any Marx?',
-            //         picture: 'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/67135032_10156509996661762_2449079524290199552_o.jpg?_nc_cat=108&ccb=2&_nc_sid=174925&_nc_ohc=fBp8S8ZPj4MAX9HI70O&_nc_ht=scontent-iad3-1.xx&oh=1db0ab230c523cf7ad595f2480de61ac&oe=603E9879'
-
-            //     },
-            //     {
-
-            //         id: 3,
-            //         name: 'Wholesome Summer',
-            //         lastText: 'i have seasonal allergies',
-            //         picture: 'https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/58883111_10156337445321762_6587977256465858560_o.jpg?_nc_cat=102&ccb=2&_nc_sid=174925&_nc_ohc=3_yJF2Q2AB0AX9Q1j4U&_nc_ht=scontent-iad3-1.xx&oh=4230bbca7bfb9077fd01043caaa60e30&oe=603DAF31'
-
-            //     },
+            //    
+            //         
             //     {
 
             //         id: 4,
@@ -142,7 +128,7 @@ export function ConversationList({ fetchUserId }) {
             //     }
 
             // ]
-            fetchConversations();
+            //fetchConversations();
         } catch (error) {
             console.error(error.message);
         }

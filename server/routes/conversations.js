@@ -16,7 +16,18 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id/messages', async (req, res) => {
+router.get('/last-message/:id/', async (req, res) => {
+    try {
+        console.log('hey wtf')
+        const query = await pool.query('select message from message where conversation_id = $1 and ts = (select max(ts) from message where conversation_id = $1);', [req.params.id]);
+        console.log(query.rows);
+        res.json(query.rows[0])
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
+router.get('/messages/:id', async (req, res) => {
     try {
         const query = await pool.query('select user_account_id, message, conversation_id from message where conversation_id = $1;', [req.params.id]);
         console.log(query.rows)
@@ -25,5 +36,6 @@ router.get('/:id/messages', async (req, res) => {
         console.error(error.message);
     }
 })
+
 
 module.exports = router;

@@ -22,7 +22,7 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
 
     const fetchMessages = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/conversations/${id}/messages`, {
+            const response = await fetch(`http://localhost:4000/conversations/messages/${id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token}
             });
