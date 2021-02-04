@@ -155,7 +155,7 @@ export function MatchDashboard({ fetchUserId }) {
         try {
             const userId = await fetchUserId();
             const profile = await fetchProfile(profiles[0].id);
-            console.log(profile)
+            //console.log(profile)
             const profile2 = await fetchProfile(userId);
             const playlist1 = await loadPlaylistTracks(profile.playlist_id);
             const playlist2 = await loadPlaylistTracks(profile2.playlist_id);

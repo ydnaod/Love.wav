@@ -39,7 +39,14 @@ export function ConversationList({ fetchUserId }) {
                 headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
+            let hasMatches;
             //console.log(parseRes)
+            if (parseRes.length == 0) {
+                hasMatches = false;
+            }
+            else {
+                hasMatches = true;
+            }
             const tempConvos = [];
             await parseRes.forEach(async (conversation) => {
                 const object = await createConvoPreview(conversation);
@@ -47,12 +54,24 @@ export function ConversationList({ fetchUserId }) {
                 tempConvos.push(object);
             });
             console.log(tempConvos);
-            if(conversationList.length === 0){
-                setConversationList(tempConvos);
-            }
-            if(conversationList.length > 0){
-                setIsLoading(false);
-            }
+            setConversationList(tempConvos);
+            setInterval(() => {
+                setIsLoading(false)
+            }, 1500)
+            // while (isLoading || counter >0) {
+            //     if (hasMatches == true) {
+            //         setConversationList(tempConvos);
+            //     }
+            //     if (conversationList.length > 0) {
+            //         setIsLoading(false);
+            //     }
+            //     else if(hasMatches == 0){
+            //         setIsLoading(false);
+            //     }
+            //     else{
+            //         counter --;
+            //     }
+            // }
         } catch (error) {
             console.error(error.message);
         }
@@ -86,7 +105,7 @@ export function ConversationList({ fetchUserId }) {
         }
     }
 
-    useEffect(async () => {
+    useEffect(() => {
         try {
             // const conversations = [
             //     {
@@ -127,7 +146,7 @@ export function ConversationList({ fetchUserId }) {
         } catch (error) {
             console.error(error.message);
         }
-    }, [conversationList]);
+    }, []);
 
     const handleConversationSelect = (id) => {
         setSelectedConversation(id);
@@ -158,9 +177,9 @@ export function ConversationList({ fetchUserId }) {
 
     return (
         <Fragment>
-                {
-                    isLoading ? <p>loading</p> : finishedLoadingDiv
-                }
+            {
+                isLoading ? <p>loading</p> : finishedLoadingDiv
+            }
         </Fragment>
     )
 }
