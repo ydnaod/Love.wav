@@ -230,6 +230,10 @@ export function MatchDashboard({ fetchUserId }) {
         }
     }
 
+    const matchNotification = async () => {
+        console.log('You got a match!')
+    }
+
     const handleSwipe = async (swipe) => {
         try {
             const body = {
@@ -245,8 +249,11 @@ export function MatchDashboard({ fetchUserId }) {
             });
             const parseRes = await response.json();
             console.log(parseRes);
+            if(parseRes.match === true){
+                matchNotification();
+            }
             tempArray.shift();
-            console.log(tempArray)
+            //console.log(tempArray)
             setProfiles(tempArray)
             setIsLoading(true);
             fetchData();
