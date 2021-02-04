@@ -20,8 +20,28 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
 
     const SOCKET_SERVER_URL = "http://localhost:4000";
 
+    const fetchMessages = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/conversations/${id}/messages`, {
+                method: 'GET',
+                headers: { token: sessionStorage.token}
+            });
+            const parseRes = await response.json();
+            //console.log(parseRes)
+            parseRes.forEach(message => {
+                message.body = message.message;
+                message.userId = message.user_account_id;
+            });
+            //console.log(parseRes)
+            setMessages(parseRes);
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     useEffect(() => {
     
+        fetchMessages();
         // Creates a WebSocket connection
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             withCredentials: true,
