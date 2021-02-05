@@ -3,6 +3,7 @@ import './ConversationList.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import { Conversation } from '../Conversation/Conversation'
 import {ConversationListContent} from './ConversationListContent';
+import ReactCSSTransitionGroup from 'react-transition-group';
 
 export function ConversationList({ fetchUserId }) {
 
