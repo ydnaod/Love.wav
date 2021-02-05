@@ -38,8 +38,8 @@ function App(props) {
   }
 
   const dashboard = <div className="dashboard">
-    <MatchDashboard fetchUserId={fetchUserId}/>
-    <ConversationList fetchUserId={fetchUserId}/>
+    <MatchDashboard fetchUserId={fetchUserId} />
+    <ConversationList fetchUserId={fetchUserId} />
   </div>
 
   const isAuth = async () => {
@@ -64,21 +64,23 @@ function App(props) {
     <Router >
       <Fragment>
         <div className="App">
-          <NavBar isAuthorized={isAuthorized}
-            handleAuthorization={handleAuthorization} />
-          <Switch>
-            <Route exact path="/" render={props => isAuthorized ? dashboard : <Redirect to='/login' />} />
-            <Route exact path='/profile'>
-              <EditProfile fetchUserId={fetchUserId}/>
-            </Route>
-            <Route exact path='/settings'>
-              <Settings fetchUserId={fetchUserId}/>
-            </Route>
-            <Route exact path='/login' render={props => !isAuthorized ? <Login isAuthorized={isAuthorized}
-              handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />
-            <Route exact path='/register' render={props => !isAuthorized ? <Register isAuthorized={isAuthorized}
-              handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />
-          </Switch>
+          <div className='App-Content'>
+            <NavBar isAuthorized={isAuthorized}
+              handleAuthorization={handleAuthorization} />
+            <Switch>
+              <Route exact path="/" render={props => isAuthorized ? dashboard : <Redirect to='/login' />} />
+              <Route exact path='/profile'>
+                <EditProfile fetchUserId={fetchUserId} />
+              </Route>
+              <Route exact path='/settings'>
+                <Settings fetchUserId={fetchUserId} />
+              </Route>
+              <Route exact path='/login' render={props => !isAuthorized ? <Login isAuthorized={isAuthorized}
+                handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />
+              <Route exact path='/register' render={props => !isAuthorized ? <Register isAuthorized={isAuthorized}
+                handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />
+            </Switch>
+          </div>
         </div>
       </Fragment>
     </Router>
