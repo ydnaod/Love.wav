@@ -9,13 +9,14 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const socketRef = useRef();
+    const conversationRef = useRef();
 
     const handleChange = (e) => {
         setInput(e.target.value);
     }
 
     const handleBackClick = () => {
-        handleConversationSelect('');
+        handleConversationSelect('', true);
     }
 
     const SOCKET_SERVER_URL = "http://localhost:4000";
@@ -97,7 +98,7 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
 
     return (
         <Fragment>
-            <div className='Conversation'>
+            <div className='Conversation' ref={conversationRef}>
                 <img onClick={handleBackClick} className='backArrow' src={backArrow}></img>
                 <div>
                     {

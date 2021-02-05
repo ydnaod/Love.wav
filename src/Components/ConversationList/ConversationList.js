@@ -1,7 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import './ConversationList.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import { Conversation } from '../Conversation/Conversation'
+import {ConversationListContent} from './ConversationListContent';
 
 export function ConversationList({ fetchUserId }) {
 
@@ -9,11 +10,13 @@ export function ConversationList({ fetchUserId }) {
     const [conversationIdList, setConversationIdList] = useState();
     const [selectedConversation, setSelectedConversation] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const listRef = useRef();
+    const convoRef = useRef();
 
     const fetchLastMessage = async (id) => {
         const response = await fetch(`http://localhost:4000/conversations/last-message/${id}`, {
             method: 'GET',
-            headers: {token:sessionStorage.token}
+            headers: { token: sessionStorage.token }
         });
         //console.log(response)
         const parseRes = await response.json();
@@ -134,21 +137,35 @@ export function ConversationList({ fetchUserId }) {
         }
     }, []);
 
-    const handleConversationSelect = (id) => {
-        setSelectedConversation(id);
+    const handleConversationSelect = (id, closeConvo = false) => {
+        const list = listRef.current;
+        console.log(closeConvo)
+        if (list && !closeConvo) {
+            list.classList.toggle('fade-out');
+        }
+        //if (closeConvo) {
+            setSelectedConversation(id);
+        //}
+        // else {
+        //     setInterval(() => {
+        //         setSelectedConversation(id);
+        //     }, 1000)
+        // }
     }
 
-    const conversationListDiv =
-        <Fragment>
-            <h1 className="label">messages</h1>
-            {
-                conversationList.map(conversation => {
-                    return <ConversationPreview conversation={conversation}
-                        key={conversation.id}
-                        handleConversationSelect={handleConversationSelect} />
-                })
-            }
-        </Fragment>;
+    // const conversationListDiv =
+    //     <Fragment>
+    //         <div className='convo-container-content' ref={listRef}>
+    //             <h1 className="label">messages</h1>
+    //             {
+    //                 conversationList.map(conversation => {
+    //                     return <ConversationPreview conversation={conversation}
+    //                         key={conversation.id}
+    //                         handleConversationSelect={handleConversationSelect} />
+    //                 })
+    //             }
+    //         </div>
+    //     </Fragment>;
 
     const finishedLoadingDiv =
         <Fragment>
@@ -156,7 +173,10 @@ export function ConversationList({ fetchUserId }) {
                 {
                     selectedConversation ? <Conversation id={selectedConversation}
                         handleConversationSelect={handleConversationSelect}
-                        fetchUserId={fetchUserId} /> : conversationListDiv
+                        fetchUserId={fetchUserId} /> : <ConversationListContent 
+                            handleConversationSelect={handleConversationSelect}
+                            conversationList={conversationList}
+                            fetchUserId={fetchUserId}/>
                 }
             </div>
         </Fragment>;

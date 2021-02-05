@@ -7,8 +7,13 @@
     justify-content: start;
     text-align: start;
     padding: 25px;
+    /*overflow: hidden;*/
 }
 
+.convo-container-content{
+    /*transition: transform 1s ease-in-out*/
+    transition: opacity 1s ease-in-out;
+}
 
 .label {
     margin-bottom: .5em;
