@@ -1,11 +1,12 @@
 .popup{
     height: 100vh;
     position: absolute;
-    top: -9%;
-    left: -10%;
-    right: -1.7%;
+    top: -13.2%;
+    left: -15%;
+    right: -11.1%;
     z-index: 5;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(206, 206, 206, 0.35);
+    backdrop-filter: blur(1rem);
 }
 
 .window {

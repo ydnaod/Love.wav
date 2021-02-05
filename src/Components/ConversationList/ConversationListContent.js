@@ -7,12 +7,16 @@ export function ConversationListContent({ fetchUserId, conversationList, handleC
 
     const listRef = useRef();
 
-    useEffect(() => {
-        return () => {
-            const list = listRef.current;
+    const unmount = () => {
+        const list = listRef.current;
             if (list) {
                 list.classList.toggle('fade-out');
             }
+    }
+
+    useEffect(() => {
+        return () => {
+            unmount();
         }
     });
 
