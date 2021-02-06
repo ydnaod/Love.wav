@@ -3,7 +3,7 @@ import './ConversationList.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import { Conversation } from '../Conversation/Conversation'
 import { ConversationListContent } from './ConversationListContent';
-import { useTransition, animated } from 'react-spring';
+import { useTransition, animated, useChain, useSpring } from 'react-spring';
 
 export function ConversationList({ fetchUserId }) {
 
@@ -11,12 +11,22 @@ export function ConversationList({ fetchUserId }) {
     const [convoToggle, setConvoToggle] = useState(false);
     const [selectedConversation, setSelectedConversation] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const listRef = useRef();
-    const transitions = useTransition(convoToggle, null, {
-        from: { opacity: 0 },
-        enter: { opacity: 1 },
-        leave: { opacity: 1 },
+
+    const convoListRef = useRef();
+    const convoListTransition = useSpring({
+        ref: convoListRef,
+        to: { opacity: convoToggle ? .5 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
+        from: { opacity: convoToggle ? 1 : .5, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(-100%,0,0)' },
     });
+    const convoRef = useRef();
+    const conversationTransition = useSpring({
+        ref: convoRef,
+        from: { opacity: convoToggle ? .5 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
+        to: { opacity: convoToggle ? 1 : .5, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(100%,0,0)' },
+    });
+
+    useChain(convoToggle ? [convoListRef, convoRef] : [convoRef, convoListRef], [0, 0])
+
 
     const fetchLastMessage = async (id) => {
         const response = await fetch(`http://localhost:4000/conversations/last-message/${id}`, {
@@ -143,7 +153,7 @@ export function ConversationList({ fetchUserId }) {
     }, []);
 
     const handleConvoToggle = () => {
-        setConvoToggle(!convoToggle);
+        setConvoToggle(!convoToggle)
     }
 
     const handleConversationSelect = (id) => {
@@ -171,25 +181,38 @@ export function ConversationList({ fetchUserId }) {
     //         </div>
     //     </Fragment>;
 
+
     const finishedLoadingDiv =
         <Fragment>
             <div className="ConversationList">
                 {
-                    transitions.map(({ item, key, props }) =>
-                        convoToggle ? <animated.div style={props}><Conversation id={selectedConversation}
-                            handleConvoToggle={handleConvoToggle}
-                            fetchUserId={fetchUserId}
-                            key={selectedConversation} /></animated.div> :
-                            <animated.div style={props}><ConversationListContent
-                                handleConversationSelect={handleConversationSelect}
+
+                    !convoToggle ? <animated.div style={convoListTransition}><ConversationListContent
+                        handleConversationSelect={handleConversationSelect}
+                        handleConvoToggle={handleConvoToggle}
+                        conversationList={conversationList}
+                        fetchUserId={fetchUserId}>
+                    </ConversationListContent>
+                        {/* {conversationTransition.map(({ item, key, props }) =>
+                            convoToggle && <animated.div style={props}><Conversation id={selectedConversation}
                                 handleConvoToggle={handleConvoToggle}
-                                conversationList={conversationList}
-                                fetchUserId={fetchUserId} />
+                                fetchUserId={fetchUserId}
+                                key={selectedConversation} /></animated.div>
+                        )} */}
+                    </animated.div>
+                        :
+                        <animated.div style={conversationTransition}>
+                                <Conversation id={selectedConversation}
+                                    handleConvoToggle={handleConvoToggle}
+                                    fetchUserId={fetchUserId}
+                                    key={selectedConversation} />
                             </animated.div>
-                    )
+                        
+
                 }
             </div>
         </Fragment >;
+
 
     return (
         <Fragment>
