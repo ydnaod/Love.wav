@@ -2,8 +2,8 @@ import React, { useState, useEffect, Fragment, useRef } from 'react';
 import './ConversationList.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import { Conversation } from '../Conversation/Conversation'
-import {ConversationListContent} from './ConversationListContent';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import { ConversationListContent } from './ConversationListContent';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 export function ConversationList({ fetchUserId }) {
 
@@ -145,7 +145,7 @@ export function ConversationList({ fetchUserId }) {
             list.classList.toggle('fade-out');
         }
         //if (closeConvo) {
-            setSelectedConversation(id);
+        setSelectedConversation(id);
         //}
         // else {
         //     setInterval(() => {
@@ -172,12 +172,19 @@ export function ConversationList({ fetchUserId }) {
         <Fragment>
             <div className="ConversationList">
                 {
-                    selectedConversation ? <Conversation id={selectedConversation}
-                        handleConversationSelect={handleConversationSelect}
-                        fetchUserId={fetchUserId} /> : <ConversationListContent 
+                    selectedConversation ?
+                        <CSSTransitionGroup
+                            transitionName="conversation-animation"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={300}>
+                            <Conversation id={selectedConversation}
+                                handleConversationSelect={handleConversationSelect}
+                                fetchUserId={fetchUserId} 
+                                key={selectedConversation}/>
+                        </CSSTransitionGroup> : <ConversationListContent
                             handleConversationSelect={handleConversationSelect}
                             conversationList={conversationList}
-                            fetchUserId={fetchUserId}/>
+                            fetchUserId={fetchUserId} />
                 }
             </div>
         </Fragment>;

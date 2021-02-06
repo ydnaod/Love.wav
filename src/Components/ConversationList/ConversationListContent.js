@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment, useRef } from 'react';
 import './ConversationListContent.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import { Conversation } from '../Conversation/Conversation'
+import ReactCSSTransitionGroup from 'react-transition-group';
 
 export function ConversationListContent({ fetchUserId, conversationList, handleConversationSelect }) {
 

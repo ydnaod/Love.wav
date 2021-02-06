@@ -3,6 +3,7 @@ import './Conversation.css';
 import backArrow from '../../images/backArrow.png'
 import {Message} from '../Message/Message'
 import socketIOClient from "socket.io-client";
+import ReactCSSTransitionGroup from 'react-transition-group';
 
 export function Conversation({handleConversationSelect, id, fetchUserId}) {
 
