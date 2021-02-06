@@ -3,16 +3,20 @@ import './ConversationList.css';
 import { ConversationPreview } from '../ConversationPreview/ConversationPreview';
 import { Conversation } from '../Conversation/Conversation'
 import { ConversationListContent } from './ConversationListContent';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { useTransition, animated } from 'react-spring';
 
 export function ConversationList({ fetchUserId }) {
 
     const [conversationList, setConversationList] = useState([]);
-    const [conversationIdList, setConversationIdList] = useState();
+    const [convoToggle, setConvoToggle] = useState(false);
     const [selectedConversation, setSelectedConversation] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const listRef = useRef();
-    const convoRef = useRef();
+    const transitions = useTransition(convoToggle, null, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 1 },
+    });
 
     const fetchLastMessage = async (id) => {
         const response = await fetch(`http://localhost:4000/conversations/last-message/${id}`, {
@@ -138,12 +142,11 @@ export function ConversationList({ fetchUserId }) {
         }
     }, []);
 
-    const handleConversationSelect = (id, closeConvo = false) => {
-        const list = listRef.current;
-        console.log(closeConvo)
-        if (list && !closeConvo) {
-            list.classList.toggle('fade-out');
-        }
+    const handleConvoToggle = () => {
+        setConvoToggle(!convoToggle);
+    }
+
+    const handleConversationSelect = (id) => {
         //if (closeConvo) {
         setSelectedConversation(id);
         //}
@@ -172,22 +175,21 @@ export function ConversationList({ fetchUserId }) {
         <Fragment>
             <div className="ConversationList">
                 {
-                    selectedConversation ?
-                        <CSSTransitionGroup
-                            transitionName="conversation-animation"
-                            transitionEnterTimeout={500}
-                            transitionLeaveTimeout={300}>
-                            <Conversation id={selectedConversation}
+                    transitions.map(({ item, key, props }) =>
+                        convoToggle ? <animated.div style={props}><Conversation id={selectedConversation}
+                            handleConvoToggle={handleConvoToggle}
+                            fetchUserId={fetchUserId}
+                            key={selectedConversation} /></animated.div> :
+                            <animated.div style={props}><ConversationListContent
                                 handleConversationSelect={handleConversationSelect}
-                                fetchUserId={fetchUserId} 
-                                key={selectedConversation}/>
-                        </CSSTransitionGroup> : <ConversationListContent
-                            handleConversationSelect={handleConversationSelect}
-                            conversationList={conversationList}
-                            fetchUserId={fetchUserId} />
+                                handleConvoToggle={handleConvoToggle}
+                                conversationList={conversationList}
+                                fetchUserId={fetchUserId} />
+                            </animated.div>
+                    )
                 }
             </div>
-        </Fragment>;
+        </Fragment >;
 
     return (
         <Fragment>

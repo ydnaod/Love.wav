@@ -3,9 +3,8 @@ import './Conversation.css';
 import backArrow from '../../images/backArrow.png'
 import {Message} from '../Message/Message'
 import socketIOClient from "socket.io-client";
-import ReactCSSTransitionGroup from 'react-transition-group';
 
-export function Conversation({handleConversationSelect, id, fetchUserId}) {
+export function Conversation({handleConvoToggle, id, fetchUserId}) {
 
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
@@ -17,7 +16,7 @@ export function Conversation({handleConversationSelect, id, fetchUserId}) {
     }
 
     const handleBackClick = () => {
-        handleConversationSelect('', true);
+        handleConvoToggle();
     }
 
     const SOCKET_SERVER_URL = "http://localhost:4000";

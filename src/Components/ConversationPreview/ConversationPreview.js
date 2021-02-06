@@ -5,6 +5,7 @@ export function ConversationPreview(props){
 
     const handleClick = () => {
         props.handleConversationSelect(props.conversation.id);
+        props.handleConvoToggle();
     }
 
     return (
