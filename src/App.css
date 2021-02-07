@@ -68,9 +68,10 @@
 
 /*loading*/
 .loading-gradient {
-  background: repeating-linear-gradient(90deg,#dbdbdb,#dbdbdb,#dbdbdb,rgb(235, 235, 235) ,  #dbdbdb,#dbdbdb,#dbdbdb);
+  background: repeating-linear-gradient(90deg,#ff17789a,#ff17789a,#ff17789a,#ff8dbd,  #ff17789a,#ff17789a,#ff17789a);
   background-size: 200% 200%;
   color: transparent;
+  border-radius: 12px / 10px;
 
   -webkit-animation: GreyGradient 2s ease infinite;
   -moz-animation: GreyGradient 2s ease infinite;
@@ -89,19 +90,7 @@
 }
 @keyframes GreyGradient {
   0%{background-position:0% 50%}
-  50%{background-position:50% 50%}
-  100%{background-position:0% 50%}
+  50%{background-position:150% 50%}
+  100%{background-position:350% 50%}
 }
 
-/*swipe in*/
-.swipe-from-left{
-  /*transform: translateX(-100%);*/
-}
-
-.fade-out{
-  opacity: 0;
-}
-
-.fade-in{
-  opacity: 1;
-}

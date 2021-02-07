@@ -4,6 +4,7 @@ import { ConversationPreview } from '../ConversationPreview/ConversationPreview'
 import { Conversation } from '../Conversation/Conversation'
 import { ConversationListContent } from './ConversationListContent';
 import { useTransition, animated, useChain, useSpring } from 'react-spring';
+import { LoadingConversationList } from './LoadingConversationList';
 
 export function ConversationList({ fetchUserId }) {
 
@@ -182,11 +183,10 @@ export function ConversationList({ fetchUserId }) {
             </div>
         </Fragment >;
 
-
     return (
         <Fragment>
             {
-                isLoading ? <p>loading</p> : finishedLoadingDiv
+                isLoading ? <LoadingConversationList/> : finishedLoadingDiv
             }
         </Fragment>
     )
