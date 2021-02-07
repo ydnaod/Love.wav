@@ -54,7 +54,10 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
             });
             //console.log(parseRes)
             setMessages(parseRes);
-            executeScroll()
+            setTimeout(() => {
+                executeScroll();
+            }, 500)
+            //executeScroll()
         } catch (error) {
             console.error(error.message);
         }
@@ -95,7 +98,6 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         socketRef.current.on('chat message', (msg) => {
             console.log(msg)
             setMessages((messages) => [...messages, msg]);
-            executeScroll()
         })
 
         // Destroys the socket reference
@@ -141,9 +143,10 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         // lastMessageRef.current.scrollIntoView();
         // }
         const element = document.getElementById("lastMessageRefDiv");
-        setInterval(() => {
-            element.scrollIntoView();
-        }, 500)
+        element.scrollIntoView();
+        // setInterval(() => {
+        //     element.scrollIntoView();
+        // }, 500)
     }
 
     return (

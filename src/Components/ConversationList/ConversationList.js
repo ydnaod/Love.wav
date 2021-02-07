@@ -94,7 +94,7 @@ export function ConversationList({ fetchUserId }) {
             //     setIsLoading(false);
             // }
             //setIsLoading(false)
-            setInterval(() => {
+            setTimeout(() => {
                 setIsLoading(false)
             }, 1500)
         } catch (error) {
