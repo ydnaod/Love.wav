@@ -7,10 +7,10 @@ export function SlideThemeSong(props) {
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{props.profileInfo.slideTitle}</h2>
+                    <h2>theme song</h2>
                 </div>
                 <div className="songDetailsSlide">
-                    <img className="albumCover" src={props.profileInfo.image} />
+                    <img className="albumCover" src={props.profileInfo.themeSongImage} />
                     <div className="songDetails">
                         <h3>{props.profileInfo.title}</h3>
                         <h3>{props.profileInfo.artist}</h3>

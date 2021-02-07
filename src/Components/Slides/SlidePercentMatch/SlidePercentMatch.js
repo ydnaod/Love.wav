@@ -85,7 +85,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{profileInfo.slideTitle[0]}</h2>
+                    <h2>it seems you both like</h2>
                 </div>
                 <div className="percentMatchSlide">
                     <div className="sentence">
@@ -98,7 +98,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
                     </div>
                 </div>
                 <div className="slideTitle">
-                    <h2>{profileInfo.slideTitle[1]}</h2>
+                    <h2>you can show them</h2>
                 </div>
                 <div className="percentMatchSlide">
                     <div className="sentence">

@@ -1,13 +1,22 @@
 .Profile {
     width: 75%;
     height: 90%;
-    background: linear-gradient(to right bottom, rgb(255,255,255,.8), rgb(255,255,255,.4));
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 30px;
     border-radius: 5%;
     flex-direction: column;
+}
+
+.entireProfile{
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5%;
+    width: 80%;
+    height: 90%;
 }
 
 .albumCover{

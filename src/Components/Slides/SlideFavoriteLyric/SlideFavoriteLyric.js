@@ -8,11 +8,11 @@ export function SlideFavoriteLyric({profileInfo}) {
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{profileInfo.slideTitle}</h2>
+                    <h2>guess their favorite lyric</h2>
                 </div>
                 <div className="lyricSlide">
                     <div className="lyrics">
-                        <h3>{ profileInfo.title} | {profileInfo.artist }</h3>
+                        <h3>{ profileInfo.favoriteLyricTitle} | {profileInfo.favoriteLyricArtist }</h3>
                         {
                             profileInfo.lyrics.map(lyric => {
 

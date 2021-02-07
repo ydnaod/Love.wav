@@ -165,40 +165,25 @@ export function MatchDashboard({ fetchUserId }) {
             const trackQualities2 = await calculateTrackQualities(idString2);
             const themeSong = await fetchThemeSong(profile.theme_song_id);
             const favoriteLyrics = await fetchFavoriteLyrics(profiles[0].id);
-            const profileInfo = [
+            const profileInfo = 
                 {
-                    id: 0,
-                    slideTitle: profile.first_name,
+                    
+                    name: profile.first_name,
                     image: profile.photo,
-                    percentMatch: await calculatePercentMatch(trackQualities1, trackQualities2)
-                },
-                {
-                    id: 1,
-                    slideTitle: 'their playlist',
-                    trackList: await playlist1
-                },
-                {
-                    id: 2,
-                    slideTitle: 'theme song',
-                    image: themeSong.album.images[0].url,
+                    percentMatch: await calculatePercentMatch(trackQualities1, trackQualities2),
+                    trackList: await playlist1,
+                    themeSongImage: themeSong.album.images[0].url,
                     title: themeSong.name,
-                    artist: themeSong.artists[0].name
-                },
-                {
-                    id: 3,
-                    slideTitle: 'guess their favorite lyric',
+                    artist: themeSong.artists[0].name,
                     lyrics: favoriteLyrics.lyrics,
                     favoriteLyric: favoriteLyrics.favorite_lyric,
-                    title: favoriteLyrics.song_title,
-                    artist: favoriteLyrics.song_artist
-                },
-                {
-                    id: 4,
-                    slideTitle: ['it seems you both like', 'you can show them'],
+                    favoriteLyricTitle: favoriteLyrics.song_title,
+                    favoriteLyricArtist: favoriteLyrics.song_artist,
                     musicDiff: await calculateMusicDiff(trackQualities1, trackQualities2),
                     yourTrackQualities: await trackQualities1,
-                },
-            ]
+                }
+            
+            
             setSlides(profileInfo);
             setIsLoading(false);
         } catch (error) {
@@ -270,14 +255,12 @@ export function MatchDashboard({ fetchUserId }) {
     const profileSection =
         <Fragment>
             <div className="profileSection">
-                <img src={LeftArrow} onClick={handleLeftArrowClick}></img>
 
                 {
-                    isLoading ? <p>isLoading</p> : <Profile profileInfo={slides[current]}
-                        key={slides[current].id} />
+                    isLoading ? <p>isLoading</p> : <Profile profileInfo={slides}
+                        key='1' />
                 }
 
-                <img src={RightArrow} onClick={handleRightArrowClick}></img>
             </div>
             <div className="nameSection">
                 <div className="buttons">

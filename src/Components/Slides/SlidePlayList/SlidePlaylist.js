@@ -9,7 +9,7 @@ export function SlidePlaylist(props) {
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{props.profileInfo.slideTitle}</h2>
+                    <h2>their playlist</h2>
                 </div>
                 <div className="playlistSlide">
                     <div className="tracks">
