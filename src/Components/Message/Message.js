@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect, useRef } from 'react';
 import './Message.css';
 
-export function Message({ message, owner, fetchUserId }) {
+export function Message({ message, owner, fetchUserId, styleName }) {
 
     //const [messageOwner, setMessageOwner] = useState();
     const messageRef = useRef();
@@ -26,13 +26,13 @@ export function Message({ message, owner, fetchUserId }) {
 
 
     useEffect( async() => {
-        determineOwner();
+        //determineOwner();
     },[])
     
     return (
         <Fragment>
             <div className="messageContainer">
-                <p ref={messageRef} className={`message` /*${messageOWner} */}>{message}</p>
+                <p ref={messageRef} className={`message ${styleName}`}>{message}</p>
             </div>
         </Fragment>
     )

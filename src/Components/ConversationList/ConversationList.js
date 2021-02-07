@@ -15,14 +15,14 @@ export function ConversationList({ fetchUserId }) {
     const convoListRef = useRef();
     const convoListTransition = useSpring({
         ref: convoListRef,
-        to: { opacity: convoToggle ? .5 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
-        from: { opacity: convoToggle ? 1 : .5, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(-100%,0,0)' },
+        to: { opacity: convoToggle ? 0 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
+        from: { opacity: convoToggle ? 1 : 0, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(-100%,0,0)' },
     });
     const convoRef = useRef();
     const conversationTransition = useSpring({
         ref: convoRef,
-        from: { opacity: convoToggle ? .5 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
-        to: { opacity: convoToggle ? 1 : .5, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(100%,0,0)' },
+        from: { opacity: convoToggle ? 0 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
+        to: { opacity: convoToggle ? 1 : 0, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(100%,0,0)' },
     });
 
     useChain(convoToggle ? [convoListRef, convoRef] : [convoRef, convoListRef], [0, 0])
@@ -133,20 +133,6 @@ export function ConversationList({ fetchUserId }) {
     useEffect(() => {
         fetchConversations();
         try {
-            // const conversations = [
-            //    
-            //         
-            //     {
-
-            //         id: 4,
-            //         name: 'bikini Summer',
-            //         lastText: 'u up?',
-            //         picture: 'https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/13497952_10153673708421762_3223320782340572090_o.jpg?_nc_cat=106&ccb=2&_nc_sid=174925&_nc_ohc=j_Zwan_QIAkAX-_cPAN&_nc_ht=scontent-iad3-1.xx&oh=4769a5cec2a20c626432248dee7e7c4f&oe=603E3556'
-
-            //     }
-
-            // ]
-            //fetchConversations();
         } catch (error) {
             console.error(error.message);
         }
@@ -167,19 +153,6 @@ export function ConversationList({ fetchUserId }) {
         // }
     }
 
-    // const conversationListDiv =
-    //     <Fragment>
-    //         <div className='convo-container-content' ref={listRef}>
-    //             <h1 className="label">messages</h1>
-    //             {
-    //                 conversationList.map(conversation => {
-    //                     return <ConversationPreview conversation={conversation}
-    //                         key={conversation.id}
-    //                         handleConversationSelect={handleConversationSelect} />
-    //                 })
-    //             }
-    //         </div>
-    //     </Fragment>;
 
 
     const finishedLoadingDiv =
@@ -193,19 +166,15 @@ export function ConversationList({ fetchUserId }) {
                         conversationList={conversationList}
                         fetchUserId={fetchUserId}>
                     </ConversationListContent>
-                        {/* {conversationTransition.map(({ item, key, props }) =>
-                            convoToggle && <animated.div style={props}><Conversation id={selectedConversation}
-                                handleConvoToggle={handleConvoToggle}
-                                fetchUserId={fetchUserId}
-                                key={selectedConversation} /></animated.div>
-                        )} */}
                     </animated.div>
                         :
                         <animated.div style={conversationTransition}>
                                 <Conversation id={selectedConversation}
                                     handleConvoToggle={handleConvoToggle}
                                     fetchUserId={fetchUserId}
-                                    key={selectedConversation} />
+                                    key={selectedConversation}
+                                    getNameFromId={getNameFromId}
+                                    getPhotoFromId={getPhotoFromId}/>
                             </animated.div>
                         
 

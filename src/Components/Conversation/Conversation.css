@@ -21,6 +21,16 @@
     margin-bottom: 15px;
 }
 
+.messages{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.conversationHeader{
+    display: flex;
+    justify-content: space-between;
+}
+
 .messageInput{
     margin-top: 5px;
 }

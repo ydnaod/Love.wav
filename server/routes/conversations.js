@@ -37,5 +37,20 @@ router.get('/messages/:id', async (req, res) => {
     }
 })
 
+router.get('/their-id/:id/:myId', async (req, res) => {
+    try {
+        const query = await pool.query('select user_account_id, other_user_account_id from conversation where id = $1', [req.params.id]);
+        console.log(query.rows[0])
+        if(query.rows[0].user_account_id == req.params.myId){
+            res.json(query.rows[0].other_user_account_id)
+        }
+        else{
+            res.json(query.rows[0].user_account_id)
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 
 module.exports = router;
