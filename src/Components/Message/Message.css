@@ -16,6 +16,7 @@
 .message{
     border-radius: 10px / 8px;
     padding: 4px;
+    margin-bottom: 4px;
 }
 
 .messageContainer {

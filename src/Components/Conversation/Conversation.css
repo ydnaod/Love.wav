@@ -1,6 +1,6 @@
 .backArrow{
     width: 15px;
-    height: auto;
+    max-height: 32px;
 }
 
 .Conversation{
@@ -13,6 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 5px;
 }
 
 .messageButton{
@@ -28,9 +29,21 @@
 
 .conversationHeader{
     display: flex;
-    justify-content: space-between;
+    
 }
 
 .messageInput{
-    margin-top: 5px;
+    margin-top: 0px;
+}
+
+.userName{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30%;
+    margin-bottom: 10px;
+}
+#lastMessageRefDiv{
+    height: 1px;
 }

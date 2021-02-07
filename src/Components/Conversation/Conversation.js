@@ -13,6 +13,7 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
     const [name, setName] = useState();
     const [photo, setPhoto] = useState();
     const [theirId, setTheirId] = useState();
+    const lastMessageRef = useRef();
 
     const handleChange = (e) => {
         setInput(e.target.value);
@@ -53,6 +54,7 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
             });
             //console.log(parseRes)
             setMessages(parseRes);
+            executeScroll()
         } catch (error) {
             console.error(error.message);
         }
@@ -93,6 +95,7 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         socketRef.current.on('chat message', (msg) => {
             console.log(msg)
             setMessages((messages) => [...messages, msg]);
+            executeScroll()
         })
 
         // Destroys the socket reference
@@ -133,13 +136,25 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         }
     }
 
+    const executeScroll = () => {
+        // if(lastMessageRef.current){
+        // lastMessageRef.current.scrollIntoView();
+        // }
+        const element = document.getElementById("lastMessageRefDiv");
+        setInterval(() => {
+            element.scrollIntoView();
+        }, 500)
+    }
 
     return (
         <Fragment>
             <div className='Conversation' ref={conversationRef}>
                 <div className='conversationHeader'>
                     <img onClick={handleBackClick} className='backArrow' src={backArrow}></img>
-                    <h4>{name}</h4>
+                    <div className='userName'>
+                        <img className='conversationIcon' src={photo}></img>
+                        <h2>{name}</h2>
+                    </div>
                 </div>
                 <div className="messages">
                     {
@@ -148,15 +163,14 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
                                 key={index}
                                 owner={message.userId}
                                 fetchUserId={fetchUserId}
-                                styleName={determineOwner(message.userId, theirId)}
-                                //className={await determineOwner(message.userId)}
-                                />
+                                styleName={determineOwner(message.userId, theirId)}/>
                         })
                     }
+                    <div id='lastMessageRefDiv' ref={lastMessageRef}></div>
                 </div>
                 <div className='messageInput'>
                     <form className='messageForm' onSubmit={handleSubmit}>
-                        <input value={input} onChange={handleChange} placeholder='message' className='message'></input>
+                        <input value={input} onChange={handleChange} placeholder='message' className='messageInput'></input>
                         <button className='button messageButton'>send</button>
                     </form>
                 </div>
