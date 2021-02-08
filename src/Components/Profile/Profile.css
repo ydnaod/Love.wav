@@ -1,12 +1,17 @@
 .Profile {
-    width: 75%;
+    width: 85%;
     height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px;
+    margin: 15px;
     border-radius: 5%;
     flex-direction: column;
+}
+
+hr{
+    width: 40%;
+    border-color: #372470;
 }
 
 .entireProfile{

@@ -23,7 +23,7 @@ export function Track(props) {
             <div className="trackList">
                 <div style={props.isSelected ? style.selected : style.defaultStyle} className="track" onClick={handleSelectSong}>
                     <img className="sampleButton" src={playSampleButton} onClick={handlePlaySample} />
-                    <p>{props.track.playlistIndex || props.track.playlistIndex == 0 ? props.track.playlistIndex + 1 + ". " : ""}<span className="title">{props.track.name}</span> | {props.track.artist} | {props.track.album}</p>
+                    <p className='songText'>{props.track.playlistIndex || props.track.playlistIndex == 0 ? props.track.playlistIndex + 1 + ". " : ""}<span className="title">{props.track.name}</span> | {props.track.artist} | {props.track.album}</p>
                 </div>
             </div>
         </Fragment>

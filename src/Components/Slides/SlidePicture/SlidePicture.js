@@ -11,7 +11,7 @@ export function SlidePicture(props){
         <Fragment>
             <div className="Profile">
                 <div className="slideTitle">
-                    <h2>{props.profileInfo.slideTitle}</h2>
+                    <h2>{props.profileInfo.name}</h2>
                 </div>
                 <div className="pictureSlide">
                     <img className="profilePicture" src={props.profileInfo.image} />

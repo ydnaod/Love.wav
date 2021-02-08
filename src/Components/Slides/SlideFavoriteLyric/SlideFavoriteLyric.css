@@ -4,15 +4,17 @@
     justify-content: center;
     align-items: flex-start;
     width: 80%;
+    text-align: left;
+    padding-top: 30px;
+    padding-left: 30px;
 }
 
 .lyricSlide{
     display: flex;
     height: 80%;
     width: 100%;
-    padding-left: 2em;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .lyric {

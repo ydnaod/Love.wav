@@ -95,3 +95,8 @@
   100%{background-position:350% 50%}
 }
 
+::-webkit-scrollbar{
+  /* border-radius: 5%; */
+  color: #372470;
+  /* width: 10px; */
+}

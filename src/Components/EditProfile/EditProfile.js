@@ -11,6 +11,7 @@ import { ProfilePicture } from '../ProfilePicture/ProfilePicture';
 import { YourPlaylist } from '../YourPlaylist/YourPlaylist';
 import { YourThemeSong } from '../YourThemeSong/YourThemeSong';
 import { FavoriteLyric } from '../FavoriteLyric/FavoriteLyric';
+import { Transition, animated, Spring } from 'react-spring/renderprops'
 
 export function EditProfile({ fetchUserId }) {
 
@@ -34,7 +35,11 @@ export function EditProfile({ fetchUserId }) {
                     </nav>
                     <Switch>
                         <Route exact path='/profilePicture'>
-                            <ProfilePicture fetchUserId={fetchUserId} />
+                            <Spring
+                                from={{ opacity: 0 }}
+                                to={{ opacity: 1 }}>
+                                {props => <ProfilePicture style={props} fetchUserId={fetchUserId} />}
+                            </Spring>
                         </Route>
                         <Route exact path='/yourPlaylist'>
                             <YourPlaylist fetchUserId={fetchUserId} />
