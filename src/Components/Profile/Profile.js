@@ -10,13 +10,11 @@ export function Profile(props) {
 
     return (
         <Fragment>
-            <div className='entireProfile glass'>
                 <SlidePicture profileInfo={props.profileInfo} />
                 <SlideThemeSong profileInfo={props.profileInfo} />
                 <SlidePlaylist profileInfo={props.profileInfo} />
                 <SlideFavoriteLyric profileInfo={props.profileInfo} />
                 <SlidePercentMatch profileInfo={props.profileInfo} />
-            </div>
         </Fragment>
     )
     if (props.profileInfo.id == 0) {

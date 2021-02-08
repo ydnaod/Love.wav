@@ -90,9 +90,9 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
                 <div className="percentMatchSlide">
                     <div className="sentence">
                         {
-                            mutual.map(sentence => {
+                            mutual.map((sentence, index) => {
                                 return <Statement sentence={sentence}
-                                    /*key={mutual.indexOf(sentence)}*/ />
+                                    key={index} />
                             })
                         }
                     </div>
@@ -103,9 +103,9 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
                 <div className="percentMatchSlide">
                     <div className="sentence">
                         {
-                            different.map(sentence => {
+                            different.map((sentence, index) => {
                                 return <Statement sentence={sentence} 
-                                /*key={mutual.indexOf(sentence)}*//>
+                                key={index}/>
                             })
                         }
                     </div>

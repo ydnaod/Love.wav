@@ -5,6 +5,7 @@ import playButton from '../../images/Playbutton(swiperight).png'
 import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
+import { LoadingMatchDashboard } from './LoadingMatchDashboard'
 
 export function MatchDashboard({ fetchUserId }) {
 
@@ -165,25 +166,25 @@ export function MatchDashboard({ fetchUserId }) {
             const trackQualities2 = await calculateTrackQualities(idString2);
             const themeSong = await fetchThemeSong(profile.theme_song_id);
             const favoriteLyrics = await fetchFavoriteLyrics(profiles[0].id);
-            const profileInfo = 
-                {
-                    
-                    name: profile.first_name,
-                    image: profile.photo,
-                    percentMatch: await calculatePercentMatch(trackQualities1, trackQualities2),
-                    trackList: await playlist1,
-                    themeSongImage: themeSong.album.images[0].url,
-                    title: themeSong.name,
-                    artist: themeSong.artists[0].name,
-                    lyrics: favoriteLyrics.lyrics,
-                    favoriteLyric: favoriteLyrics.favorite_lyric,
-                    favoriteLyricTitle: favoriteLyrics.song_title,
-                    favoriteLyricArtist: favoriteLyrics.song_artist,
-                    musicDiff: await calculateMusicDiff(trackQualities1, trackQualities2),
-                    yourTrackQualities: await trackQualities1,
-                }
-            
-            
+            const profileInfo =
+            {
+
+                name: profile.first_name,
+                image: profile.photo,
+                percentMatch: await calculatePercentMatch(trackQualities1, trackQualities2),
+                trackList: await playlist1,
+                themeSongImage: themeSong.album.images[0].url,
+                title: themeSong.name,
+                artist: themeSong.artists[0].name,
+                lyrics: favoriteLyrics.lyrics,
+                favoriteLyric: favoriteLyrics.favorite_lyric,
+                favoriteLyricTitle: favoriteLyrics.song_title,
+                favoriteLyricArtist: favoriteLyrics.song_artist,
+                musicDiff: await calculateMusicDiff(trackQualities1, trackQualities2),
+                yourTrackQualities: await trackQualities1,
+            }
+
+
             setSlides(profileInfo);
             setIsLoading(false);
         } catch (error) {
@@ -229,12 +230,12 @@ export function MatchDashboard({ fetchUserId }) {
             const tempArray = profiles;
             const response = await fetch(`http://localhost:4000/swipes`, {
                 method: 'POST',
-                headers: {token: sessionStorage.token, 'Content-Type': 'application/json'},
+                headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
             });
             const parseRes = await response.json();
             console.log(parseRes);
-            if(parseRes.match === true){
+            if (parseRes.match === true) {
                 matchNotification();
             }
             tempArray.shift();
@@ -255,23 +256,23 @@ export function MatchDashboard({ fetchUserId }) {
     const profileSection =
         <Fragment>
             <div className="profileSection">
-
-                {
-                    isLoading ? <p>isLoading</p> : <Profile profileInfo={slides}
-                        key='1' />
-                }
-
+                <div className='entireProfile glass'>
+                    {
+                        isLoading ? <LoadingMatchDashboard /> : <Profile profileInfo={slides}
+                            key='1' />
+                    }
+                </div>
             </div>
             <div className="nameSection">
                 <div className="buttons">
-                    <img onClick={()=>handleSwipe('left')} className="dashboardButton" src={stopButton}></img>
-                    <img onClick={()=>handleSwipe('right')} className="dashboardButton" src={playButton}></img>
+                    <img onClick={() => handleSwipe('left')} className="dashboardButton" src={stopButton}></img>
+                    <img onClick={() => handleSwipe('right')} className="dashboardButton" src={playButton}></img>
                 </div>
             </div>
         </Fragment>
 
 
-    const findProfiles = <div className="profileSection">
+    const findProfiles = <div className="findMatches">
 
         <button onClick={fetchRandomProfiles} className='button'>roll the die</button>
 
