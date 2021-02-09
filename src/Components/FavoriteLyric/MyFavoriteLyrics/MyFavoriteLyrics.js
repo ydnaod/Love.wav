@@ -16,11 +16,12 @@ export function MyFavoriteLyrics({lyrics}){
         setLyricsArray(tempArray);
     }, [lyrics])
 
+
     return(
         <Fragment>
             <p>{lyrics.song_title} | {lyrics.song_artist}</p>
             {
-                lyricsArray ? <Lyric lyrics={lyricsArray}
+                lyricsArray.length > 0 ? <Lyric lyrics={lyricsArray}
                     favorite={lyrics.favorite_lyric}/> : ''
             }
         </Fragment>

@@ -175,13 +175,23 @@ export function FavoriteLyric({fetchUserId}) {
         }
     }, [selectedLine, favoriteLyricFromDatabase])
 
+    const loadingDiv = 
+    <Fragment>
+        <p className='loading-gradient'>loading</p>
+        <p className='loading-gradient'>loading</p>
+        <p className='loading-gradient'>loading</p>
+        <p className='loading-gradient'>loading</p>
+        <p className='loading-gradient'>loading</p>
+        <p className='loading-gradient'>loading</p>
+    </Fragment>
+
     return (
         <Fragment>
             <div className='editProfileSetting flexCenterColumn editFavoriteLyrics'>
                 <div className='currentFavorite'>
                     <h3>your favorite lyrics</h3>
                     {
-                        favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : ''
+                        favoriteLyricFromDatabase ? <MyFavoriteLyrics lyrics={favoriteLyricFromDatabase} /> : loadingDiv
                     }
                 </div>
                 <div className='lyricSearch'>

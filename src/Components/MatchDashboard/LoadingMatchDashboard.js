@@ -8,7 +8,7 @@ export function LoadingMatchDashboard() {
                 <div className="slideTitle loadingSlideTitle">
                     <h2 className='loading-gradient'>Loading</h2>
                 </div>
-                <div className="pictureSlide">
+                <div className="loadingPictureSlide">
                     <img className="loading-gradient loadingPicture profilePicture" />
                     <div id="percentMatch">
                         <h3 className='loading-gradient h3-loading'>Loading</h3>

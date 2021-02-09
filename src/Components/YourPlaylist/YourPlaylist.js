@@ -59,19 +59,33 @@ export function YourPlaylist({ fetchUserId }) {
         fetchCurrentPlaylist();
     }, []);
 
+    const loadingDiv = 
+    <Fragment>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+        <p className='loading-gradient'>Loading</p>
+    </Fragment>
+
     return (
         <Fragment>
             <div className='editProfileSetting editYourPlaylist'>
                 <div className='currentPlaylist'>
                     <h3>your current playlist</h3>
                     {
-                        currentPlaylist ? <Playlist playlist={currentPlaylist} /> : ''
+                        currentPlaylist ? <Playlist playlist={currentPlaylist} /> : <p className='loading-gradient'>Loading</p>
                     }
                     <h3>your other playlists</h3>
                 </div>
                 <div className='yourPlaylists'>
                     {
-                        isLoading ? <p>isLoading</p> : playlists.map(playlist => {
+                        isLoading ? loadingDiv : playlists.map(playlist => {
                             return <Playlist playlist={playlist}
                                 key={playlist.id}
                                 fetchUserId={fetchUserId}

@@ -46,15 +46,17 @@ export function Register({ handleAuthorization }) {
 
     return (
         <Fragment>
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <input type='text' name="first_name" placeholder='first name' value={first_name} onChange={handleChange}></input>
-                <input type='text' name="last_name" placeholder='last name' value={last_name} onChange={handleChange}></input>
-                <input type='email' name="email" placeholder='email' value={email} onChange={handleChange}></input>
-                <input type='password' name="password" placeholder='password' value={password} onChange={handleChange}></input>
-                <input type='password' name="passwordConfirmation" placeholder='re-enter password' value={passwordConfirmation} onChange={handleChange}></input>
-                <button>Register</button>
-            </form>
+            <div className='glass settings'>
+                <h2>Register</h2>
+                <form className='form' onSubmit={handleSubmit}>
+                    <input type='text' name="first_name" placeholder='first name' value={first_name} onChange={handleChange}></input>
+                    <input type='text' name="last_name" placeholder='last name' value={last_name} onChange={handleChange}></input>
+                    <input type='email' name="email" placeholder='email' value={email} onChange={handleChange}></input>
+                    <input type='password' name="password" placeholder='password' value={password} onChange={handleChange}></input>
+                    <input type='password' name="passwordConfirmation" placeholder='re-enter password' value={passwordConfirmation} onChange={handleChange}></input>
+                    <button className='button'>Register</button>
+                </form>
+            </div>
         </Fragment>
     )
 }

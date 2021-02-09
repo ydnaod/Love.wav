@@ -6,3 +6,11 @@
 .h3-loading{
     margin-left: 5px;
 }
+
+.loadingPictureSlide{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    padding: 0 0 2em 2em;
+}

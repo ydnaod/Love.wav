@@ -101,7 +101,7 @@ export function YourThemeSong({ fetchUserId }) {
                 <div className='currentThemeSong'>
                     <h3>your theme song</h3>
                     {
-                        currentThemeSong ? <Track track={currentThemeSong} /> : ''
+                        currentThemeSong ? <Track track={currentThemeSong} /> : <p className='loading-gradient'>Loading</p>
                     }
                 </div>
                 <form className='form' onSubmit={handleSubmit}>

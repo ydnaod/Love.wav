@@ -118,12 +118,17 @@ export function MatchDashboard({ fetchUserId }) {
 
 
     const fetchProfile = async (id) => {
-        const response = await fetch(`http://localhost:4000/profile/${id}`, {
-            method: 'GET',
-            headers: { token: sessionStorage.token }
-        })
-        const parseRes = await response.json();
-        return parseRes;
+        try {
+            const response = await fetch(`http://localhost:4000/profile/${id}`, {
+                method: 'GET',
+                headers: { token: sessionStorage.token }
+            })
+            const parseRes = await response.json();
+            return parseRes;
+        } catch (error) {
+            console.log('yay error handling')
+            console.error(error.message);
+        }
     }
 
     const fetchThemeSong = async (themeSongId) => {

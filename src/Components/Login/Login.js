@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import './Login.css';
 
 
-export function Login({handleAuthorization}) {
+export function Login({ handleAuthorization }) {
 
     const [inputs, setInputs] = useState({
         email: '',
@@ -37,12 +37,14 @@ export function Login({handleAuthorization}) {
 
     return (
         <Fragment>
-            <h2>Login</h2>
-            <form className='form' onSubmit={handleSubmit}>
-                <input type='email' name='email' placeholder='email' value={email} onChange={handleChange}></input>
-                <input type='password' name='password' placeholder='password' value={password} onChange={handleChange}></input>
-                <button>Login</button>
-            </form>
+            <div className='glass settings'>
+                <h2>Login</h2>
+                <form className='form' onSubmit={handleSubmit}>
+                    <input type='email' name='email' placeholder='email' value={email} onChange={handleChange}></input>
+                    <input type='password' name='password' placeholder='password' value={password} onChange={handleChange}></input>
+                    <button className = 'button'>Login</button>
+                </form>
+            </div>
         </Fragment>
     )
 }

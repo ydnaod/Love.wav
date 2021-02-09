@@ -46,7 +46,7 @@ export function ProfilePicture({ fetchUserId }) {
             <div className="editProfilePicture editProfileSetting">
                 <h1>your profile picture</h1>
                 {
-                    isLoading ? <p>loading</p> : <img src={photo} className="profilePicture"></img>
+                    isLoading ? <img className='profilePicture loading-gradient' /> : <img src={photo} className="profilePicture"></img>
                 }
                 <button className='button glass' onClick={handleImportFromSpotify}>import photo from Spotify</button>
             </div>

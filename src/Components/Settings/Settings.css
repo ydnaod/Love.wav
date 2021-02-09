@@ -1,0 +1,9 @@
+.settings {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px / 8px;
+    padding: 20px;
+}

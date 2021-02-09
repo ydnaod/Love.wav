@@ -27,7 +27,7 @@ export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist, handleSe
         <Fragment>
             <div>
                 <div style={isSelected ? style.selected : style.defaultStyle} className='playlist' onClick={handleClick}>
-                    <p>{playlist.name} | {playlist.owner}</p>
+                    <p>{playlist.name}</p>
                 </div>
             </div>
         </Fragment>
