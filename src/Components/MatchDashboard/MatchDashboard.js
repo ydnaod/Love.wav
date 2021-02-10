@@ -6,6 +6,7 @@ import stopButton from '../../images/StopButton.png'
 import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
+import {Popup} from '../Popup/Popup'
 
 export function MatchDashboard({ fetchUserId }) {
 
@@ -16,6 +17,7 @@ export function MatchDashboard({ fetchUserId }) {
     const [isLoading, setIsLoading] = useState(true);
     //const [playlistTrackIds, setPlaylistTrackIds] = useState('');
     const [profiles, setProfiles] = useState();
+    const [hasError, setHasError] = useState(false);
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
@@ -37,7 +39,8 @@ export function MatchDashboard({ fetchUserId }) {
             //setPlaylistTrackIds(string);
             return trackList;
         } catch (error) {
-            console.error(error.message)
+            console.log('yay error handling loadingPlaylistTracks')
+            console.error(error.message);
         }
     }
 
@@ -86,6 +89,7 @@ export function MatchDashboard({ fetchUserId }) {
             console.log(average)
             return average;
         } catch (error) {
+            console.log('yay error handling calculateTrackQualities')
             console.error(error.message);
         }
     }
@@ -123,38 +127,52 @@ export function MatchDashboard({ fetchUserId }) {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })
+            if(response.status == 400){
+                throw new Error('Profile is incomplete')
+            }
             const parseRes = await response.json();
             return parseRes;
         } catch (error) {
-            console.log('yay error handling')
+            //console.log('yay error handling fetchProfile')
+            setHasError(true);
             console.error(error.message);
         }
     }
 
     const fetchThemeSong = async (themeSongId) => {
-        const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`, {
-            method: 'GET',
-            headers: { token: sessionStorage.token }
-        });
-        const parseRes = await response.json();
-        //console.log(parseRes);
-        return parseRes;
+        try {
+            const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`, {
+                method: 'GET',
+                headers: { token: sessionStorage.token }
+            });
+            const parseRes = await response.json();
+            //console.log(parseRes);
+            return parseRes;
+        } catch (error) {
+            console.log('yay error handling fetchThemeSong')
+            console.error(error.message);
+        }
     }
 
     const fetchFavoriteLyrics = async (id) => {
-        const response = await fetch(`http://localhost:4000/lyrics/${id}/favorite/`, {
-            method: 'GET',
-            headers: { token: sessionStorage.token }
-        });
-        const parseRes = await response.json();
-        console.log(parseRes);
-        parseRes.lyrics = [];
-        parseRes.lyrics.push(parseRes.line_one);
-        parseRes.lyrics.push(parseRes.line_two);
-        parseRes.lyrics.push(parseRes.line_three);
-        parseRes.lyrics.push(parseRes.line_four);
-        parseRes.lyrics.push(parseRes.line_five);
-        return parseRes;
+        try {
+            const response = await fetch(`http://localhost:4000/lyrics/${id}/favorite/`, {
+                method: 'GET',
+                headers: { token: sessionStorage.token }
+            });
+            const parseRes = await response.json();
+            console.log(parseRes);
+            parseRes.lyrics = [];
+            parseRes.lyrics.push(parseRes.line_one);
+            parseRes.lyrics.push(parseRes.line_two);
+            parseRes.lyrics.push(parseRes.line_three);
+            parseRes.lyrics.push(parseRes.line_four);
+            parseRes.lyrics.push(parseRes.line_five);
+            return parseRes;
+        } catch (error) {
+            console.log('yay error handling fetchFavoriteLyrics')
+            console.error(error.message);
+        }
     }
 
     async function fetchData() {
@@ -193,6 +211,7 @@ export function MatchDashboard({ fetchUserId }) {
             setSlides(profileInfo);
             setIsLoading(false);
         } catch (error) {
+            console.log('yay error handling fetchData')
             console.error(error.message);
         }
     }
@@ -253,6 +272,11 @@ export function MatchDashboard({ fetchUserId }) {
         }
     }
 
+    const emptyProfilesArray = () => {
+        setProfiles();
+        setHasError(false);
+    }
+
     useEffect(async () => {
         fetchData();
     }, [profiles])
@@ -288,6 +312,12 @@ export function MatchDashboard({ fetchUserId }) {
             <div className="MatchDashboard">
                 {
                     profiles ? profileSection : findProfiles
+                }
+                {
+                    hasError ? <Popup hasError={hasError}
+                        emptyProfilesArray={emptyProfilesArray}
+                        isSeen={true}
+                        lyrics={[]}/> : ''
                 }
             </div>
         </Fragment>

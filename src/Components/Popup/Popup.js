@@ -32,7 +32,7 @@ export function Popup(props) {
                 <div className='popup flexCenterColumn'>
                     <div className='glass window'>
                         <img onClick={props.handleXClick} className='x' src={x}/>
-                        <h3>Okay, now which line is your favorite?</h3>
+                        <h3>Okay, now which line is your favorite? People can try and guess when they see your profile. We'll let you know if they were right ;)</h3>
                         <Lyric lyrics={selectedLyricsArray}
                             handleFavoriteLyricSelect={props.handleFavoriteLyricSelect}
                             favoriteLyric={props.favoriteLyric}
@@ -74,6 +74,23 @@ export function Popup(props) {
                         {
                             props.selectedTrack ? <button className='button' onClick={handleFetchLyrics}>find lyrics</button> : ''
                         }
+                    </div>
+                </div>
+            )
+        }
+        else if (props.hasError) {
+            return (
+                <div className='dashboard-popup flexCenterColumn'>
+                    <div className='glass window'>
+                        <img onClick={props.emptyProfilesArray} className='x' src={x}/>
+                        <ul>
+                        <ul>Sorry - Tt seems like your profile is incomplete or invalid. Try again after making sure your profile has all of the following:</ul>
+                        <ul>Connection to your Spotify account (Settings)</ul>
+                        <ul>Profile picture (Profile)</ul>
+                        <ul>Theme song (Profile)</ul>
+                        <ul>Playlist of valid spotify songs. If you added any songs to your Spotify externally - it is not a valid song (Profile)</ul>
+                        <ul>5 lines of your favorite lyrics (Profile)</ul>
+                        </ul>
                     </div>
                 </div>
             )
