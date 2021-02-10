@@ -21,6 +21,12 @@ router.param('id', async (req, res, next) => {
 
 router.get('/:id', async (req, res) => {
     const query = await pool.query('select playlist_id, photo,theme_song_id, first_name from user_profile where user_account_id = $1', [req.id])
+    for(const setting in query.rows[0]){
+        console.log(query.rows[0][setting]);
+        if(query.rows[0][setting] == null){
+            res.status(400).send('sorry')
+        }
+    }
     res.json(query.rows[0]);
 })
 

@@ -13,6 +13,7 @@ router.get('/random', async (req, res) => {
         res.json(query.rows);
     } catch (error) {
         console.error(error.message);
+        console.log('does this change save')
     }
 })
 
