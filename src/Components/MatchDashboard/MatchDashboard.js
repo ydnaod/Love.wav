@@ -6,7 +6,7 @@ import stopButton from '../../images/StopButton.png'
 // import LeftArrow from '../../images/LeftArrow.png'
 // import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
-import {Popup} from '../Popup/Popup'
+import { Popup } from '../Popup/Popup'
 const restAPIUrl = require('../../Util/serverUrl')
 
 export function MatchDashboard({ fetchUserId }) {
@@ -128,16 +128,18 @@ export function MatchDashboard({ fetchUserId }) {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })
-            if(response.status == 400){
+            if (response.status == 400) {
                 throw new Error('Profile is incomplete')
             }
             const parseRes = await response.json();
             return parseRes;
         } catch (error) {
             //console.log('yay error handling fetchProfile')
-            if(error.message=='Profile is incomplete'){
-            setHasError(true);
-            console.error(error.message);
+            if (error.response) {
+                if (error.response.status == 400) {
+                    setHasError(true);
+                    console.error(error.message);
+                }
             }
         }
     }
@@ -320,7 +322,7 @@ export function MatchDashboard({ fetchUserId }) {
                     hasError ? <Popup hasError={hasError}
                         emptyProfilesArray={emptyProfilesArray}
                         isSeen={true}
-                        lyrics={[]}/> : ''
+                        lyrics={[]} /> : ''
                 }
             </div>
         </Fragment>
