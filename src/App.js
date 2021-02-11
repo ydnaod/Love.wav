@@ -18,7 +18,6 @@ import { ProfilePicture } from './Components/ProfilePicture/ProfilePicture';
 import { YourPlaylist } from './Components/YourPlaylist/YourPlaylist';
 import { YourThemeSong } from './Components/YourThemeSong/YourThemeSong';
 import { FavoriteLyric } from './Components/FavoriteLyric/FavoriteLyric';
-import Cookies from 'universal-cookie';
 
 function App(props) {
 

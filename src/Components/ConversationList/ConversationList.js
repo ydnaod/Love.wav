@@ -68,7 +68,7 @@ export function ConversationList({ fetchUserId }) {
     const fetchConversations = async () => {
         try {
             const myId = await fetchUserId();
-            const response = await fetch('${restAPIUrl.url}/conversations/', {
+            const response = await fetch(`${restAPIUrl.url}/conversations/`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
