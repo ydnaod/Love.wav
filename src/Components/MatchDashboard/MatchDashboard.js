@@ -135,8 +135,10 @@ export function MatchDashboard({ fetchUserId }) {
             return parseRes;
         } catch (error) {
             //console.log('yay error handling fetchProfile')
+            if(error.message=='Profile is incomplete'){
             setHasError(true);
             console.error(error.message);
+            }
         }
     }
 

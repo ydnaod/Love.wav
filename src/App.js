@@ -2,7 +2,6 @@ import './App.css';
 import React, { useState, useEffect, Fragment } from 'react';
 import {
   BrowserRouter as Router,
-  Link,
   Switch,
   Route,
   Redirect
@@ -14,10 +13,10 @@ import { Login } from './Components/Login/Login';
 import { Settings } from './Components/Settings/Settings';
 import { EditProfile } from './Components/EditProfile/EditProfile';
 import { Register } from './Components/Register/Register';
-import { ProfilePicture } from './Components/ProfilePicture/ProfilePicture';
-import { YourPlaylist } from './Components/YourPlaylist/YourPlaylist';
-import { YourThemeSong } from './Components/YourThemeSong/YourThemeSong';
-import { FavoriteLyric } from './Components/FavoriteLyric/FavoriteLyric';
+// import { ProfilePicture } from './Components/ProfilePicture/ProfilePicture';
+// import { YourPlaylist } from './Components/YourPlaylist/YourPlaylist';
+// import { YourThemeSong } from './Components/YourThemeSong/YourThemeSong';
+// import { FavoriteLyric } from './Components/FavoriteLyric/FavoriteLyric';
 const restAPIUrl = require('./Util/serverUrl');
 
 function App(props) {
