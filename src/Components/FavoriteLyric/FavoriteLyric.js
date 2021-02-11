@@ -5,6 +5,7 @@ import { LyricTrack } from './LyricTrack/LyricTrack';
 import { Lyric } from './Lyric/Lyric';
 import { MyFavoriteLyrics } from './MyFavoriteLyrics/MyFavoriteLyrics';
 import { Popup } from '../Popup/Popup'
+const restAPIUrl = require('../../Util/serverUrl');
 
 export function FavoriteLyric({fetchUserId}) {
 
@@ -36,7 +37,7 @@ export function FavoriteLyric({fetchUserId}) {
 
     const fetchLyrics = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/lyrics/track/${selectedTrack}`, {
+            const response = await fetch(`${restAPIUrl.url}/lyrics/track/${selectedTrack}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -69,7 +70,7 @@ export function FavoriteLyric({fetchUserId}) {
     const search = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:4000/lyrics/search/${input}`, {
+            const response = await fetch(`${restAPIUrl.url}/lyrics/search/${input}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -106,7 +107,7 @@ export function FavoriteLyric({fetchUserId}) {
             const print = JSON.stringify(body);
             //console.log(print)
             if (!favoriteLyricFromDatabase) {
-                const response = await fetch(`http://localhost:4000/lyrics/save-favorite-lyric`, {
+                const response = await fetch(`${restAPIUrl.url}/lyrics/save-favorite-lyric`, {
                     method: 'POST',
                     headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
@@ -115,7 +116,7 @@ export function FavoriteLyric({fetchUserId}) {
                 console.log(parseRes);
             }
             else {
-                const response = await fetch(`http://localhost:4000/lyrics/edit-favorite-lyric`, {
+                const response = await fetch(`${restAPIUrl.url}/lyrics/edit-favorite-lyric`, {
                     method: 'PUT',
                     headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
@@ -140,7 +141,7 @@ export function FavoriteLyric({fetchUserId}) {
     const fetchFavoriteLyric = async () => {
         try {
             const id = await fetchUserId();
-            const response = await fetch(`http://localhost:4000/lyrics/${id}/favorite`, {
+            const response = await fetch(`${restAPIUrl.url}/lyrics/${id}/favorite`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });

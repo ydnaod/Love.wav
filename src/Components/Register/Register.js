@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import './Register.css';
+const restAPIUrl = require('../../Util/serverUrl')
 
 export function Register({ handleAuthorization }) {
 
@@ -24,7 +25,7 @@ export function Register({ handleAuthorization }) {
             if (password !== passwordConfirmation) {
                 throw 'passwords must match'
             }
-            const response = await fetch('http://localhost:4000/account/register', {
+            const response = await fetch(`${restAPIUrl.url}/account/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
@@ -33,7 +34,7 @@ export function Register({ handleAuthorization }) {
             console.log(parseRes)
             sessionStorage.setItem('token', parseRes.token);
             handleAuthorization(true);
-            const response2 = await fetch(`http://localhost:4000/profile/create-profile`, {
+            const response2 = await fetch(`${restAPIUrl.url}/profile/create-profile`, {
                 method: 'POST',
                 headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)

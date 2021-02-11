@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import './ProfilePicture.css';
+const restAPIUrl = require('../../Util/serverUrl');
 
 export function ProfilePicture({ fetchUserId }) {
 
@@ -8,7 +9,7 @@ export function ProfilePicture({ fetchUserId }) {
 
     const handleImportFromSpotify = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/login/profile-picture`, {
+            const response = await fetch(`${restAPIUrl.url}/login/profile-picture`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -23,7 +24,7 @@ export function ProfilePicture({ fetchUserId }) {
     const fetchPhoto = async () => {
         try {
             const userId = await fetchUserId();
-            const response = await fetch(`http://localhost:4000/profile/${userId}/photo`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${userId}/photo`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });

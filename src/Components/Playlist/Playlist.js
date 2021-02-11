@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import './Playlist.css';
 const style = require('../../Util/selectedStyling')
+const restAPIUrl = require('../../Util/serverUrl');
 
 export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist, handleSelectedPlaylist, isSelected }) {
 
@@ -12,7 +13,7 @@ export function Playlist({ playlist, fetchUserId, fetchCurrentPlaylist, handleSe
         const body = { playlistId };
         //console.log(playlistId);
         console.log(body);
-        const response = await fetch(`http://localhost:4000/profile/${id}/playlist`, {
+        const response = await fetch(`${restAPIUrl.url}/profile/${id}/playlist`, {
             method: 'PUT',
             headers: { token: sessionStorage.token, "Content-Type": "application/json" },
             body: JSON.stringify(body)

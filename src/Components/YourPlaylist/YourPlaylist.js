@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Playlist } from '../Playlist/Playlist'
 import './YourPlaylist.css';
+const restAPIUrl = require('../../Util/serverUrl')
 
 export function YourPlaylist({ fetchUserId }) {
 
@@ -10,7 +11,7 @@ export function YourPlaylist({ fetchUserId }) {
     const [selectedPlaylist, setSelectedPlaylist] = useState();
 
     const fetchPlaylists = async () => {
-        const response = await fetch('http://localhost:4000/login/loadPlaylists', {
+        const response = await fetch(`${restAPIUrl.url}/login/loadPlaylists`, {
             method: 'GET',
             headers: { token: sessionStorage.token }
         })
@@ -32,13 +33,13 @@ export function YourPlaylist({ fetchUserId }) {
     const fetchCurrentPlaylist = async () => {
         try {
             const id = await fetchUserId();
-            const response = await fetch(`http://localhost:4000/profile/${id}/playlist`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${id}/playlist`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
             console.log(parseRes);
-            const responseTwo = await fetch(`http://localhost:4000/login/load-playlist/${parseRes.playlist_id}`, {
+            const responseTwo = await fetch(`${restAPIUrl.url}/login/load-playlist/${parseRes.playlist_id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })

@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import './Login.css';
+const restAPIUrl = require('../../Util/serverUrl');
 
 
 export function Login({ handleAuthorization }) {
@@ -20,7 +21,7 @@ export function Login({ handleAuthorization }) {
             e.preventDefault();
 
             const body = { email, password };
-            const response = await fetch('http://localhost:4000/account/login', {
+            const response = await fetch(`${restAPIUrl.url}/account/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)

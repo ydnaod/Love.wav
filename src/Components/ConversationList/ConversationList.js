@@ -5,6 +5,7 @@ import { Conversation } from '../Conversation/Conversation'
 import { ConversationListContent } from './ConversationListContent';
 import { useTransition, animated, useChain, useSpring } from 'react-spring';
 import { LoadingConversationList } from './LoadingConversationList';
+const restAPIUrl = require('../../Util/serverUrl');
 
 export function ConversationList({ fetchUserId }) {
 
@@ -30,7 +31,7 @@ export function ConversationList({ fetchUserId }) {
 
 
     const fetchLastMessage = async (id) => {
-        const response = await fetch(`http://localhost:4000/conversations/last-message/${id}`, {
+        const response = await fetch(`${restAPIUrl.url}/conversations/last-message/${id}`, {
             method: 'GET',
             headers: { token: sessionStorage.token }
         });
@@ -67,7 +68,7 @@ export function ConversationList({ fetchUserId }) {
     const fetchConversations = async () => {
         try {
             const myId = await fetchUserId();
-            const response = await fetch('http://localhost:4000/conversations/', {
+            const response = await fetch('${restAPIUrl.url}/conversations/', {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -105,7 +106,7 @@ export function ConversationList({ fetchUserId }) {
 
     const getNameFromId = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/profile/${id}/name`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${id}/name`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -119,7 +120,7 @@ export function ConversationList({ fetchUserId }) {
 
     const getPhotoFromId = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/profile/${id}/photo`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${id}/photo`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });

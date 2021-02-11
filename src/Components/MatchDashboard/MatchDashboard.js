@@ -7,6 +7,7 @@ import LeftArrow from '../../images/LeftArrow.png'
 import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
 import {Popup} from '../Popup/Popup'
+const restAPIUrl = require('../../Util/serverUrl')
 
 export function MatchDashboard({ fetchUserId }) {
 
@@ -21,7 +22,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
-            const response = await fetch(`http://localhost:4000/login/loadPlaylistTracks/${playlistId}`, {
+            const response = await fetch(`${restAPIUrl.url}/login/loadPlaylistTracks/${playlistId}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -54,7 +55,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     const calculateTrackQualities = async (trackIds) => {
         try {
-            const response = await fetch(`http://localhost:4000/login/getPlaylistQualities/${trackIds}`, {
+            const response = await fetch(`${restAPIUrl.url}/login/getPlaylistQualities/${trackIds}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -123,7 +124,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     const fetchProfile = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/profile/${id}`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })
@@ -141,7 +142,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     const fetchThemeSong = async (themeSongId) => {
         try {
-            const response = await fetch(`http://localhost:4000/login/theme_song/${themeSongId}`, {
+            const response = await fetch(`${restAPIUrl.url}/login/theme_song/${themeSongId}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -156,7 +157,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     const fetchFavoriteLyrics = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/lyrics/${id}/favorite/`, {
+            const response = await fetch(`${restAPIUrl.url}/lyrics/${id}/favorite/`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -226,7 +227,7 @@ export function MatchDashboard({ fetchUserId }) {
 
     const fetchRandomProfiles = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/fetch-profiles/random`, {
+            const response = await fetch(`${restAPIUrl.url}/fetch-profiles/random`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -252,7 +253,7 @@ export function MatchDashboard({ fetchUserId }) {
                 other_user_account_id: profiles[0].id
             }
             const tempArray = profiles;
-            const response = await fetch(`http://localhost:4000/swipes`, {
+            const response = await fetch(`${restAPIUrl.url}/swipes`, {
                 method: 'POST',
                 headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)

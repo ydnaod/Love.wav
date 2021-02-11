@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useImperativeHandle, useEffect } from 'react';
 import './YourThemeSong.css';
 import { Track } from '../Slides/Track/Track'
+const restAPIUrl = require('../../Util/serverUrl')
 
 export function YourThemeSong({ fetchUserId }) {
 
@@ -17,7 +18,7 @@ export function YourThemeSong({ fetchUserId }) {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:4000/login/search-tracks/${input}`, {
+            const response = await fetch(`${restAPIUrl.url}/login/search-tracks/${input}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })
@@ -51,7 +52,7 @@ export function YourThemeSong({ fetchUserId }) {
     const handleThemeSongSubmit = async () => {
         try {
             const userId = await fetchUserId();
-            const response = await fetch(`http://localhost:4000/profile/${userId}/theme-song/${selectedThemeSong}`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${userId}/theme-song/${selectedThemeSong}`, {
                 method: 'PUT',
                 json: true,
                 headers: { token: sessionStorage.token }
@@ -67,13 +68,13 @@ export function YourThemeSong({ fetchUserId }) {
     const fetchThemeSong = async () => {
         try {
             const userId = await fetchUserId();
-            const response = await fetch(`http://localhost:4000/profile/${userId}/theme-song/`, {
+            const response = await fetch(`${restAPIUrl.url}/profile/${userId}/theme-song/`, {
                 method: 'GET',
                 json: true,
                 headers: { token: sessionStorage.token }
             })
             const parseRes = await response.json();
-            const responseTwo = await fetch(`http://localhost:4000/login/theme_song/${parseRes.theme_song_id}`, {
+            const responseTwo = await fetch(`${restAPIUrl.url}/login/theme_song/${parseRes.theme_song_id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });

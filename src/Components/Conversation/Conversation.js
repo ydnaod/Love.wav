@@ -3,6 +3,7 @@ import './Conversation.css';
 import backArrow from '../../images/backArrow.png'
 import { Message } from '../Message/Message'
 import socketIOClient from "socket.io-client";
+const restAPIUrl = require('../../Util/serverUrl');
 
 export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId, getPhotoFromId }) {
 
@@ -26,7 +27,7 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
     const fetchTheirId = async () => {
         try {
             const myId = await fetchUserId();
-            const response = await fetch(`http://localhost:4000/conversations/their-id/${id}/${myId}`, {
+            const response = await fetch(`${restAPIUrl.url}/conversations/their-id/${id}/${myId}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
@@ -38,11 +39,11 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         }
     }
 
-    const SOCKET_SERVER_URL = "http://localhost:4000";
+    //const SOCKET_SERVER_URL = `${url.url}`;
 
     const fetchMessages = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/conversations/messages/${id}`, {
+            const response = await fetch(`${restAPIUrl.url}/conversations/messages/${id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             });
