@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Profile } from '../Profile/Profile';
 import './MatchDashboard.css';
-import playButton from '../../images/Playbutton(swiperight).png'
+import playButton from '../../images/Playbutton.png'
 import stopButton from '../../images/StopButton.png'
-import LeftArrow from '../../images/LeftArrow.png'
-import RightArrow from '../../images/RightArrow.png'
+// import LeftArrow from '../../images/LeftArrow.png'
+// import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
 import {Popup} from '../Popup/Popup'
 const restAPIUrl = require('../../Util/serverUrl')

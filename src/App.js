@@ -18,6 +18,7 @@ import { ProfilePicture } from './Components/ProfilePicture/ProfilePicture';
 import { YourPlaylist } from './Components/YourPlaylist/YourPlaylist';
 import { YourThemeSong } from './Components/YourThemeSong/YourThemeSong';
 import { FavoriteLyric } from './Components/FavoriteLyric/FavoriteLyric';
+const restAPIUrl = require('./Util/serverUrl');
 
 function App(props) {
 
@@ -28,7 +29,7 @@ function App(props) {
   }
 
   const fetchUserId = async () => {
-    const response = await fetch('http://localhost:4000/account/getId', {
+    const response = await fetch(`${restAPIUrl.url}/account/getId`, {
       method: 'GET',
       headers: { token: sessionStorage.token }
     });
@@ -43,7 +44,7 @@ function App(props) {
 
   const isAuth = async () => {
     try {
-      const response = await fetch('http://localhost:4000/account/verify', {
+      const response = await fetch(`${restAPIUrl.url}/account/verify`, {
         method: 'GET',
         headers: { token: sessionStorage.token }
       });

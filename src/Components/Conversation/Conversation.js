@@ -73,7 +73,7 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         setPhoto(await getPhotoFromId(theirId));
         fetchMessages();
         // Creates a WebSocket connection
-        socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
+        socketRef.current = socketIOClient(restAPIUrl.url, {
             withCredentials: true,
             extraHeaders: {
                 "my-custom-header": "abcd"

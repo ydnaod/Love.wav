@@ -84,7 +84,7 @@ export function Popup(props) {
                     <div className='glass window'>
                         <img onClick={props.emptyProfilesArray} className='x' src={x}/>
                         <ul>
-                        <ul>Sorry - Tt seems like your profile is incomplete or invalid. Try again after making sure your profile has all of the following:</ul>
+                        <ul>Sorry - it seems like your profile is incomplete or invalid. Try again after making sure your profile has all of the following:</ul>
                         <ul>Connection to your Spotify account (Settings)</ul>
                         <ul>Profile picture (Profile)</ul>
                         <ul>Theme song (Profile)</ul>
