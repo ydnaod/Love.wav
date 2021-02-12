@@ -5,24 +5,6 @@
     align-items: center;
 }
 
-input {
-    background: linear-gradient(to bottom, rgb(255,255,255,1), rgb(223, 223, 223));
-    border: 0px;
-    border-radius: 4px / 8px;
-    height: 30px;
-    width: 400px;
-    display: flex;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
 #searchButton{
     max-height: 30px;
 }

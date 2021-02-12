@@ -18,3 +18,10 @@
 .label {
     margin-bottom: .5em;
 }
+
+@media only screen and (max-width: 1020px) {
+    .ConversationList{
+        width: 100%;
+        border-radius: 7%/25%;
+    }
+}
