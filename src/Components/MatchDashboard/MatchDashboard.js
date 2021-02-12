@@ -19,6 +19,7 @@ export function MatchDashboard({ fetchUserId }) {
     //const [playlistTrackIds, setPlaylistTrackIds] = useState('');
     const [profiles, setProfiles] = useState();
     const [hasError, setHasError] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
 
     const loadPlaylistTracks = async (playlistId) => {
         try {
@@ -131,14 +132,32 @@ export function MatchDashboard({ fetchUserId }) {
             if (response.status == 400) {
                 throw new Error('Profile is incomplete')
             }
+            else if(response.status == 404){
+                throw new Error('no profile exists for this user');
+            }
             const parseRes = await response.json();
             return parseRes;
         } catch (error) {
             //console.log('yay error handling fetchProfile')
-            if (error.response) {
-                if (error.response.status == 400) {
+            console.log(error.message)
+            if (error.message) {
+                if (error.message == 'Profile is incomplete') {
                     setHasError(true);
                     console.error(error.message);
+                }
+                else if(error.message == 'no profile exists for this user'){
+                    const tempArray = profiles;
+                    tempArray.shift();
+                    if(tempArray.length == 0){
+                        setIsEmpty(true);
+                    }
+                    setProfiles(tempArray);
+                    checkProfilesEmpty()
+                    fetchData();
+                    // setTimeout(() => {
+                    //     checkProfilesEmpty()
+                    //     fetchData();
+                    // }, 2000)
                 }
             }
         }
@@ -181,7 +200,7 @@ export function MatchDashboard({ fetchUserId }) {
     }
 
     async function fetchData() {
-        try {
+        try {    
             const userId = await fetchUserId();
             const profile = await fetchProfile(profiles[0].id);
             //console.log(profile)
@@ -272,17 +291,33 @@ export function MatchDashboard({ fetchUserId }) {
             setProfiles(tempArray)
             setIsLoading(true);
             fetchData();
+            //^ do you actually have to do this again?
         } catch (error) {
             console.error(error.message);
+        }
+    }
+
+    const checkProfilesEmpty = () => {
+        if(profiles){
+            if(profiles.length == 0){
+                setIsEmpty(true);
+            }
+            else{
+                return '';
+            }
+        }
+        else{
+            return '';
         }
     }
 
     const emptyProfilesArray = () => {
         setProfiles();
         setHasError(false);
+        setIsEmpty(false);
     }
 
-    useEffect(async () => {
+    useEffect(() => {
         fetchData();
     }, [profiles])
 
@@ -324,6 +359,12 @@ export function MatchDashboard({ fetchUserId }) {
                         isSeen={true}
                         lyrics={[]} /> : ''
                 }
+                {
+                        isEmpty ? <Popup isEmpty={isEmpty}
+                        emptyProfilesArray={emptyProfilesArray}
+                        isSeen={true}
+                        lyrics={[]} /> : ''
+                    }
             </div>
         </Fragment>
     )

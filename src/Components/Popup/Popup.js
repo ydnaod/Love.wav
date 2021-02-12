@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import './Popup.css';
 import { TrackList } from '../FavoriteLyric/TrackList/TrackList';
-import {Lyric} from '../FavoriteLyric/Lyric/Lyric';
+import { Lyric } from '../FavoriteLyric/Lyric/Lyric';
 import x from '../../images/x.png'
 
 export function Popup(props) {
@@ -16,7 +16,7 @@ export function Popup(props) {
     const handleSelectedLines = () => {
         setLyricsSubmitted(true);
         const tempArray = [];
-        for(const line in props.selectedLines){
+        for (const line in props.selectedLines) {
             tempArray.push(props.selectedLines[line]);
         }
         setSelectedLyricsArray(tempArray);
@@ -27,16 +27,16 @@ export function Popup(props) {
     }
 
     if (props.isSeen) {
-        if(lyricsSubmitted && selectedLyricsArray.length > 0){
+        if (lyricsSubmitted && selectedLyricsArray.length > 0) {
             return (
                 <div className='popup flexCenterColumn'>
                     <div className='glass window'>
-                        <img onClick={props.handleXClick} className='x' src={x}/>
+                        <img onClick={props.handleXClick} className='x' src={x} />
                         <h3>Okay, now which line is your favorite? People can try and guess when they see your profile. We'll let you know if they were right ;)</h3>
                         <Lyric lyrics={selectedLyricsArray}
                             handleFavoriteLyricSelect={props.handleFavoriteLyricSelect}
                             favoriteLyric={props.favoriteLyric}
-                            lyricsSubmitted={lyricsSubmitted}/> 
+                            lyricsSubmitted={lyricsSubmitted} />
                         {
                             props.selectedLines ? <button className='button' onClick={handleSubmission}>this is my favorite lyric</button> : ''
                         }
@@ -44,15 +44,15 @@ export function Popup(props) {
                 </div>
             )
         }
-        if(props.lyrics.length > 0){
+        if (props.lyrics.length > 0) {
             return (
                 <div className='popup flexCenterColumn'>
                     <div className='glass window'>
-                        <img onClick={props.handleXClick} className='x' src={x}/>
+                        <img onClick={props.handleXClick} className='x' src={x} />
                         <h3>Of these lyrics, which are your favorite?</h3>
                         <Lyric lyrics={props.lyrics}
-                            handleLineSelect={props.handleLineSelect} 
-                            selectedLines={props.selectedLines}/> 
+                            handleLineSelect={props.handleLineSelect}
+                            selectedLines={props.selectedLines} />
                         {
                             props.selectedLines ? <button className='button' onClick={handleSelectedLines}>these are my favorite lyrics</button> : ''
                         }
@@ -64,12 +64,12 @@ export function Popup(props) {
             return (
                 <div className='popup flexCenterColumn'>
                     <div className='glass window'>
-                        <img onClick={props.handleXClick} className='x' src={x}/>
+                        <img onClick={props.handleXClick} className='x' src={x} />
                         {
                             props.tracks ? <TrackList tracks={props.tracks}
                                 handleTrackClick={props.handleTrackClick}
-                                handleLineSelect={props.handleLineSelect} 
-                                selectedTrack={props.selectedTrack ? props.selectedTrack : null}/> : ''
+                                handleLineSelect={props.handleLineSelect}
+                                selectedTrack={props.selectedTrack ? props.selectedTrack : null} /> : ''
                         }
                         {
                             props.selectedTrack ? <button className='button' onClick={handleFetchLyrics}>find lyrics</button> : ''
@@ -82,14 +82,27 @@ export function Popup(props) {
             return (
                 <div className='dashboard-popup flexCenterColumn'>
                     <div className='glass window'>
-                        <img onClick={props.emptyProfilesArray} className='x' src={x}/>
+                        <img onClick={props.emptyProfilesArray} className='x' src={x} />
                         <ul>
-                        <ul>Sorry - it seems like your profile is incomplete or invalid. Try again after making sure your profile has all of the following:</ul>
-                        <ul>Connection to your Spotify account (Settings)</ul>
-                        <ul>Profile picture (Profile)</ul>
-                        <ul>Theme song (Profile)</ul>
-                        <ul>Playlist of valid spotify songs. If you added any songs to your Spotify externally - it is not a valid song (Profile)</ul>
-                        <ul>5 lines of your favorite lyrics (Profile)</ul>
+                            <li>Sorry - it seems like your profile is incomplete or invalid. Try again after making sure your profile has all of the following:</li>
+                            <li>Connection to your Spotify account (Settings)</li>
+                            <li>Profile picture (Profile)</li>
+                            <li>Theme song (Profile)</li>
+                            <li>Playlist of valid spotify songs. If you added any songs to your Spotify externally - it is not a valid song (Profile)</li>
+                            <li>5 lines of your favorite lyrics (Profile)</li>
+                        </ul>
+                    </div>
+                </div>
+            )
+        }
+        else if (props.isEmpty) {
+            return (
+                <div className='dashboard-popup flexCenterColumn'>
+                    <div className='glass window'>
+                        <img onClick={props.emptyProfilesArray} className='x' src={x} />
+                        <ul>
+                            <li>Sorry - it seems like we can't find any matches for you right now :(</li>
+                            <li>feel free to make fake profiles to populate my database :)</li>
                         </ul>
                     </div>
                 </div>
@@ -98,7 +111,7 @@ export function Popup(props) {
 
     }
 
-    return(
+    return (
         <Fragment>
 
         </Fragment>
