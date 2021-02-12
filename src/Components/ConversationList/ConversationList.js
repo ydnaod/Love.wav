@@ -35,9 +35,9 @@ export function ConversationList({ fetchUserId }) {
             method: 'GET',
             headers: { token: sessionStorage.token }
         });
-        //console.log(response)
+        console.log(response)
         const parseRes = await response.json();
-        //console.log(parseRes)
+        console.log(parseRes)
         return parseRes;
     }
 
