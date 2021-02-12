@@ -125,21 +125,23 @@ export function MatchDashboard({ fetchUserId }) {
 
     const fetchProfile = async (id) => {
         try {
+            const myId = await fetchUserId();
             const response = await fetch(`${restAPIUrl.url}/profile/${id}`, {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })
-            if (response.status == 400) {
+            if (response.status == 400 && id == myId) {
+                console.log(id + myId)
                 throw new Error('Profile is incomplete')
             }
-            else if(response.status == 404){
+            else if((response.status == 404 || response.status == 400) && id !== myId){
                 throw new Error('no profile exists for this user');
             }
             const parseRes = await response.json();
             return parseRes;
         } catch (error) {
             //console.log('yay error handling fetchProfile')
-            console.log(error.message)
+            //console.log(error.message)
             if (error.message) {
                 if (error.message == 'Profile is incomplete') {
                     setHasError(true);
