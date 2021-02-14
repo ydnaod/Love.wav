@@ -17,11 +17,16 @@ export function YourPlaylist({ fetchUserId }) {
         })
         const parseRes = await response.json();
         //console.log(parseRes);
-        const playlists = parseRes.items.map(playlist => ({
-            id: playlist.id,
-            owner: playlist.owner.display_name,
-            name: playlist.name
-        }))
+        if (parseRes.items.length > 0) {
+            const playlists = parseRes.items.map(playlist => ({
+                id: playlist.id,
+                owner: playlist.owner.display_name,
+                name: playlist.name
+            }))
+        }
+        else{
+            console.log(parseRes);
+        }
         setPlaylists(playlists);
         setIsLoading(false);
     }
@@ -60,19 +65,19 @@ export function YourPlaylist({ fetchUserId }) {
         fetchCurrentPlaylist();
     }, []);
 
-    const loadingDiv = 
-    <Fragment>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-        <p className='loading-gradient'>Loading</p>
-    </Fragment>
+    const loadingDiv =
+        <Fragment>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+            <p className='loading-gradient'>Loading</p>
+        </Fragment>
 
     return (
         <Fragment>
@@ -92,7 +97,7 @@ export function YourPlaylist({ fetchUserId }) {
                                 fetchUserId={fetchUserId}
                                 fetchCurrentPlaylist={fetchCurrentPlaylist}
                                 handleSelectedPlaylist={handleSelectedPlaylist}
-                                isSelected={selectedPlaylist == playlist.id ? true : false}/>
+                                isSelected={selectedPlaylist == playlist.id ? true : false} />
                         })
                     }
                 </div>
