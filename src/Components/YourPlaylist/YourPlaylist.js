@@ -16,19 +16,21 @@ export function YourPlaylist({ fetchUserId }) {
             headers: { token: sessionStorage.token }
         })
         const parseRes = await response.json();
-        //console.log(parseRes);
-        if (parseRes.items.length > 0) {
-            const playlists = parseRes.items.map(playlist => ({
-                id: playlist.id,
-                owner: playlist.owner.display_name,
-                name: playlist.name
-            }))
+        let playlists;
+        if (parseRes.items) {
+            if (parseRes.items.length > 0) {
+                playlists = parseRes.items.map(playlist => ({
+                    id: playlist.id,
+                    owner: playlist.owner.display_name,
+                    name: playlist.name
+                }))
+                setPlaylists(playlists);
+                setIsLoading(false);
+            }
         }
-        else{
+        else {
             console.log(parseRes);
         }
-        setPlaylists(playlists);
-        setIsLoading(false);
     }
 
     const handleSelectedPlaylist = (playlist) => {
