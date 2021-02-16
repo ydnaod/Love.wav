@@ -32,6 +32,10 @@ function App(props) {
       method: 'GET',
       headers: { token: sessionStorage.token }
     });
+    if(response.status === 403){
+      //console.log(response)
+      setIsAuthorized(false);
+    }
     const parseRes = await response.json();
     return parseRes;
   }
