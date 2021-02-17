@@ -39,3 +39,24 @@
     right: 4%;
     top: 7%;
 }
+
+@media only screen and (max-width: 1020px) {
+    .popup{
+        height: 100%;
+    }
+
+    .dashboard-popup{
+        height:100%;
+        margin-bottom: 500px;
+    }
+
+    .window{
+        width: 100%;
+        text-align: left;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    }
+}

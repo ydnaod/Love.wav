@@ -23,8 +23,8 @@ export function ConversationList({ fetchUserId }) {
     const convoRef = useRef();
     const conversationTransition = useSpring({
         ref: convoRef,
-        from: { opacity: convoToggle ? 0 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
-        to: { opacity: convoToggle ? 1 : 0, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(100%,0,0)' },
+        from: { height: '100%', display: 'flex', opacity: convoToggle ? 0 : 1, transform: convoToggle ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)' },
+        to: { height: '100%', display: 'flex', opacity: convoToggle ? 1 : 0, transform: convoToggle ? 'translate3d(0%,0,0)' : 'translate3d(100%,0,0)' },
     });
 
     useChain(convoToggle ? [convoListRef, convoRef] : [convoRef, convoListRef], [0, 0])
