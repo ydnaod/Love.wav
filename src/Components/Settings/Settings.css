@@ -17,5 +17,7 @@
         flex-direction: column;
         border-radius: 10px / 8px;
         padding: 20px;
+        min-height: 400px;
+        margin: 40px 0 150px 0;
     }
 }
