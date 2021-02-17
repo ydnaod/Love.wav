@@ -37,6 +37,11 @@ export function MatchDashboard({ fetchUserId }) {
                 uri: track.track.uri,
                 preview_url: track.track.preview_url
             }))
+            trackList.forEach(track => {
+                if(!track.id){
+                    throw new Error('sorry, one of your tracks was invalid')
+                }
+            })
             //let string = await generatePlaylistIdString(trackList);
             //setPlaylistTrackIds(string);
             return trackList;
