@@ -242,6 +242,7 @@ export function MatchDashboard({ fetchUserId }) {
             setSlides(profileInfo);
             setIsLoading(false);
         } catch (error) {
+            checkProfilesEmpty();
             console.log('yay error handling fetchData')
             console.error(error.message);
         }
@@ -309,12 +310,6 @@ export function MatchDashboard({ fetchUserId }) {
             if(profiles.length == 0){
                 setIsEmpty(true);
             }
-            else{
-                return '';
-            }
-        }
-        else{
-            return '';
         }
     }
 
