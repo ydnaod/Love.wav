@@ -20,3 +20,10 @@
     color:  #472F8D;
     
 }
+
+@media only screen and (max-width: 1020px) {
+    .profilePicture{
+        height: 12em;
+        width: 12em;
+    }
+}

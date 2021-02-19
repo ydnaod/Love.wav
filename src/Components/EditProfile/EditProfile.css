@@ -23,3 +23,26 @@
     width: 80%;
 }
 
+@media only screen and (max-width: 1020px) {
+    .editProfile{
+        width: 100%;
+        border-radius: 5%/5%;
+        min-height: 575px;
+        height: 80%;
+        margin-left: 0;
+    }
+
+    .editProfileNav{
+        padding: 0;
+    }
+
+    a {
+        font-size: 16px;
+    }
+
+    .editProfileSetting {
+        height: 100%;
+        margin: 0px;
+        width: 80%;
+    }
+}
