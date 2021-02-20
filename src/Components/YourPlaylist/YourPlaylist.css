@@ -22,3 +22,10 @@
     flex-direction: column;
     width: 80%;
 }
+
+@media only screen and (max-width: 1020px) {
+    .yourPlaylists{
+        flex-wrap:nowrap;
+        overflow-y: scroll;
+    }
+}
