@@ -27,5 +27,16 @@
     .yourPlaylists{
         flex-wrap:nowrap;
         overflow-y: scroll;
+        padding-top: 0;
+        height: 60%;
+        max-height: 400px;
+    }
+
+    .editYourPlaylist{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
     }
 }
