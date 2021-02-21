@@ -235,7 +235,7 @@ export function MatchDashboard({ fetchUserId }) {
                 favoriteLyricTitle: favoriteLyrics.song_title,
                 favoriteLyricArtist: favoriteLyrics.song_artist,
                 musicDiff: await calculateMusicDiff(trackQualities1, trackQualities2),
-                yourTrackQualities: await trackQualities1,
+                yourTrackQualities: await trackQualities2,
             }
 
 

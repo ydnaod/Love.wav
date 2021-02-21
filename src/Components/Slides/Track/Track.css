@@ -24,3 +24,9 @@
     height: 80%;
     margin-right: .5em;
 }
+
+@media only screen and (max-width: 1020px) {
+    .trackList{
+        flex-wrap: wrap;
+    }
+}
