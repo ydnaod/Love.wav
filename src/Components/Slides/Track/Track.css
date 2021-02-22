@@ -29,4 +29,20 @@
     .trackList{
         flex-wrap: wrap;
     }
+
+    .songText{
+        width: 100%;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow-x: scroll;
+    }
+
+    .track{
+        width: 100%;
+        max-width: 300px;
+        font-size: 12px;
+    }
+    .currentThemeSong{
+        padding-top: 20px;
+    }
 }
