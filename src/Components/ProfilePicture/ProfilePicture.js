@@ -1,6 +1,9 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import './ProfilePicture.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const restAPIUrl = require('../../Util/serverUrl');
+
 
 export function ProfilePicture({ fetchUserId }) {
 
@@ -14,9 +17,13 @@ export function ProfilePicture({ fetchUserId }) {
                 headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
-            console.log(parseRes)
+            console.log(response.status)
+            if(response.status === 404){
+                toast.error(parseRes);
+            }
             setPhoto(parseRes);
         } catch (error) {
+            toast(error.message);
             console.error(error.message);
         }
     };

@@ -13,12 +13,15 @@ import { Login } from './Components/Login/Login';
 import { Settings } from './Components/Settings/Settings';
 import { EditProfile } from './Components/EditProfile/EditProfile';
 import { Register } from './Components/Register/Register';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { ProfilePicture } from './Components/ProfilePicture/ProfilePicture';
 // import { YourPlaylist } from './Components/YourPlaylist/YourPlaylist';
 // import { YourThemeSong } from './Components/YourThemeSong/YourThemeSong';
 // import { FavoriteLyric } from './Components/FavoriteLyric/FavoriteLyric';
 const restAPIUrl = require('./Util/serverUrl');
 
+toast.configure();
 function App(props) {
 
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -32,7 +35,7 @@ function App(props) {
       method: 'GET',
       headers: { token: sessionStorage.token }
     });
-    if(response.status === 403){
+    if (response.status === 403) {
       //console.log(response)
       setIsAuthorized(false);
     }
@@ -73,7 +76,8 @@ function App(props) {
             <Switch>
               <Route exact path="/" render={props => isAuthorized ? dashboard : <Redirect to='/login' />} />
               <Route exact path='/profile'>
-                <EditProfile fetchUserId={fetchUserId} />
+                <EditProfile fetchUserId={fetchUserId}
+                />
               </Route>
               <Route exact path='/settings'>
                 <Settings fetchUserId={fetchUserId} />

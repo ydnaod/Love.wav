@@ -35,11 +35,12 @@ export function EditProfile({ fetchUserId }) {
                     </nav>
                     <Switch>
                         <Route exact path='/profilePicture'>
-                            <Spring
+                            {/* <Spring
                                 from={{ opacity: 0 }}
                                 to={{ opacity: 1 }}>
-                                {props => <ProfilePicture style={props} fetchUserId={fetchUserId} />}
-                            </Spring>
+                                {props => <ProfilePicture style={props} fetchUserId={fetchUserId} notify={notify} />}
+                            </Spring> */}
+                            <ProfilePicture fetchUserId={fetchUserId}/>
                         </Route>
                         <Route exact path='/yourPlaylist'>
                             <YourPlaylist fetchUserId={fetchUserId} />

@@ -7,6 +7,8 @@ import stopButton from '../../images/StopButton.png'
 // import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
 import { Popup } from '../Popup/Popup'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const restAPIUrl = require('../../Util/serverUrl')
 
 export function MatchDashboard({ fetchUserId }) {
@@ -38,7 +40,8 @@ export function MatchDashboard({ fetchUserId }) {
                 preview_url: track.track.preview_url
             }))
             trackList.forEach(track => {
-                if(!track.id){
+                if (!track.id) {
+                    toast('sorry, one of your tracks was invalid');
                     throw new Error('sorry, one of your tracks was invalid')
                 }
             })
@@ -136,10 +139,10 @@ export function MatchDashboard({ fetchUserId }) {
                 headers: { token: sessionStorage.token }
             })
             if (response.status == 400 && id == myId) {
-                console.log(id + myId)
+                console.log(id + myId);
                 throw new Error('Profile is incomplete')
             }
-            else if((response.status == 404 || response.status == 400) && id !== myId){
+            else if ((response.status == 404 || response.status == 400) && id !== myId) {
                 throw new Error('no profile exists for this user');
             }
             const parseRes = await response.json();
@@ -149,13 +152,14 @@ export function MatchDashboard({ fetchUserId }) {
             //console.log(error.message)
             if (error.message) {
                 if (error.message == 'Profile is incomplete') {
+                    toast('Profile is incomplete! Please check your profile to make sure it is complete.')
                     setHasError(true);
                     console.error(error.message);
                 }
-                else if(error.message == 'no profile exists for this user'){
+                else if (error.message == 'no profile exists for this user') {
                     const tempArray = profiles;
                     tempArray.shift();
-                    if(tempArray.length == 0){
+                    if (tempArray.length == 0) {
                         setIsEmpty(true);
                     }
                     setProfiles(tempArray);
@@ -207,7 +211,7 @@ export function MatchDashboard({ fetchUserId }) {
     }
 
     async function fetchData() {
-        try {    
+        try {
             const userId = await fetchUserId();
             const profile = await fetchProfile(profiles[0].id);
             //console.log(profile)
@@ -273,7 +277,7 @@ export function MatchDashboard({ fetchUserId }) {
     }
 
     const matchNotification = async () => {
-        console.log('You got a match!')
+        toast.success('You got a match!');
     }
 
     const handleSwipe = async (swipe) => {
@@ -306,8 +310,8 @@ export function MatchDashboard({ fetchUserId }) {
     }
 
     const checkProfilesEmpty = () => {
-        if(profiles){
-            if(profiles.length == 0){
+        if (profiles) {
+            if (profiles.length == 0) {
                 setIsEmpty(true);
             }
         }
@@ -362,11 +366,11 @@ export function MatchDashboard({ fetchUserId }) {
                         lyrics={[]} /> : ''
                 }
                 {
-                        isEmpty ? <Popup isEmpty={isEmpty}
+                    isEmpty ? <Popup isEmpty={isEmpty}
                         emptyProfilesArray={emptyProfilesArray}
                         isSeen={true}
                         lyrics={[]} /> : ''
-                    }
+                }
             </div>
         </Fragment>
     )
