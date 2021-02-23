@@ -7,7 +7,7 @@ import stopButton from '../../images/StopButton.png'
 // import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
 import { Popup } from '../Popup/Popup'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const restAPIUrl = require('../../Util/serverUrl')
 
@@ -139,7 +139,7 @@ export function MatchDashboard({ fetchUserId }) {
                 headers: { token: sessionStorage.token }
             })
             if (response.status == 400 && id == myId) {
-                console.log(id + myId);
+                //console.log(id + myId);
                 throw new Error('Profile is incomplete')
             }
             else if ((response.status == 404 || response.status == 400) && id !== myId) {
@@ -152,7 +152,7 @@ export function MatchDashboard({ fetchUserId }) {
             //console.log(error.message)
             if (error.message) {
                 if (error.message == 'Profile is incomplete') {
-                    toast('Profile is incomplete! Please check your profile to make sure it is complete.')
+                    //toast.error('Profile is incomplete! Please check your profile to make sure it is complete.')
                     setHasError(true);
                     console.error(error.message);
                 }
@@ -247,7 +247,7 @@ export function MatchDashboard({ fetchUserId }) {
             setIsLoading(false);
         } catch (error) {
             checkProfilesEmpty();
-            console.log('yay error handling fetchData')
+            //console.log('yay error handling fetchData')
             console.error(error.message);
         }
     }

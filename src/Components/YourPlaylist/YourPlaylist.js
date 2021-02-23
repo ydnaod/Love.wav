@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Playlist } from '../Playlist/Playlist'
 import './YourPlaylist.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const restAPIUrl = require('../../Util/serverUrl')
 
 export function YourPlaylist({ fetchUserId }) {
@@ -29,7 +31,7 @@ export function YourPlaylist({ fetchUserId }) {
             }
         }
         else {
-            console.log(parseRes);
+            toast.error(parseRes);
         }
     }
 
