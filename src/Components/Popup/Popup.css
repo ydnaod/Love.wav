@@ -1,9 +1,9 @@
 .popup{
-    height: 100vh;
-    position: absolute;
-    top: -13.2%;
-    left: -15%;
-    right: -11.1%;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 5;
     background-color: rgba(206, 206, 206, 0.35);
     backdrop-filter: blur(1rem);
@@ -25,6 +25,7 @@
 .window {
     border-radius: 8px / 4px;
     width: 60%;
+    max-width: 1000px;
     margin-left: 40px;
     padding: 40px 60px;
     text-align: left;
@@ -43,6 +44,9 @@
 @media only screen and (max-width: 1020px) {
     .popup{
         height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
     }
 
     .dashboard-popup{
