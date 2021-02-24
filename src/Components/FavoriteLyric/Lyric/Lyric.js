@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import './Lyric.css';
 import { Line } from '../Line/Line'
 
-export function Lyric({ lyrics, handleLineSelect, handleFavoriteLyricSelect, selectedLines, favoriteLyric, lyricsSubmitted, favorite }) {
+export function Lyric({ lyrics, handleLineSelect, handleFavoriteLyricSelect, selectedLines, favoriteLyric, lyricsSubmitted, favorite, slideGuess, selectedLine }) {
 
     if (favorite) {
         return (
@@ -57,6 +57,21 @@ export function Lyric({ lyrics, handleLineSelect, handleFavoriteLyricSelect, sel
                             key={index}
                             handleLineSelect={handleLineSelect}
                             isSelected={selectedLines[index] === line ? true : false} />
+                    })
+                }
+            </div>
+        )
+    }
+    else if(slideGuess){
+        return (
+            <div>
+                {
+                    lyrics.map((line, index) => {
+                        return <Line line={line}
+                            index={index}
+                            key={index}
+                            handleLineSelect={handleLineSelect}
+                            isSelected={lyrics[selectedLine] === line ? true : false} />
                     })
                 }
             </div>

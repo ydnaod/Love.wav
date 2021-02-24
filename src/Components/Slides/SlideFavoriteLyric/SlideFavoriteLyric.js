@@ -23,7 +23,8 @@ export function SlideFavoriteLyric({profileInfo}) {
                         
                         <Lyric lyrics={profileInfo.lyrics}
                             handleLineSelect={handleLineSelect}
-                            selectedLine={selectedLine} />
+                            selectedLine={selectedLine} 
+                            slideGuess={true}/>
                         {
                             selectedLine >= 0 ? <button className='button'>Send your guess (this counts as a like)</button> : <button className='button'>Click a lyric to guess!</button>
                         }
