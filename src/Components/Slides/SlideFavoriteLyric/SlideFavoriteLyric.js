@@ -1,8 +1,15 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlideFavoriteLyric.css';
 import { Track } from '../Track/Track'
+import {Lyric} from '../../FavoriteLyric/Lyric/Lyric';
 
 export function SlideFavoriteLyric({profileInfo}) {
+
+    const [selectedLine, setSelectedLine] = useState();
+
+    const handleLineSelect = (index) => {
+        setSelectedLine(index);
+    }
 
     return (
         <Fragment>
@@ -13,14 +20,12 @@ export function SlideFavoriteLyric({profileInfo}) {
                 <div className="lyricSlide">
                     <div className="lyrics">
                         <h3>{ profileInfo.favoriteLyricTitle} | {profileInfo.favoriteLyricArtist }</h3>
+                        
+                        <Lyric lyrics={profileInfo.lyrics}
+                            handleLineSelect={handleLineSelect}
+                            selectedLine={selectedLine} />
                         {
-                            profileInfo.lyrics.map(lyric => {
-
-                                return (
-                                    <p className="lyric" >{lyric}</p>
-                                )
-
-                            })
+                            selectedLine >= 0 ? <button className='button'>Send your guess (this counts as a like)</button> : <button className='button'>Click a lyric to guess!</button>
                         }
                     </div>
                 </div>
