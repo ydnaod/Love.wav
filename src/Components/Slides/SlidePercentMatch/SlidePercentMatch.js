@@ -61,7 +61,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         if (yourTrackQualities.tempo < 100) {
             sentences.tempo = 'songs that are great for slow dancing and only slow dancing';
         }
-        console.log(sentences);
+        console.table(sentences);
         const common = calculateCommon();
         const updatedMutual = [];
         const updatedDifferent = [];

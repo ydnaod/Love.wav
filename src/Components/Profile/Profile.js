@@ -13,7 +13,8 @@ export function Profile(props) {
                 <SlidePicture profileInfo={props.profileInfo} />
                 <SlideThemeSong profileInfo={props.profileInfo} />
                 <SlidePlaylist profileInfo={props.profileInfo} />
-                <SlideFavoriteLyric profileInfo={props.profileInfo} />
+                <SlideFavoriteLyric profileInfo={props.profileInfo}
+                    handleSendingGuess={props.handleSendingGuess}/>
                 <SlidePercentMatch profileInfo={props.profileInfo} />
         </Fragment>
     )

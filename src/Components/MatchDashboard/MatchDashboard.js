@@ -96,7 +96,7 @@ export function MatchDashboard({ fetchUserId }) {
             for (const quality in average) {
                 average[quality] /= trackQualities.length;
             }
-            console.log(average)
+            console.table(average)
             return average;
         } catch (error) {
             console.log('yay error handling calculateTrackQualities')
@@ -120,7 +120,7 @@ export function MatchDashboard({ fetchUserId }) {
         for (const quality in musicDiff) {
             musicDiff[quality] = calculateDifference(yourAverageTrack[quality], theirAverageTrack[quality]);
         }
-        console.log(musicDiff)
+        console.table(musicDiff)
         return musicDiff;
     }
 
@@ -196,7 +196,7 @@ export function MatchDashboard({ fetchUserId }) {
                 headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
-            console.log(parseRes);
+            //console.table(parseRes);
             parseRes.lyrics = [];
             parseRes.lyrics.push(parseRes.line_one);
             parseRes.lyrics.push(parseRes.line_two);
@@ -323,6 +323,10 @@ export function MatchDashboard({ fetchUserId }) {
         setIsEmpty(false);
     }
 
+    const handleSendingGuess = (index) => {
+        console.log('guess: ' + index)
+    }
+
     useEffect(() => {
         fetchData();
     }, [profiles])
@@ -334,7 +338,8 @@ export function MatchDashboard({ fetchUserId }) {
                 <div className='entireProfile glass'>
                     {
                         isLoading ? <LoadingMatchDashboard /> : <Profile profileInfo={slides}
-                            key='1' />
+                            key='1'
+                            handleSendingGuess={handleSendingGuess}/>
                     }
                 </div>
             </div>
