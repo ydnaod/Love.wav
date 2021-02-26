@@ -323,8 +323,25 @@ export function MatchDashboard({ fetchUserId }) {
         setIsEmpty(false);
     }
 
-    const handleSendingGuess = (index) => {
+    const handleSendingGuess = async (index) => {
         console.log('guess: ' + index)
+        try {
+            const body = {
+                swiped: 'right',
+                user_account_id: await fetchUserId(),
+                other_user_account_id: profiles[0].id,
+                guess: index
+            }
+            const response = await fetch(`${restAPIUrl.url}/swipes`, {
+                method: 'POST',
+                headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const parseRes = response.json();
+            console.log(parseRes)
+        } catch (error) {
+            console.error(error.message)
+        }
     }
 
     useEffect(() => {
