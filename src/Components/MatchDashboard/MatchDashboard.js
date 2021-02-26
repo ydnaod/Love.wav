@@ -337,7 +337,7 @@ export function MatchDashboard({ fetchUserId }) {
                 headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
             });
-            const parseRes = response.json();
+            const parseRes = await response.json();
             console.log(parseRes)
         } catch (error) {
             console.error(error.message)

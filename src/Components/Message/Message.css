@@ -5,7 +5,7 @@
 }
 
 .love.wav-message{
-    background-color: rgb(247, 0, 255);
+    background-color: rgb(167, 255, 196);
 }
 
 .their-message{
@@ -22,3 +22,4 @@
 .messageContainer {
     display: flex;
 }
+
