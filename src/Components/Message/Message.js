@@ -15,7 +15,7 @@ export function Message({ message, owner, fetchUserId, styleName }) {
     }
     else if (owner === 999) {
         //setMessageOwner('love.wav-message');
-        message.classList.toggle('love.wav-message')
+        message.classList.toggle('lovewav-message')
     }
     else {
         //setMessageOwner('their-message');
