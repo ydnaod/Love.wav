@@ -131,7 +131,7 @@ export function Conversation({ handleConvoToggle, id, fetchUserId, getNameFromId
         }
         else if (id === 999) {
             //setMessageOwner('love.wav-message');
-            return 'love.wav-message'
+            return 'lovewav-message'
         }
         else {
             //setMessageOwner('their-message');
