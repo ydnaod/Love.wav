@@ -339,6 +339,14 @@ export function MatchDashboard({ fetchUserId }) {
             });
             const parseRes = await response.json();
             console.log(parseRes)
+            if (parseRes.match === true) {
+                matchNotification();
+            }
+            tempArray.shift();
+            //console.log(tempArray)
+            setProfiles(tempArray)
+            setIsLoading(true);
+            fetchData();
         } catch (error) {
             console.error(error.message)
         }
