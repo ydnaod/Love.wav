@@ -55,12 +55,12 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         if (yourTrackQualities.instrumentalness > .5) {
             sentences.instrumentallness = 'songs that you can work to';
         }
-        if (yourTrackQualities.tempo >= 100) {
-            sentences.tempo = 'songs that are fast-paced';
-        }
-        if (yourTrackQualities.tempo < 100) {
-            sentences.tempo = 'songs that are great for slow dancing and only slow dancing';
-        }
+        // if (yourTrackQualities.tempo >= 100) {
+        //     sentences.tempo = 'songs that are fast-paced';
+        // }
+        // if (yourTrackQualities.tempo < 100) {
+        //     sentences.tempo = 'songs that are great for slow dancing and only slow dancing';
+        // }
         console.table(sentences);
         const common = calculateCommon();
         const updatedMutual = [];
@@ -84,32 +84,36 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
     return (
         <Fragment>
             <div className="Profile">
-                <div className="slideTitle">
-                    <h2>it seems you both like</h2>
+                {mutual.length > 1 ? <div>
+                    <div className="slideTitle">
+                        <h2>it seems you both like</h2>
+                    </div>
+                    <div className="percentMatchSlide">
+                        <div className="sentence">
+                            {
+                                mutual.map((sentence, index) => {
+                                    return <Statement sentence={sentence}
+                                        key={index} />
+                                })
+                            }
+                        </div>
+                    </div>
+                </div> : ''}
+                {different.length > 1 ? <div>
+                    <div className="slideTitle">
+                    <h2>it seems you disagree on</h2>
                 </div>
                 <div className="percentMatchSlide">
                     <div className="sentence">
                         {
-                            mutual.map((sentence, index) => {
+                            different.map((sentence, index) => {
                                 return <Statement sentence={sentence}
                                     key={index} />
                             })
                         }
                     </div>
                 </div>
-                <div className="slideTitle">
-                    <h2>you can show them</h2>
-                </div>
-                <div className="percentMatchSlide">
-                    <div className="sentence">
-                        {
-                            different.map((sentence, index) => {
-                                return <Statement sentence={sentence} 
-                                key={index}/>
-                            })
-                        }
-                    </div>
-                </div>
+                </div> : ''}
             </div>
         </Fragment>
     )

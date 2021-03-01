@@ -337,6 +337,7 @@ export function MatchDashboard({ fetchUserId }) {
                 headers: { token: sessionStorage.token, 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
             });
+            const tempArray = profiles;
             const parseRes = await response.json();
             console.log(parseRes)
             if (parseRes.match === true) {
