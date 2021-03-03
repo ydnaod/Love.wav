@@ -51,6 +51,10 @@
         margin: 0;
         border-radius: 10% / 5%;
         margin-bottom: 15px;
-        min-height: 575px;
+        max-height: 750px;
+    }
+
+    .nameSection{
+        height: auto;
     }
 }
