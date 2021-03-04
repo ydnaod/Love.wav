@@ -49,3 +49,9 @@
 #lastMessageRefDiv{
     height: 1px;
 }
+
+@media only screen and (max-width: 1020px) {
+    .Conversation{
+        width: 100%;
+    }
+}
