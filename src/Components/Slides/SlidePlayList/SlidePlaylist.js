@@ -19,7 +19,8 @@ export function SlidePlaylist(props) {
                                 return (
 
                                     <Track track={track}
-                                        key={track.id} />
+                                        key={track.id}
+                                        handlePlaySample={props.handlePlaySample}/>
 
                                 )
 

@@ -43,8 +43,16 @@ function App(props) {
     return parseRes;
   }
 
+  const handlePlaySample = (previewUrl) => {
+    const audioObject = new Audio(previewUrl);
+    //setInterval(() => {this.setState({isPlaying: false})}, 30000)
+    audioObject.play();
+    //setState({isPlaying: true})
+}
+
   const dashboard = <div className="dashboard">
-    <MatchDashboard fetchUserId={fetchUserId} />
+    <MatchDashboard fetchUserId={fetchUserId} 
+      handlePlaySample={handlePlaySample}/>
     <ConversationList fetchUserId={fetchUserId} />
   </div>
 

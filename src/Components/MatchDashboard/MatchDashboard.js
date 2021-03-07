@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const restAPIUrl = require('../../Util/serverUrl')
 
-export function MatchDashboard({ fetchUserId }) {
+export function MatchDashboard({ fetchUserId, handlePlaySample }) {
 
     //profiles will be needed to be fetched from the database
     const [slides, setSlides] = useState([]);
@@ -365,7 +365,8 @@ export function MatchDashboard({ fetchUserId }) {
                     {
                         isLoading ? <LoadingMatchDashboard /> : <Profile profileInfo={slides}
                             key='1'
-                            handleSendingGuess={handleSendingGuess}/>
+                            handleSendingGuess={handleSendingGuess}
+                            handlePlaySample={handlePlaySample}/>
                     }
                 </div>
             </div>

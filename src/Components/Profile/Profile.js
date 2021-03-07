@@ -12,7 +12,8 @@ export function Profile(props) {
         <Fragment>
                 <SlidePicture profileInfo={props.profileInfo} />
                 <SlideThemeSong profileInfo={props.profileInfo} />
-                <SlidePlaylist profileInfo={props.profileInfo} />
+                <SlidePlaylist profileInfo={props.profileInfo}
+                    handlePlaySample={props.handlePlaySample}/>
                 <SlideFavoriteLyric profileInfo={props.profileInfo}
                     handleSendingGuess={props.handleSendingGuess}/>
                 <SlidePercentMatch profileInfo={props.profileInfo} />
