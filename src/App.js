@@ -25,6 +25,7 @@ toast.configure();
 function App(props) {
 
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isPlayingSample, setIsPlayingSample] = useState(false);
 
   const handleAuthorization = (boolValue) => {
     setIsAuthorized(boolValue);
@@ -49,6 +50,10 @@ function App(props) {
     audioObject.play();
     //setState({isPlaying: true})
 }
+
+  const handleStopSample = () => {
+    
+  }
 
   const dashboard = <div className="dashboard">
     <MatchDashboard fetchUserId={fetchUserId} 
