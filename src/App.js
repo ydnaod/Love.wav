@@ -13,6 +13,7 @@ import { Login } from './Components/Login/Login';
 import { Settings } from './Components/Settings/Settings';
 import { EditProfile } from './Components/EditProfile/EditProfile';
 import { Register } from './Components/Register/Register';
+import {AudioObject} from './Components/AudioObject/AudioObject';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { ProfilePicture } from './Components/ProfilePicture/ProfilePicture';
