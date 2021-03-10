@@ -26,6 +26,7 @@ function App(props) {
 
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isPlayingSample, setIsPlayingSample] = useState(false);
+  let audioObject;
 
   const handleAuthorization = (boolValue) => {
     setIsAuthorized(boolValue);
@@ -45,14 +46,33 @@ function App(props) {
   }
 
   const handlePlaySample = (previewUrl) => {
-    const audioObject = new Audio(previewUrl);
+    if (!isPlayingSample) {
+      audioObject = new Audio(previewUrl);
     //setInterval(() => {this.setState({isPlaying: false})}, 30000)
     audioObject.play();
-    //setState({isPlaying: true})
+    setIsPlayingSample(true);
+    }
+    else {
+      audioObject.pause();
+      setIsPlayingSample(false);
+    }
 }
 
+// playSample(track){
+//   if(this.state.isPlaying){
+//     this.audioObject.pause();
+//     this.setState({isPlaying: false})
+//   }
+//   else{
+//     this.audioObject = new Audio(track.preview_url);
+//     setInterval(() => {this.setState({isPlaying: false})}, 30000)
+//     this.audioObject.play();
+//     this.setState({isPlaying: true})
+//   }
+// }
+
   const handleStopSample = () => {
-    
+
   }
 
   const dashboard = <div className="dashboard">
