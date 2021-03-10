@@ -27,7 +27,6 @@ function App(props) {
 
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isPlayingSample, setIsPlayingSample] = useState(false);
-  let audioObject;
 
   const handleAuthorization = (boolValue) => {
     setIsAuthorized(boolValue);
@@ -48,13 +47,13 @@ function App(props) {
 
   const handlePlaySample = (previewUrl) => {
     if (!isPlayingSample) {
-      audioObject = new Audio(previewUrl);
+     // audioObject = new Audio(previewUrl);
     //setInterval(() => {this.setState({isPlaying: false})}, 30000)
-    audioObject.play();
-    setIsPlayingSample(true);
+    //audioObject.play();
+    setIsPlayingSample(previewUrl);
     }
     else {
-      audioObject.pause();
+      //audioObject.pause();
       setIsPlayingSample(false);
     }
 }
@@ -121,6 +120,10 @@ function App(props) {
               <Route exact path='/register' render={props => !isAuthorized ? <Register isAuthorized={isAuthorized}
                 handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />
             </Switch>
+            {
+              isPlayingSample ? <AudioObject 
+                isPlayingSample={isPlayingSample}/> : ''
+            }
           </div>
         </div>
       </Fragment>
