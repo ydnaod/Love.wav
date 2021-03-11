@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,6 +27,8 @@ function App(props) {
 
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isPlayingSample, setIsPlayingSample] = useState(false);
+  const [isAlreadyPlayingSample, setIsAlreadyPlayingSample] = useState();
+  const song = useRef();
 
   const handleAuthorization = (boolValue) => {
     setIsAuthorized(boolValue);
@@ -46,14 +48,18 @@ function App(props) {
   }
 
   const handlePlaySample = (previewUrl) => {
-    if (!isPlayingSample) {
+    if (!isAlreadyPlayingSample) {
      // audioObject = new Audio(previewUrl);
     //setInterval(() => {this.setState({isPlaying: false})}, 30000)
-    //audioObject.play();
     setIsPlayingSample(previewUrl);
+    song.current = new Audio(previewUrl);
+    song.current.play();
+    setIsAlreadyPlayingSample(true);
+    console.log(song);
     }
     else {
       //audioObject.pause();
+      song.current.pause();
       setIsPlayingSample(false);
     }
 }
@@ -71,8 +77,8 @@ function App(props) {
 //   }
 // }
 
-  const handleStopSample = () => {
-
+  const handleStopSample = (boolean) => {
+    setIsAlreadyPlayingSample(boolean);
   }
 
   const dashboard = <div className="dashboard">
@@ -121,8 +127,10 @@ function App(props) {
                 handleAuthorization={handleAuthorization} /> : <Redirect to='/' />} />
             </Switch>
             {
-              isPlayingSample ? <AudioObject 
-                isPlayingSample={isPlayingSample}/> : ''
+              // !isAlreadyPlayingSample && isPlayingSample ? <AudioObject 
+              // isPlayingSample={isPlayingSample}
+              // handleIsPlayingSample={handleStopSample}
+              // isAlreadyPlayingSample={isAlreadyPlayingSample}/> : ''
             }
           </div>
         </div>
