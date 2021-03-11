@@ -55,11 +55,13 @@ function App(props) {
     song.current = new Audio(previewUrl);
     song.current.play();
     setIsAlreadyPlayingSample(true);
+    setInterval(() => {setIsAlreadyPlayingSample(false);}, 30000)
     console.log(song);
     }
     else {
       //audioObject.pause();
       song.current.pause();
+      setIsAlreadyPlayingSample(false);
       setIsPlayingSample(false);
     }
 }
