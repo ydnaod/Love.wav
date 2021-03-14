@@ -1,6 +1,7 @@
 .profilePicture {
     height: 20em;
     width: 20em;
+    min-width: 20em;
     object-fit: cover;
     border-radius: 50%;
     border: 10px solid white;
