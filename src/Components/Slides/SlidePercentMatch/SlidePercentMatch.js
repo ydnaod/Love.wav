@@ -5,14 +5,13 @@ import { Statement } from '../Statement/Statement';
 
 export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourTrackQualities } }) {
 
-    //sentences to show
-
     //mutual sentences
     const [mutual, setMutual] = useState([]);
 
     //different sentences
     const [different, setDifferent] = useState([]);
 
+    //takes the object holding values of differences in track qualities and returns an array holding mutual qualities
     const calculateCommon = () => {
 
         const update = [];
@@ -25,6 +24,7 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
         return update;
     }
 
+    //creates sentences to be displayed on your profile based on the track qualities of your music
     const calculateSentences = () => {
 
         const sentences = {};
@@ -53,15 +53,20 @@ export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourT
             sentences.valence = 'songs that you can cry to';
         }
         if (yourTrackQualities.instrumentalness > .5) {
-            sentences.instrumentallness = 'songs that you can work to';
+            sentences.instrumentalness = 'songs that you can work to';
         }
+
+        //Still need to implement tempo as a quality to display
         // if (yourTrackQualities.tempo >= 100) {
         //     sentences.tempo = 'songs that are fast-paced';
         // }
         // if (yourTrackQualities.tempo < 100) {
         //     sentences.tempo = 'songs that are great for slow dancing and only slow dancing';
         // }
-        console.table(sentences);
+
+        //console.table(sentences);
+
+        //adds sentences to state to be rendered conditionally
         const common = calculateCommon();
         const updatedMutual = [];
         const updatedDifferent = [];
