@@ -3,8 +3,6 @@ import { Profile } from '../Profile/Profile';
 import './MatchDashboard.css';
 import playButton from '../../images/Playbutton.png'
 import stopButton from '../../images/StopButton.png'
-// import LeftArrow from '../../images/LeftArrow.png'
-// import RightArrow from '../../images/RightArrow.png'
 import { LoadingMatchDashboard } from './LoadingMatchDashboard'
 import { Popup } from '../Popup/Popup'
 import { toast } from 'react-toastify';
@@ -13,16 +11,22 @@ const restAPIUrl = require('../../Util/serverUrl')
 
 export function MatchDashboard({ fetchUserId, handlePlaySample }) {
 
-    //profiles will be needed to be fetched from the database
+    //This array is used to hold the different slide components of users' profiles
     const [slides, setSlides] = useState([]);
-    //const [profile, setProfile] = useState();
-    const [current, setCurrent] = useState(0);
+
+    //Set to false when data is fetched
     const [isLoading, setIsLoading] = useState(true);
-    //const [playlistTrackIds, setPlaylistTrackIds] = useState('');
+
+    //Holds profiles to interate through after swiping
     const [profiles, setProfiles] = useState();
-    const [hasError, setHasError] = useState(false);
+
+    //Set to true when there are no more profiles to iterate through
     const [isEmpty, setIsEmpty] = useState(false);
 
+    //Set to true when error
+    const [hasError, setHasError] = useState(false);
+
+    //Fetches tracks from a user's playlist ID
     const loadPlaylistTracks = async (playlistId) => {
         try {
             const response = await fetch(`${restAPIUrl.url}/login/loadPlaylistTracks/${playlistId}`, {
@@ -45,15 +49,13 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                     throw new Error('sorry, one of your tracks was invalid')
                 }
             })
-            //let string = await generatePlaylistIdString(trackList);
-            //setPlaylistTrackIds(string);
             return trackList;
         } catch (error) {
-            console.log('yay error handling loadingPlaylistTracks')
             console.error(error.message);
         }
     }
 
+    //Takes a list of tracks and generates a string of their ID's. This is needed to fetch the track qualities from Spotify's API
     const generatePlaylistIdString = async (trackList) => {
         let string = '';
         await trackList.forEach(track => {
@@ -62,6 +64,7 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
         return string;
     }
 
+    //Takes the string of all the track ID's and returns an object holding the average of each quality across the 10 songs
     const calculateTrackQualities = async (trackIds) => {
         try {
             const response = await fetch(`${restAPIUrl.url}/login/getPlaylistQualities/${trackIds}`, {
@@ -94,12 +97,11 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                 }
             })
             for (const quality in average) {
-                average[quality] /= trackQualities.length;
+                average[quality] /= trackQualities.length - 1;
             }
             console.table(average)
             return average;
         } catch (error) {
-            console.log('yay error handling calculateTrackQualities')
             console.error(error.message);
         }
     }
@@ -108,6 +110,7 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
         return Math.abs(num1 - num2);
     }
 
+    //Finds the difference across the six track qualities between two users
     const calculateMusicDiff = (yourAverageTrack, theirAverageTrack) => {
         const musicDiff = {
             acousticness: 0,
@@ -124,13 +127,14 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
         return musicDiff;
     }
 
+    //Returns the % match between users based on the difference in their track qualities
     const calculatePercentMatch = (yourAverageTrack, theirAverageTrack) => {
         const musicDiff = calculateMusicDiff(yourAverageTrack, theirAverageTrack);
         const { acousticness, danceability, energy, instrumentalness, liveness, valence } = musicDiff;
         return Math.floor((1 - ((acousticness + danceability + energy + instrumentalness + liveness + valence) / 6)) * 100) + "% match"
     }
 
-
+    //Fetches a new user from the database that the current user has not swiped yet
     const fetchProfile = async (id) => {
         try {
             const myId = await fetchUserId();
@@ -138,25 +142,22 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                 method: 'GET',
                 headers: { token: sessionStorage.token }
             })
+
+            //Throws error if user's profile is incomplete
             if (response.status == 400 && id == myId) {
-                //console.log(id + myId);
                 throw new Error('Profile is incomplete')
-            }
-            else if ((response.status == 404 || response.status == 400) && id !== myId) {
+            } else if ((response.status == 404 || response.status == 400) && id !== myId) {
                 throw new Error('no profile exists for this user');
             }
             const parseRes = await response.json();
             return parseRes;
         } catch (error) {
-            //console.log('yay error handling fetchProfile')
-            //console.log(error.message)
             if (error.message) {
                 if (error.message == 'Profile is incomplete') {
                     //toast.error('Profile is incomplete! Please check your profile to make sure it is complete.')
                     setHasError(true);
                     console.error(error.message);
-                }
-                else if (error.message == 'no profile exists for this user') {
+                } else if (error.message == 'no profile exists for this user') {
                     const tempArray = profiles;
                     tempArray.shift();
                     if (tempArray.length == 0) {
@@ -165,10 +166,6 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                     setProfiles(tempArray);
                     checkProfilesEmpty()
                     fetchData();
-                    // setTimeout(() => {
-                    //     checkProfilesEmpty()
-                    //     fetchData();
-                    // }, 2000)
                 }
             }
         }
@@ -184,7 +181,6 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
             //console.log(parseRes);
             return parseRes;
         } catch (error) {
-            console.log('yay error handling fetchThemeSong')
             console.error(error.message);
         }
     }
@@ -205,32 +201,31 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
             parseRes.lyrics.push(parseRes.line_five);
             return parseRes;
         } catch (error) {
-            console.log('yay error handling fetchFavoriteLyrics')
             console.error(error.message);
         }
     }
 
+    //Fetches all user profile data to be rendered to the screen
     async function fetchData() {
         try {
             const userId = await fetchUserId();
-            const profile = await fetchProfile(profiles[0].id);
-            //console.log(profile)
-            const profile2 = await fetchProfile(userId);
-            const playlist1 = await loadPlaylistTracks(profile.playlist_id);
-            const playlist2 = await loadPlaylistTracks(profile2.playlist_id);
-            const idString1 = await generatePlaylistIdString(playlist1);
-            const idString2 = await generatePlaylistIdString(playlist2);
-            const trackQualities1 = await calculateTrackQualities(idString1);
-            const trackQualities2 = await calculateTrackQualities(idString2);
-            const themeSong = await fetchThemeSong(profile.theme_song_id);
+            const theirProfile = await fetchProfile(profiles[0].id);
+            const yourProfile = await fetchProfile(userId);
+            const theirPlaylist = await loadPlaylistTracks(theirProfile.playlist_id);
+            const yourPlaylist = await loadPlaylistTracks(yourProfile.playlist_id);
+            const theirIdString = await generatePlaylistIdString(theirPlaylist);
+            const yourIdString = await generatePlaylistIdString(yourPlaylist);
+            const theirTrackQualities = await calculateTrackQualities(theirIdString);
+            const yourTrackQualities = await calculateTrackQualities(yourIdString);
+            const themeSong = await fetchThemeSong(theirProfile.theme_song_id);
             const favoriteLyrics = await fetchFavoriteLyrics(profiles[0].id);
             const profileInfo =
             {
 
-                name: profile.first_name,
-                image: profile.photo,
-                percentMatch: await calculatePercentMatch(trackQualities1, trackQualities2),
-                trackList: await playlist1,
+                name: theirProfile.first_name,
+                image: theirProfile.photo,
+                percentMatch: await calculatePercentMatch(theirTrackQualities, yourTrackQualities),
+                trackList: await theirPlaylist,
                 themeSongImage: themeSong.album.images[0].url,
                 title: themeSong.name,
                 artist: themeSong.artists[0].name,
@@ -238,8 +233,8 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                 favoriteLyric: favoriteLyrics.favorite_lyric,
                 favoriteLyricTitle: favoriteLyrics.song_title,
                 favoriteLyricArtist: favoriteLyrics.song_artist,
-                musicDiff: await calculateMusicDiff(trackQualities1, trackQualities2),
-                yourTrackQualities: await trackQualities2,
+                musicDiff: await calculateMusicDiff(theirTrackQualities, yourTrackQualities),
+                yourTrackQualities: await yourTrackQualities,
             }
 
 
@@ -247,19 +242,11 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
             setIsLoading(false);
         } catch (error) {
             checkProfilesEmpty();
-            //console.log('yay error handling fetchData')
             console.error(error.message);
         }
     }
 
-    const handleLeftArrowClick = () => {
-        setCurrent(current == 0 ? slides.length - 1 : current - 1);
-    }
-
-    const handleRightArrowClick = () => {
-        setCurrent(current == slides.length - 1 ? 0 : current + 1);
-    }
-
+    //Populates profiles array
     const fetchRandomProfiles = async () => {
         try {
             const response = await fetch(`${restAPIUrl.url}/fetch-profiles/random`, {
@@ -299,11 +286,9 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                 matchNotification();
             }
             tempArray.shift();
-            //console.log(tempArray)
             setProfiles(tempArray)
             setIsLoading(true);
             fetchData();
-            //^ do you actually have to do this again?
         } catch (error) {
             console.error(error.message);
         }
@@ -323,6 +308,7 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
         setIsEmpty(false);
     }
 
+    //Handles when a user guesses another user's favorite lyric
     const handleSendingGuess = async (index) => {
         console.log('guess: ' + index)
         try {
@@ -344,7 +330,6 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                 matchNotification();
             }
             tempArray.shift();
-            //console.log(tempArray)
             setProfiles(tempArray)
             setIsLoading(true);
             fetchData();
@@ -366,7 +351,7 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
                         isLoading ? <LoadingMatchDashboard /> : <Profile profileInfo={slides}
                             key='1'
                             handleSendingGuess={handleSendingGuess}
-                            handlePlaySample={handlePlaySample}/>
+                            handlePlaySample={handlePlaySample} />
                     }
                 </div>
             </div>
