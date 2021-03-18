@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import './SlidePercentMatch.css';
-import { Track } from '../Track/Track';
 import { Statement } from '../Statement/Statement';
 
-export function SlidePercentMatch({ profileInfo, profileInfo: { musicDiff, yourTrackQualities } }) {
+export function SlidePercentMatch({ profileInfo: { musicDiff, yourTrackQualities } }) {
 
     //mutual sentences
     const [mutual, setMutual] = useState([]);
