@@ -1,29 +1,46 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import './FavoriteLyric.css';
-import { TrackList } from './TrackList/TrackList';
-import { LyricTrack } from './LyricTrack/LyricTrack';
-import { Lyric } from './Lyric/Lyric';
 import { MyFavoriteLyrics } from './MyFavoriteLyrics/MyFavoriteLyrics';
 import { Popup } from '../Popup/Popup'
 const restAPIUrl = require('../../Util/serverUrl');
 
 export function FavoriteLyric({fetchUserId}) {
 
+    //Used with input field to search for songs
     const [input, setInput] = useState('');
+
+    //Array of tracks returned from the song search
     const [tracks, setTracks] = useState([]);
+
+    //Keeps track of which track is selected
     const [selectedTrack, setSelectedTrack] = useState();
+
+    //Holds artist and song title once the lyrics are chosen
     const [trackInfo, setTrackInfo] = useState([]);
+
+    //Renders lyrics to be selected
     const [lyrics, setLyrics] = useState([]);
-    const [selectedLine, setSelectedLine] = useState();
+
+    //Holds the initial first five lines
     const [selectedLines, setSelectedLines] = useState({});
+
+    //Holds the absolute favorite line selected from the already selected 5 lines. This will represent the correct guess
+    const [selectedLine, setSelectedLine] = useState();
+
+    //Fetched from the database once a favorite line is selected
     const [favoriteLyric, setFavoriteLyric] = useState();
+
+    //Used to determine if there is already an entry in the database. So we know whether or not POST or PUT
     const [favoriteLyricFromDatabase, setFavoriteLyricFromDatabase] = useState();
+
+    //Set to true after user searches for a song
     const [popupSeen, setPopupSeen] = useState(false);
 
     const handleChange = (e) => {
         setInput(e.target.value);
     }
 
+    //Closes the popup window and clears relevant state variables
     const handleXClick = () => {
         setInput('');
         setTracks([]);
@@ -42,7 +59,6 @@ export function FavoriteLyric({fetchUserId}) {
                 headers: { token: sessionStorage.token }
             });
             const parseRes = await response.json();
-            //console.log(parseRes.lyrics_body)
             const array = parseRes.lyrics_body.split('\n')
             array.splice(array.length - 4, 4);
             setLyrics(array)
@@ -83,12 +99,9 @@ export function FavoriteLyric({fetchUserId}) {
         }
     }
 
+    //Called when the user submits their favorite lyric
     const handleFavoriteSubmission = async () => {
         try {
-            /*
-            const body = {
-                trackInfo, favoriteLyric, selectedLines
-            };*/
             let tempArray = [];
             for (const line in selectedLines) {
                 tempArray.push(selectedLines[line]);
@@ -104,8 +117,6 @@ export function FavoriteLyric({fetchUserId}) {
                 line_four: tempArray[3],
                 line_five: tempArray[4],
             };
-            const print = JSON.stringify(body);
-            //console.log(print)
             if (!favoriteLyricFromDatabase) {
                 const response = await fetch(`${restAPIUrl.url}/lyrics/save-favorite-lyric`, {
                     method: 'POST',
@@ -138,6 +149,7 @@ export function FavoriteLyric({fetchUserId}) {
         }
     }
 
+    //Fetches the user's favorite lyric from database if it exists
     const fetchFavoriteLyric = async () => {
         try {
             const id = await fetchUserId();
@@ -152,7 +164,6 @@ export function FavoriteLyric({fetchUserId}) {
             }
             else if (favoriteLyricFromDatabase.song_artist !== parseRes.song_artist || favoriteLyricFromDatabase.song_title !== parseRes.song_title || favoriteLyricFromDatabase.line_one !== parseRes.line_one || favoriteLyricFromDatabase.favorite_lyric !== parseRes.favorite_lyric) {
                 setFavoriteLyricFromDatabase(parseRes)
-                console.log('sup')
             }
         } catch (error) {
             console.error(error.message);
@@ -215,17 +226,6 @@ export function FavoriteLyric({fetchUserId}) {
                             handleFavoriteLyricSelect={handleFavoriteLyricSelect}
                             favoriteLyric={favoriteLyric}
                             handleFavoriteSubmission={handleFavoriteSubmission} /> : ''
-                    }
-                    {
-                        //lyrics ? <Lyric lyrics={lyrics}
-                        // handleLineSelect={handleLineSelect} /> : ''
-                    }
-                    {
-                        //selectedLines ? <Lyric lyrics={selectedLines}
-                        // handleFavoriteLyricSelect={handleFavoriteLyricSelect} /> : ''
-                    }
-                    {
-                        //favoriteLyric ? <button className='button' onClick={handleFavoriteSubmission}>submit favorite lyric</button> : ''
                     }
                 </div>
             </div>
