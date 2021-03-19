@@ -30,6 +30,8 @@ function App(props) {
   const [isAlreadyPlayingSample, setIsAlreadyPlayingSample] = useState();
   const song = useRef();
 
+  const [matchesFound, setMatchesFound] = useState(0);
+
   const handleAuthorization = (boolValue) => {
     setIsAuthorized(boolValue);
   }
@@ -45,6 +47,10 @@ function App(props) {
     }
     const parseRes = await response.json();
     return parseRes;
+  }
+
+  const handleMatchesFoundIncrease = () => {
+    setMatchesFound(matchesFound + 1);
   }
 
   const handlePlaySample = (previewUrl) => {
@@ -85,8 +91,10 @@ function App(props) {
 
   const dashboard = <div className="dashboard">
     <MatchDashboard fetchUserId={fetchUserId} 
-      handlePlaySample={handlePlaySample}/>
-    <ConversationList fetchUserId={fetchUserId} />
+      handlePlaySample={handlePlaySample}
+      handleMatchesFoundIncrease={handleMatchesFoundIncrease}/>
+    <ConversationList fetchUserId={fetchUserId}
+      matchesFound={matchesFound}/>
   </div>
 
   const isAuth = async () => {

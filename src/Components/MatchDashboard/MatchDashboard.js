@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const restAPIUrl = require('../../Util/serverUrl')
 
-export function MatchDashboard({ fetchUserId, handlePlaySample }) {
+export function MatchDashboard({ fetchUserId, handlePlaySample, handleMatchesFoundIncrease }) {
 
     //This array is used to hold the different slide components of users' profiles
     const [slides, setSlides] = useState([]);
@@ -265,6 +265,7 @@ export function MatchDashboard({ fetchUserId, handlePlaySample }) {
 
     const matchNotification = async () => {
         toast.success('You got a match!');
+        handleMatchesFoundIncrease();
     }
 
     const handleSwipe = async (swipe) => {

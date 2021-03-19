@@ -7,7 +7,7 @@ import { useTransition, animated, useChain, useSpring } from 'react-spring';
 import { LoadingConversationList } from './LoadingConversationList';
 const restAPIUrl = require('../../Util/serverUrl');
 
-export function ConversationList({ fetchUserId }) {
+export function ConversationList({ fetchUserId, matchesFound }) {
 
     const [conversationList, setConversationList] = useState([]);
     const [convoToggle, setConvoToggle] = useState(false);
@@ -138,7 +138,7 @@ export function ConversationList({ fetchUserId }) {
         } catch (error) {
             console.error(error.message);
         }
-    }, []);
+    }, [matchesFound]);
 
     const handleConvoToggle = () => {
         setConvoToggle(!convoToggle)
